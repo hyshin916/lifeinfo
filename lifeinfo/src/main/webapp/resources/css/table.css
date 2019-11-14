@@ -1,0 +1,47 @@
+.board_list{
+  width: 100%;
+  border: 1;
+  font-size: 0.95em;
+}
+
+.board_list td{
+  padding : 10px 0;
+}
+
+.board_wrap{
+  height: auto;
+  overflow: hidden;
+}
+
+.board_list tr td a{
+  display: inline-block;
+  padding : 5px 13px;
+  border-radius: 5px;
+  color  : #ee6b1c;
+  background: #fff;
+  border: 1px solid #ee6b1c;
+}
+
+
+@media screen and (max-width:400px)
+{
+  .board_list tr td:nth-child(1)
+  {
+    width: 20%;
+    font-size: 0.9em;
+  }
+  .board_list tr td:nth-child(2)
+  {
+    width: 55%;
+    font-size: 0.9em;
+  }
+}
+
+
+table tr .link2 a{
+  display: inline-block;
+  height: auto;
+  background: #ee6b1c;
+  color :#fff;
+  text-align: center;
+}

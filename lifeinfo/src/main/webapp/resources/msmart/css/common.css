@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+/* customazing css */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900');
+@import url('https://fonts.googleapis.com/css?family=Noto Sans KR:100,300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,300,400,500	');
+@import url('https://fonts.googleapis.com/css?family=Lato:100,300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto Mono:300,400,500');
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500');
+@import url('https://fonts.googleapis.com/css?family=Play:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Open Sans:300,400,500,600');
+@import url('https://fonts.googleapis.com/css?family=Tenor Sans:300,400,500,600');
+
+
+html,body{margin:0;padding:0;color:#424242;font-size:15px;font-family:'NotoSansKR-Light';letter-spacing:-1px;}
+nav,header,menu,section,footer,div,th,td,ul,li,dl,dt,dd,p,h1,h2,h3,h4,h5,h6,form,select,textarea,input{margin:0;padding:0;list-style:none;}
+input[type=text], input[type=password], input[type=submit], input[type=button], input[type=search], input[type=tel], input[type=number], input[type=email], input[type=file], textarea{box-sizing:border-box;border-radius:0px;-webkit-appearance:none;}
+
+ul{list-style:none;margin:0;padding:0;}
+a{color:inherit;text-decoration:none;}
+#mslifeA a {
+	width:100%;
+}
+
+input::-webkit-input-placeholder{color:inherit;}
+input:-ms-input-placeholder{color:inherit;}
+input::placeholder{color:inherit;}
+
+.msWrap{overflow:hidden;}
+#msHeaderApp{box-sizing:border-box;background:#701cee;overflow:hidden;}
+#msContents{padding-bottom:10px;background:#f8f8f8;}
+#msFooter{padding:40px 13px 90px 13px;background:#fff;border-top:1px solid #eee;box-sizing:border-box;font-size:0.8em;}
+
+.msAppDownload{margin:6px 13px 8px 13px;line-height:37px;color:#fff;font-size:1.3em;font-weight:bold;font-family:'NotoSansKR-Bold';}
+.msAppDownload h1{float:left;width:39px;height:39px;margin-right:7px;background:#d90600 url('../skin/default/img/logo.png') no-repeat;background-size:85%;background-position:center;border:1px solid #c72200;box-sizing:border-box;box-shadow:2px 3px 3px rgba(0,0,0,0.1);border-radius:10px;font-size:0px;line-height:0%;}
+.msAppDownload .btnAppDown{float:right;margin-top:7px;padding:3px 6px;background:none;border:1px solid rgba(255,255,255,0.5);color:#fff;font-size:0.8rem;}
+.msTopMenu{padding-top:3px;overflow:hidden;}
+.msSiteTab{float:left;position:relative;width:85%;max-width:600px;height:55px;overflow:hidden;}
+.msSiteTab li{position:absolute;bottom:0px;left:60%;width:40%;max-width:600px;height:42px;line-height:48px;box-sizing:border-box;background:url('../skin/default/img/msSiteTab_bg2.png') no-repeat;background-position:100% 100%;background-size:auto 100%;color:#fff;font-size:0.95em;font-family:'NotoSansKR-Bold';text-align:center;z-index:1;}
+.msSiteTab li.active{left:0%;width:70%;height:55px;line-height:70px;padding-left:15px;background:url('../skin/default/img/msSiteTab_active_bg.png') no-repeat;background-position:100% 100%;background-size:auto 100%;color:#8a58d1;text-align:left;z-index:2;}
+.msSiteTab li.active span{display:inline-block;margin-top:21px;margin-left:7px;padding-left:7px;border-left:1px solid #ddd;line-height:20px;}
+.msSiteTab .tab_logo{margin-top:-5px;max-width:50%;max-height:30px;vertical-align:middle;}
+@media screen AND (max-width:320px){ /* iPhone 5/SE 대응 */
+ .msSiteTab .tab_logo{max-height:18px;}
+}
+
+
+.msSearch{float:right;margin-top:13px;margin-right:15px;}
+.msSearch .btn_search{display:inline-block;width:30px;height:30px;background:url('../skin/default/img/btn_search.png') no-repeat;background-size:20px auto;background-position:center;}
+.msNotice{padding:8px 15px 0px 15px;background:#fff;}
+.msNotice .scrollNews {padding:5px 15px;background:#f8f8f8;border:1px solid #eee;border-radius:50px;}
+.msNotice a{font-size:0.9rem;}
+/* .msCategory{padding:15px 15px;box-sizing:border-box;background:#fff;}
+.msCategory ul li{width:auto;}
+.msCategory a{display:block;padding:10px 5px;color:#000;font-size:1.1em;}
+.msCategory a.active{border-bottom:3px solid #8a58d5;color:#8a58d5;} */
+.msCategory{padding:0px 13px;box-sizing:border-box;background:#fff;}
+.msCategory ul li{width:auto;}
+.msCategory a{display:block;padding:13px 10px;color:#222;font-size:1.1em;font-weight:600;overflow:hidden;}
+.msCategory a.active{position:relative;color:#ee6b1c;}
+.msCategory a.active:after{content:'';position:absolute;bottom:0px;left:0px;width:100%;height:3px;background:#ee6b1c;overflow:hidden;}
+
+#msCategoryTable{position:fixed;top:-50px;left:0px;width:100%;background:#fff;box-shadow:0px 0px 10px rgba(0,0,0,0.1);-webkit-transition: all 0.3s ease;-moz-transition: all 0.3s ease;-ms-transition: all 0.3s ease;-o-transition: all 0.3s ease;transition: all 0.3s ease;z-index:100;}
+body{line-height: 1.25em;letter-spacing:-0.5px;font-family:'Montserrat','Quicksand','Tenor Sans','Play','Lato','Raleway','Roboto Mono','Open Sans',"Apple SD Gothic Neo",'Noto Sans KR', NanumBarunGothic, "나눔바른고딕", Malgun Gothic, "맑은 고딕", dotum;}
+
+#msContents .mainVisiulBanner{position:relative;font-size:0px;}
+#msContents .mainVisiulBanner .swiper-slide{text-align:center;}
+#msContents .mainVisiulBanner img{max-width:100%;}
+#msContents .mainVisiulBanner .swiper-pagination{position:absolute;bottom:10px;right:10px;padding-right:15px;box-sizing:border-box;color:#242424;font-size:1.1rem;text-align:right;}
+#msContents .mainContents{padding:7px 15px;border-bottom:1px solid #eee;box-sizing:border-box;background:#fff;}
+
+#msFooter{padding:40px 13px 90px 13px;background:#fff;border-top:1px solid #eee;box-sizing:border-box;font-size:0.8em;}
+#msFooter h4{margin-bottom:20px;color:#242424;font-family:'NotoSansKR-Bold';}
+#msFooter p{overflow:hidden;}
+#msFooter .helpDesk{margin:20px 0px;}
+#msFooter .helpDesk .telephone{color:#242424;font-weight:bold;font-family:'NotoSansKR-Bold';}
+#msFooter a{display:inline-block;margin-left:5px;padding:2px 5px;border:1px solid #999;font-size:0.85em;}
+#msFooter a.policy{float:left;margin-left:0px;margin-top:5px;}
+#msFooter a.protect{float:left;margin-left:-1px;margin-top:5px;}
+#msFooter a.vdproposal{margin-left:-1px;}
+#msFooter .copyright{margin:20px 0px;}
+/* #msFooter h4{margin-bottom:20px;color:#242424;font-family:'NotoSansKR-Bold';}
+#msFooter p{overflow:hidden; margin : 5px 0;word-spacing: 3px;}
+#msFooter .helpDesk{margin:30px 0px;}
+#msFooter .helpDesk .telephone{color:#242424;font-weight:bold;font-family:'NotoSansKR-Bold';}
+#msFooter .helpDesk p{padding-left:0px;}
+#msFooter a{display:inline-block;margin-left:5px;padding:2px 5px;border:1px solid #999;font-size:0.85em;}
+#msFooter a.policy{float:left;margin-left:0px;margin-top:5px;}
+#msFooter a.protect{float:left;margin-left:-1px;margin-top:5px;}
+#msFooter .copyright{margin-top:30px;}
+#msFooter a.vdproposal {
+    margin-left: -1px;
+} */

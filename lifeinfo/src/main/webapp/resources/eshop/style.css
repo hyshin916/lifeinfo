@@ -1,0 +1,223 @@
+.help_wrap{
+  padding: 2%;
+}
+
+.pr_text{
+  position: relative;
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+.detail_text p span{
+  color : #ee6b1c;
+}
+.pr_text img{
+  max-width: 96%;
+  height: auto;
+  margin: 2% 0 2% 0;
+  border-radius: 7px;
+}
+
+.detail_text{
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.4em;
+}
+
+.text_size{
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+  padding: 10px 0;
+  line-height: 1.8em;
+  font-size: 11px !important;
+}
+
+.detail_text p{
+  padding: 0;
+  margin: 0;
+  padding: 0 2%;
+  margin: 5px 0;
+}
+.btn_wrap{
+  position: relative;
+  width: 100%;
+  height: auto;
+}
+
+.space{
+  padding-top: 10px;
+  padding : 0 5%;
+  width: 90%;
+}
+
+.space a{
+  cursor: none;
+}
+
+.btn_wrap a{
+  display: block;
+  padding: 5px 0;
+  text-align: center;
+  border-radius: 3px;
+  color: #fff;
+  background: #ee6b1c;
+  text-decoration: none;
+  font-size: 0.8rem;
+  margin: 0 auto;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.btn_wrap .board_content{
+  overflow: hidden;
+  height: auto;
+  border-bottom: 1px solid #eee;
+}
+
+.btn_wrap .board_content:nth-child(8){
+  border: 0;
+}
+
+.btn_wrap .board_content ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.btn_wrap .board_content ul li{
+  float: left;
+  width: 17%;
+  margin-top: 8px;
+  text-align: center;
+  font-size: 0.8em;
+  margin-right: 2%;
+}
+
+.btn_wrap .board_content ul li:nth-child(2)
+{
+  width: 60%;
+}
+
+.btn_wrap .board_content ul li:nth-child(3)
+{
+  width: 15%;
+}
+
+.btn_wrap .board_content ul li .btn_style{
+  width: 80%;
+  border: 1px solid #ee6b1c;
+  background: #fff;
+  color: #ee6b1c;
+  padding : 5px 8px;
+  font-size: 0.7rem;
+}
+
+.btn_wrap .board_content .shopping li
+{
+  width: 79%;
+}
+
+.btn_wrap .board_content .shopping li p{
+  line-height: 2.8em;
+}
+
+
+.btn_wrap .board_content .shopping li:nth-child(2)
+{
+  width: 15%;
+  padding: 1px 0 ;
+}
+
+
+.board_content ul .b_left p{
+  text-align: left;
+}
+
+.btn_wrap2{
+  position: relative;
+  width: 90%;
+  padding : 0 5%;
+  height: auto;
+  margin: 0 auto;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.4em;
+  margin-top: -8px;
+}
+
+.btn_wrap2 .btn1
+{
+  display: block;
+  width: 49%;
+  padding : 5px 0;
+  float: left;
+  margin-right: 2%;
+}
+
+.btn_wrap2 .btn1:nth-child(2)
+{
+  margin-right: 0;
+}
+
+
+@media screen and (max-width:768px)
+{
+  .space{
+    padding-top: 10px;
+    padding : 0 5%;
+    width: 90%;
+  }
+}
+
+
+@media screen and (max-width:414px)
+{
+  .detail_text{
+    font-size: 0.75em;
+  }
+  .btn_wrap a{
+    font-size: 0.85em;
+  }
+  .btn_wrap .board_content ul li:nth-child(2), .btn_wrap .board_content ul li:nth-child(1)
+  {
+    font-size: 0.75em;
+  }
+
+  .space{
+    padding-top: 10px;
+    padding : 0 2%;
+    width: 96%;
+  }
+
+  .btn_wrap2{
+    width: 96%;
+    padding :0;
+  }
+
+}
+
+@media screen and (max-width:350px)
+{
+  .detail_text{
+    font-size: 0.7em;
+  }
+  .btn_wrap .board_content ul li:nth-child(2), .btn_wrap .board_content ul li:nth-child(1)
+  {
+    font-size: 0.7em;
+  }
+
+  .space{
+    padding-top: 10px;
+    padding : 0 2%;
+    width: 96%;
+  }
+
+  .btn_wrap2{
+    width: 98%;
+    padding :0;
+  }
+}

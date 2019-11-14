@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+article .title {
+	text-align: justify;
+	overflow: auto;
+	line-height: 2;
+	padding: 10px 5px 10px 5px;
+	color: #000;
+	font-size: 20px;
+	word-wrap: break-word;
+	word-break: normal;
+}
+
+div article .copyright {
+	text-align: justify;
+	overflow: auto;
+	line-height: 2;
+	padding: 10px 15px;
+	color: #000;
+	/* font-size: 17px; */
+	word-wrap: break-word;
+	word-break: normal;
+}
+
+div article  div {
+	text-align: center;
+	margin: 0 50px 0 50px;
+}
+
+div article .banner img {
+	width: 100%;
+	margin: 0;
+}
+
+div .date {
+	margin: 10px;
+}
+
+.divPadding {
+	padding: 5px;
+}
+
+div .imgURL {
+	width: 100%;
+	padding: 1px;
+}

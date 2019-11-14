@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mseshop">
+    <select id="list" resultType="kr.co.mseshop.model.CrawlInfoVO">
+    SELECT
+          lpad(a.no,'9',0) as no, b.viewURL, a.thumbURL, a.category, a.title, a.price, a.proprice,a.reg_date
+        FROM
+            crawlinfo_tbl a inner join viewinfo_tbl b on a.no = b.no 
+    </select>
+    <select id="getViewlist" resultType="String" parameterType="Integer">
+      	SELECT
+         	detailInfo
+        FROM
+            refind_tbl
+		WHERE
+			sellingCode=#{no}    
+    </select>
+    <select id="codeList" resultType="String">
+    	SELECT
+    		distinct(level1)
+    	FROM
+    		category_tbl
+    </select>
+    <select id="categoryList" parameterType="String" resultType="String">
+    	SELECT
+    		distinct(level2)
+    	FROM
+    		category_tbl where level1 = #{param}
+    </select>
+    <select id="categoryListSmall" parameterType="String" resultType="String">
+    SELECT
+    		distinct(level3)
+    	FROM
+    		category_tbl where level2 = #{param}
+    </select> 
+    <select id="categoryListDetailView" parameterType="String" resultType="String">
+        SELECT
+    		distinct(level4)
+    	FROM
+    		category_tbl where level3 = #{param}
+    
+    </select>
+    <select id="getLastCode" parameterType="kr.co.mseshop.model.MadeCategoryCodeVO" resultType="String">
+        SELECT
+        	code
+        FROM
+        	category_tbl where level1 = #{daeParam} and level2 = #{junParam} and level3 = #{soParam} and level4 = #{detailView}	
+    </select>
+    <insert id="refindInsert" parameterType="kr.co.mseshop.model.RefindDataVO">
+    	INSERT INTO refind_tbl(productStatus,productName,sellingPrice,inventoryQuantity,asInfo,asTel,thumbImg,
+			detailInfo,sellingCode,surTax,minorsPurchase,purchaseStatus,originCode,importedCompany,redundantOrigin,deliveryMethod,deliveryType,deliveryPayMethod,returnShippCost,
+			exchangeCost,installCost,sellerItems,optionalType,optionName,optionValue,memberStatus,strLength)
+		VALUES(#{productStatus},#{productName},#{sellingPrice},#{inventoryQuantity},#{asInfo},#{asTel},#{thumbImg},
+			#{detailInfo},#{sellingCode},#{surTax},#{minorsPurchase},#{purchaseStatus},#{originCode},#{importedCompany},#{redundantOrigin},#{deliveryMethod},#{deliveryType},#{deliveryPayMethod},#{returnShippCost},
+			#{exchangeCost},#{installCost},#{sellerItems},#{optionalType},#{optionName},#{optionValue},#{memberStatus},#{strLength})
+    </insert>
+    <update id="updateRefindInfo" parameterType="kr.co.mseshop.model.RefindDataVO">
+    	UPDATE excel_tbl SET categoryID = #{categoryID},exportStatus = #{exportStatus}, sellingPrice = #{sellingPrice} WHERE sellingCode = #{sellingCode}
+    </update>
+    <select id = "getExportData" resultType="kr.co.mseshop.model.RefindDataVO" >
+    SELECT * FROM excel_tbl
+    </select>
+    
+    <select id="getRefindData"  resultType="kr.co.mseshop.model.RefindDataVO" statementType="CALLABLE">
+    	{
+			CALL crawldb.SELECT_REFINDINFO()
+		}
+    </select>
+    
+    <select id="dbInsertChk" resultType="Integer">
+    	SELECT count(*) FROM refind_tbl WHERE sellingCode = (SELECT max(lpad(no,'10',0)) as no FROM crawldb.crawlinfo_tbl)
+    </select>
+    
+    <insert id="insertExcelData" parameterType="HashMap" statementType="CALLABLE">
+    	{
+			CALL crawldb.EXPORT_EXCEL_TEMP(
+			 #{sellingCode,mode=IN,jdbcType=VARCHAR,javaType=String},
+			 #{sellingPrice,mode=IN,jdbcType=VARCHAR,javaType=String}
+			)
+		}
+    </insert>
+    
+    <select id="searchList" resultType="kr.co.mseshop.model.CrawlInfoVO" parameterType="kr.co.mseshop.model.SearchDataVO">
+        SELECT
+          lpad(a.no,'9',0) as no, b.viewURL, a.thumbURL, a.category, a.title, a.price, a.proprice,a.reg_date
+        FROM
+            crawlinfo_tbl a inner join viewinfo_tbl b on a.no = b.no WHERE 1=1 AND category like '%${searchValue}%'
+            
+      <if test="startDate!=null and startDate!=''">
+        AND
+        	reg_date between '${startDate}' and '${endDate}'	  
+       </if>
+ 	  <if test="endDate!=null and endDate!=''">
+        AND
+        	reg_date between '${startDate}' and '${endDate}'	  
+       </if>
+            
+    </select>
+    <select id="searchListCode" resultType="kr.co.mseshop.model.CrawlInfoVO" parameterType="kr.co.mseshop.model.SearchDataVO">
+     SELECT
+          lpad(no,'9',0) as no,viewURL,thumbURL,category,title,price,proprice,size,color,bodyImgURL,thumbfileName,reg_date
+        FROM
+            crawlinfo_tbl WHERE 1=1 AND no like ${searchValue}
+      <if test="startDate!=null and startDate!=''">
+        AND
+        	reg_date between '${startDate}' and '${endDate}'	  
+      </if>
+ 	  <if test="endDate!=null and endDate!=''">
+        AND
+        	reg_date between '${startDate}' and '${endDate}'	  
+       </if>
+    </select>
+    <delete id="deleteExcelData">
+    	truncate excel_tbl 
+    </delete>
+    <select id="refindList" resultType="kr.co.mseshop.model.CrawlInfoVO">
+    	SELECT
+          lpad(no,'9',0) as no,viewURL,thumbURL,category,title,price,proprice,size,color,bodyImgURL,thumbfileName,optionName,increOptionValue
+        FROM
+            crawlinfo_tbl WHERE made = 'Y'
+    </select>
+    
+    <update id="updateInsert">
+    	UPDATE crawlinfo_tbl SET made = 'N' WHERE made = 'Y'
+    </update>
+    
+    <resultMap id="test" type="hashmap"></resultMap>
+	<select id="testpro" statementType="CALLABLE">
+		{
+			CALL crawldb.test_pro(
+			 #{v_result,mode=INOUT,jdbcType=VARCHAR,javaType=String,resultMap=test}
+			)
+		}
+	</select>
+    
+</mapper>

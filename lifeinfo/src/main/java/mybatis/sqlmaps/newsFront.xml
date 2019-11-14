@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="newsFront">
+
+<select id="getLineNews" resultType="kr.co.mseshop.model.ArticleVO">
+	SELECT 
+			  pcode,
+              nsid,
+			  title
+		FROM msmartlife.article_tbl  WHERE  lineYN = 'Y'
+        union all
+	SELECT 
+			  pcode,
+			  nsid,
+			  title
+		FROM msmartlife.ms_article_tbl  WHERE
+		lineYN = 'Y'
+</select>
+
+
+<select id="getMSnewsList" parameterType="String" resultType="kr.co.mseshop.model.ArticleVO">
+	<![CDATA[
+	SELECT 
+			a.nsid,
+			a.title,
+		    a.sub_title,
+		    a.content,
+		    a.date,
+		    a.update_date,
+		    a.uv,
+		    a.author,
+		    b.fileName
+	FROM msmartlife.ms_article_tbl a,msmartlife.file_tbl b where a.nsid = b.bno and viewYN = 'Y' and start_date <= #{dateStr} and expire_date >= #{dateStr} order by orderbyno desc;
+	]]>
+</select>
+<select id="getMsDetailView" parameterType="String" resultType="kr.co.mseshop.model.ArticleVO">
+	SELECT
+		  title,
+		  content,
+		  sub_title,
+		  date,
+		  update_date,
+		  uv,
+		  author,
+		  youtubeID
+	FROM
+		msmartlife.ms_article_tbl WHERE nsid = #{artid};  
+</select>
+
+<select id="getYoutubeID" resultType="String">
+	SELECT
+		youtubeID
+	FROM
+		msmartlife.ms_article_tbl ORDER BY orderbyno DESC LIMIT 1; 
+</select>
+
+</mapper>

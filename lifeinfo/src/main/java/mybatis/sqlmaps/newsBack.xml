@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="newsBack">
+
+<insert id="newsAdd" parameterType="kr.co.mseshop.model.ArticleVO">
+	INSERT INTO msmartlife.ms_article_tbl(nsid,pcode,catecode,title,sub_title,content,keyword,date,start_date,expire_date,orderbyno,viewYN,important,youtubeID,lineYN) VALUES(#{nsid},#{pcode},#{catecode},#{title},#{sub_title},#{content},#{keyword},#{date},#{start_date},#{expire_date},#{orderbyno},#{viewYN},#{important},#{youtubeID},#{lineYN});
+</insert>
+<insert id="fileUpload" parameterType="kr.co.mseshop.model.FileVO">
+	INSERT INTO msmartlife.file_tbl(bno,fileName,fileOriName,fileUrl,fileSize,pressCd) VALUES(#{bno},#{fileName},#{fileOriName},#{fileUrl},#{fileSize},#{pressCd});
+</insert>
+
+<select id="getLineStatus" resultType="kr.co.mseshop.model.ArticleVO">
+SELECT pcode,uv,title,date,start_date,expire_date FROM msmartlife.ms_article_tbl where lineYN = 'Y'
+	union all
+SELECT pcode,uv,title,date,start_date,expire_date FROM msmartlife.article_tbl where lineYN = 'Y' order by uv desc;
+</select>
+<select id="getImpList" resultType="kr.co.mseshop.model.ArticleVO">
+select uv,title,date,start_date,expire_date from article_tbl where important = 'Y' order by uv desc;
+</select>
+<select id="getLifeMainList" resultType="kr.co.mseshop.model.ArticleVO">
+SELECT uv,title,date,start_date,expire_date FROM msmartlife.ms_article_tbl where viewYN = 'Y' and important = 'Y' order by uv desc;
+</select>
+
+<!--  MS 생활뉴스 리스트 -->
+<select id="newsList" resultType="kr.co.mseshop.model.ArticleVO" parameterType="kr.co.mseshop.criteria.BbsInfoCriteria">
+	SELECT * FROM msmartlife.ms_article_tbl 
+		WHERE 1=1
+	<if test="title!=null and title!=''">
+		AND
+			title like '%${title}%'	
+	</if>
+	<if test="viewYN!=null and viewYN!=''">
+		AND
+			viewYN = #{viewYN}	
+	</if>
+	<if test="lineYN!=null and lineYN!=''">
+		AND
+			lineYN = #{lineYN}	
+	</if>
+	order by orderbyno desc,start_date desc;
+</select>
+<!--  MS 생활뉴스 리스트 -->
+<!--  언론사 뉴스 리스트 -->
+<select id="getNewslist" resultType="kr.co.mseshop.model.ArticleVO" parameterType="kr.co.mseshop.criteria.BbsInfoCriteria">
+	SELECT * FROM msmartlife.article_tbl 
+		WHERE 1=1
+	<if test="title!=null and title!=''">
+		AND
+			title like '%${title}%'	
+	</if>
+	<if test="pcode!=null and pcode!=''">
+		AND
+			pcode = '${pcode}'	
+	</if>
+	<if test="viewYN!=null and viewYN!=''">
+		AND
+			viewYN = #{viewYN}	
+	</if>
+	<if test="lineYN!=null and lineYN!=''">
+		AND
+			lineYN = #{lineYN}	
+	</if>
+	<if test="important!=null and important!=''">
+		AND
+			important = #{important}	
+	</if>
+	order by orderbyno desc,date desc;
+</select>
+<!--  언론사 뉴스 리스트 -->
+
+<select id="getDetail" resultType="kr.co.mseshop.model.ArticleVO">
+SELECT a.pcode,a.nsid,a.title,a.sub_title,a.content,a.keyword,a.start_date,a.expire_date,a.youtubeID,a.viewYN,a.important,a.lineYN,b.fileOriName,b.fileName,b.fileUrl,b.fno,b.bno FROM msmartlife.ms_article_tbl AS a, msmartlife.file_tbl AS b WHERE a.nsid = b.bno AND b.bno = #{nsid};
+</select>
+<select id="getNewsDetail" resultType="kr.co.mseshop.model.ArticleVO">
+SELECT nsid,pcode,title,sub_title,content,keyword,start_date,expire_date,youtubeID,viewYN,important,lineYN,imgurl,
+(select fno from file_tbl where bno = #{id})as fno,
+(select bno from file_tbl where bno = #{id})as bno,
+(select fileUrl from file_tbl where bno = #{id})as fileUrl,
+(select fileOriName from file_tbl where bno = #{id})as fileOriName,
+(select fileName from file_tbl where bno = #{id})as fileName
+ FROM msmartlife.article_tbl WHERE nsid = #{id}; 
+</select> 
+
+<select id="getArticleNO" resultType="Integer">
+			SELECT ifnull(max(nsid),0)+1 FROM msmartlife.ms_article_tbl
+</select>
+
+<select id="isImgUrlChk" resultType="String">
+SELECT imgurl 
+FROM msmartlife.article_tbl WHERE nsid=#{nsid};
+</select>
+
+
+<select id="getRowCount" parameterType="kr.co.mseshop.criteria.BbsInfoCriteria" resultType="Integer">
+	SELECT count(*) FROM msmartlife.ms_article_tbl
+	WHERE 1=1
+	<if test="title != '' and title != null">
+	AND
+		title like  '%${title}%';
+	</if>
+</select>
+
+<select id="getNewsRowCount" parameterType="kr.co.mseshop.criteria.BbsInfoCriteria" resultType="Integer">
+	SELECT count(*) FROM msmartlife.article_tbl
+	WHERE 1=1
+	<if test="title != '' and title != null">
+	AND
+		title like  '%${title}%';
+	</if>
+</select>
+
+<update id="updateOrderByNO" parameterType="HashMap">
+	UPDATE msmartlife.ms_article_tbl SET orderbyno = #{idx} WHERE nsid = #{nsid};
+</update>
+
+<update id="updateArticle" parameterType="kr.co.mseshop.model.ArticleVO">
+	UPDATE msmartlife.ms_article_tbl SET title = #{title},sub_title=#{sub_title},content=#{content},keyword=#{keyword},start_date=#{start_date},expire_date=#{expire_date},update_date=#{update_date},viewYN=#{viewYN},important=#{important},youtubeID=#{youtubeID},pcode=#{pcode},catecode=#{catecode},lineYN=#{lineYN} WHERE nsid=#{nsid}; 
+</update>
+
+<update id="updateNewsArticle" parameterType="kr.co.mseshop.model.ArticleVO">
+UPDATE msmartlife.article_tbl <set>title = #{title},sub_title=#{sub_title},content=#{content},keyword=#{keyword},start_date=#{start_date},expire_date=#{expire_date},update_date=#{update_date},viewYN=#{viewYN},important=#{important},youtubeID=#{youtubeID},pcode=#{pcode},catecode=#{catecode},lineYN=#{lineYN},<if test="imgurl!=null">imgurl=#{imgurl}</if></set>  WHERE nsid=#{nsid}; 
+</update>
+
+<update id="updateFile" parameterType="kr.co.mseshop.model.FileVO">
+		UPDATE msmartlife.file_tbl SET fileName = #{fileName},fileOriName = #{fileOriName},fileUrl = #{fileUrl},fileSize = #{fileSize},pressCd = #{pressCd} WHERE fno = #{fno} AND bno = #{bno};
+</update>
+
+<delete id="deleteFile" parameterType="String">
+		DELETE FROM msmartlife.file_tbl WHERE fno = #{fno};
+</delete>
+
+<!--  패스워드 초기화 -->
+	<select id="getUserInfo" parameterType="String" resultType="kr.co.mseshop.model.PasswdResetVO">
+		SELECT no_htel,nm_byr,nm_addr FROM msmartshop.tblmember_MSAPP WHERE no_htel = #{id};
+	</select>
+	<update id="passwdUpdate" parameterType="HashMap">
+		UPDATE msmartshop.tblmember_MSAPP SET nm_pw = #{passwd} where no_htel = #{id};
+	</update>
+	<!--  패스워드 초기화 -->
+</mapper>

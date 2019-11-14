@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.mseshop">
+
+	<select id="getNewsList" resultType="kr.co.mseshop.model.ArticleVO">
+	SELECT 
+			nsid,
+			pcode,
+			title,
+			imgurl,
+			uv,
+            date
+		 FROM msmartlife.article_tbl where pcode='0001' and viewYN = 'Y' and imgurl is not null order by date desc limit 4 ;
+	</select>
+	<select id="getKadoNewsList" resultType="kr.co.mseshop.model.ArticleVO">
+	SELECT 
+			nsid,
+			pcode,
+			title,
+			imgurl,
+			uv,
+            date
+		 FROM msmartlife.article_tbl where pcode='0002' and viewYN = 'Y' and imgurl is not null order by date desc limit 4 ;
+	</select>
+
+	<select id="getImpNewsList" resultType="kr.co.mseshop.model.ArticleVO">
+		SELECT 
+			  nsid,
+			  title,
+			  imgurl,
+			  uv 
+		FROM msmartlife.article_tbl where viewYN = 'Y' and imgurl is not null and important = 'Y' order by date desc limit 5;
+	</select>
+	
+	<select id="getNewsAllList" resultType="kr.co.mseshop.model.ArticleVO">
+	SELECT uv,nsid,pcode,
+			title
+		FROM msmartlife.article_tbl where viewYN = 'Y' 
+        union all
+	SELECT uv,nsid,pcode,
+			title
+		FROM msmartlife.ms_article_tbl where viewYN = 'Y' order by uv desc limit 10;
+	</select>
+	
+	<select id="getDetailView" resultType="kr.co.mseshop.model.ArticleVO">
+		SELECT 
+		      pcode,
+			  nsid,
+			  title,
+			  content,
+			  date,
+			  imgurl,
+			  pc_url,
+			  uv
+		 FROM msmartlife.article_tbl WHERE nsid = #{value};
+	</select>
+	
+	<select id="getMoreNewsList" parameterType="kr.co.mseshop.model.SearchVO" resultType="kr.co.mseshop.model.ArticleVO">
+		SELECT 
+			   nsid,
+			   title,
+			   pcode,
+			   author,
+			   imgurl,
+			   uv
+		 FROM msmartlife.article_tbl WHERE pcode='0001' and viewYN = 'Y' order by orderbyno desc,date desc limit #{startNum},#{endNum};
+	</select>
+	<select id="getMorekadoNewsList" parameterType="kr.co.mseshop.model.SearchVO" resultType="kr.co.mseshop.model.ArticleVO">
+		SELECT 
+			   nsid,
+			   title,
+			   pcode,
+			   author,
+			   imgurl,
+			   uv
+		 FROM msmartlife.article_tbl WHERE pcode='0002' and viewYN = 'Y' order by orderbyno desc,date desc limit #{startNum},#{endNum};
+	</select>
+		
+	<select id="getMoreNewsToCnt" resultType="Integer">
+		SELECT count(*) FROM msmartlife.article_tbl where pcode='0001' and imgurl is not null AND viewYN = 'Y' order by date desc;
+	</select>
+	<select id="getMorekadoNewsToCnt" resultType="Integer">
+		SELECT count(*) FROM msmartlife.article_tbl where pcode='0002' and imgurl is not null AND viewYN = 'Y' order by date desc;
+	</select>
+	
+	<update id="updateViewCnt" parameterType="String">
+		UPDATE msmartlife.article_tbl SET uv = uv+1 WHERE nsid = #{artid};
+	</update>
+	
+	<update id="updateMsDetailViewCnt"  parameterType="String">
+		UPDATE msmartlife.ms_article_tbl SET uv = uv+1 WHERE nsid = #{artid};
+	</update>
+	
+</mapper>
