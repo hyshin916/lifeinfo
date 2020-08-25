@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+@import url(http://cdn.jsdelivr.net/font-nanum/1.0/nanumbarungothic/nanumbarungothic.css);
+body{
+	font-family: 'Nanum Myeongjo', serif;
+  position: relative;
+}
+
+.wrap{
+  padding-top: 45%;
+}
+
+.content_wrap{
+  position: relative;
+  width: 80%;
+  height: 100px;
+  margin: 0 auto;
+  border-radius: 5px;
+  padding: 10px;
+
+}
+
+.text_area{
+  font-size: 13px;
+  text-align: center;
+}
+
+.text_area p:nth-child(1){
+  font-weight: bold;
+  font-size: 18px;
+  padding: 0;
+}
+
+.text_area p:nth-child(2){
+  color : #6f6f6f;
+}
+
+.text_area p span{
+  font-size: 21px;
+  color : #f26522;
+  font-weight: bold;
+}
+
+.img_wrap{
+  margin: 0 auto;
+  position: relative;
+  width: 60%;
+  padding-top: 10%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.img_wrap img{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+@-webkit-keyframes blinker
+{ 0% { opacity: 0; }
+100% { opacity: 1; } }
+.text_area p .css3-blink
+{ -webkit-animation-name: blinker;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 0.8s;
+  -webkit-animation-delay: 0.2s;
+}
+.text_area p .css3-blink2
+{ -webkit-animation-name: blinker;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 0.8s;
+    -webkit-animation-delay: 0.5s;
+}
+.text_area p .css3-blink3
+{ -webkit-animation-name: blinker;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 0.8s;
+    -webkit-animation-delay: 0.8s;
+}
+
+@media (min-width:1024px) and (max-width:1920px){
+	.img_wrap {
+    width: 20%;
+    padding-top: 3%;
+	}
+
+  .content_wrap {
+    height: auto;
+    max-width: 500px;
+    width: auto;
+  }
+  .wrap{
+    padding-top: 10%;
+  }
+  .text_area p:nth-child(1){
+    font-size:23px;
+  }
+  .text_area p span{
+    font-size: 30px;
+  }
+  .text_area p:nth-child(2){
+    font-size: 15px;
+  }
+}
+
+
+@media (min-width:0px) and (max-width:320px){
+  .text_area p:nth-child(1){
+    font-size:17px;
+  }
+  .text_area p span{
+    font-size: 20px;
+  }
+}

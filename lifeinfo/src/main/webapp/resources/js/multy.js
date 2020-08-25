@@ -1,0 +1,1 @@
+document.write('<div class="linenews_wrap"><div id="edd3" style="visibility:hidden;opacity:0"><ul class="box-flow3"><li><a href="http://www.mstoday.co.kr/news/articleView.html?idxno=26152"><img src="http://www.mstoday.co.kr/news/photo/202004/26152_17706_4950.jpeg"><p>강원 고위 교육공무원 아내 70억대 투자사기</p></a></li></ul></div></div></div></div>');
