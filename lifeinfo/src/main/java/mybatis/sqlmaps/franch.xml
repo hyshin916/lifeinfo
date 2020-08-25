@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="franch">
+	<!-- <select id="getCompareValue" resultType="int" parameterType="HashMap"> 
+		SELECT COUNT(*) FROM msmartshop.tblmember WHERE id = #{userID} AND passwd 
+		= #{password}; </select>compareIDChkByID -->
+	<select id="compareIDChkByID" resultType="int"
+		parameterType="String">
+		SELECT COUNT(*) FROM msmartshop.tblmember WHERE id = #{userID};
+	</select>
+
+	<select id="getLimitCnt"
+		resultType="kr.co.mseshop.model.FranchAdminVO" parameterType="String">
+
+		SELECT no,name,sellerCd,useCnt FROM msmartlife.franch_tbl WHERE sellerCd =
+		#{sellerCd};
+
+	</select>
+	
+	<select id="getUseCnt" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM msmartlife.franch_use_tbl WHERE id = #{userID} AND sellerCd = #{sellerCd} AND DATE > date_format(curdate( ), '%Y-%m-%d %H:%i:%s');
+	</select>
+	
+	<select id="getPasswd" resultType="kr.co.mseshop.model.FranchAdminVO" parameterType="String">
+		SELECT no,name,sellerCd,useCnt,passwd FROM msmartlife.franch_tbl WHERE sellerCd = #{view_num};
+	</select>
+	
+	<select id="getUseFranchInfo" resultType="int" parameterType="HashMap">
+		SELECT COUNT(*) FROM franch_use_tbl WHERE 1=1 AND id = #{id} AND sellerCd = #{sellerCd}
+		<if test="date!=null and date!=''">AND date like '${date}%'</if> ;	
+	</select>
+
+	<select id="getUseTotalFranchInfo" resultType="int"
+		parameterType="String">
+		SELECT COUNT(*) FROM franch_use_tbl WHERE sellerCd = #{sellerCd};
+	</select>
+	<select id="getFranchTotalUseCntList" resultType="kr.co.mseshop.model.FranchSellerVO">
+		SELECT a.name,a.sellerCd,count(b.sellerCd) AS useCnt  FROM franch_tbl AS a INNER JOIN franch_use_tbl AS b ON a.sellerCd = b.sellerCd GROUP BY b.sellerCd ORDER BY useCnt DESC;
+	</select>
+	
+	
+	<select id="getFranchList" resultType="kr.co.mseshop.model.FranchSellerVO">
+		SELECT name,sellerCd,no,useCnt,passwd FROM msmartlife.franch_tbl;
+	</select>
+	
+	<select id="getStatistics" resultType="kr.co.mseshop.model.StatisVO">
+		SELECT a.name,count(b.sellerCd) AS cnt  FROM franch_tbl AS a INNER JOIN franch_use_tbl AS b ON a.sellerCd = b.sellerCd GROUP BY b.sellerCd ORDER BY cnt DESC;
+	</select>
+	
+	<select id="getFranchEventList" resultType="kr.co.mseshop.model.FranchEvtVO">
+				SELECT (SELECT name FROM msmartshop.tblmember WHERE id = a.id) AS NAME, a.id AS userID,max(a.date) AS date, COUNT(a.id) AS cnt FROM franch_use_tbl AS a JOIN franch_tbl AS b ON a.sellerCd = b.sellerCd and DATE(date) > DATE_ADD(NOW(),INTERVAL-30 DAY) group BY id ORDER BY cnt DESC LIMIT 100;
+	</select>
+	
+	<select id="getFranchEvent" resultType="kr.co.mseshop.model.FranchEvtVO" parameterType="HashMap">
+				SELECT (SELECT name FROM msmartshop.tblmember WHERE id = a.id) AS NAME,a.id AS userID,max(a.date) AS date, COUNT(a.id) AS cnt FROM franch_use_tbl AS a JOIN franch_tbl AS b ON a.sellerCd = b.sellerCd AND DATE(date)
+				 BETWEEN #{startDate} AND #{endDate} group BY id ORDER BY cnt DESC;
+	</select>
+	
+	<select id="getNameByID" resultType="kr.co.mseshop.model.FranchEvtVO" parameterType="String">
+				SELECT name,id AS userID FROM msmartshop.tblmember WHERE id = #{id};
+	</select>
+	
+	
+	<select id="getViewSellerInfo" parameterType="String" resultType="kr.co.mseshop.model.FranchSellerVO">
+		SELECT no,name,sellerCd,passwd,comment FROM msmartlife.franch_tbl WHERE no = #{no};
+	</select>
+
+	<select id="getAllUsersCnt" resultType="int">
+		SELECT COUNT(*) FROM (SELECT DISTINCT(id) FROM msmartlife.franch_use_tbl) AS a;
+	</select>
+	<select id="getAllUseCnt" resultType="int">
+		SELECT COUNT(*) FROM msmartlife.franch_use_tbl ;
+	</select>
+	
+	<select id="getFranchDatePickerEvent" parameterType="HashMap" resultType="kr.co.mseshop.model.FranchEvtVO">
+		SELECT (SELECT name FROM msmartshop.tblmember WHERE id = a.id) AS NAME, a.id AS userID,max(a.date) AS date, COUNT(a.id) AS cnt FROM franch_use_tbl AS a JOIN franch_tbl AS b ON a.sellerCd = b.sellerCd and DATE(date) BETWEEN #{startDate} AND #{endDate} group BY id ORDER BY cnt DESC;
+	</select>
+
+	<select id="__getAllUsersCnt" parameterType="HashMap" resultType="int">
+		SELECT COUNT(*) FROM (SELECT DISTINCT(id) FROM msmartlife.franch_use_tbl WHERE DATE(date) BETWEEN #{startDate} AND #{endDate}) AS a;
+	</select>
+	<select id="__getAllUseCnt" resultType="int">
+		SELECT COUNT(*) FROM msmartlife.franch_use_tbl WHERE DATE(date) BETWEEN #{startDate} AND #{endDate};
+	</select>
+	
+	<select id="getEvtRowCount" parameterType="kr.co.mseshop.criteria.EventCriteria" resultType="int" >
+	SELECT COUNT(*) FROM (SELECT (SELECT name FROM msmartshop.tblmember WHERE id = a.id) AS NAME, a.id AS userID,max(a.date) AS date, COUNT(a.id) AS cnt FROM franch_use_tbl AS a JOIN franch_tbl AS b ON a.sellerCd = b.sellerCd
+	  <if test="startDate!=null and endDate!=null">
+	   and DATE(DATE) BETWEEN #{startDate} AND #{endDate} 
+	  </if>
+	  <if test="startDate_1!=null and endDate_1!=null">
+	   and DATE(DATE) BETWEEN #{startDate_1} AND #{endDate_1} 
+	  </if>
+	group BY id ORDER BY cnt DESC) AS b;
+	</select>
+	
+	<insert id="addFranchInfo" parameterType="HashMap">
+		INSERT INTO msmartlife.franch_use_tbl(id,sellerCd,date)
+		VALUES(#{id},#{sellerCd},#{date});
+	</insert>
+	
+	<insert id="addFranchSellerInfo" parameterType="kr.co.mseshop.model.FranchSellerVO">
+		INSERT INTO msmartlife.franch_tbl(name,sellerCd,passwd,comment) VALUES(#{name},#{sellerCd},#{passwd},#{comment});
+	</insert>
+	
+	<update id="updateSellerInfo" parameterType="kr.co.mseshop.model.FranchSellerVO">
+		UPDATE msmartlife.franch_tbl SET name=#{name},sellerCd=#{sellerCd},passwd=#{passwd},comment=#{comment} WHERE no = #{no};
+	</update>
+	<delete id="deleteSellerInfo" parameterType="int">
+		DELETE FROM msmartlife.franch_tbl WHERE no = #{no};
+	</delete>
+	
+</mapper>
