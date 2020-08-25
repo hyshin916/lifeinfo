@@ -42,9 +42,11 @@ public class LifeInfoController {
 	 */
 	@RequestMapping(value = "/festival")
 	public String getFestival(Model model) {
+		
 
 		lifeInfoService.getFestival(model);
 
+		
 		return "festival";
 	}
 
@@ -114,12 +116,15 @@ public class LifeInfoController {
 	@RequestMapping(value = "/msNewsDetail", method = RequestMethod.GET)
 	public String msNewsDetail(Model model,HttpServletRequest request,HttpServletResponse response,@RequestParam String artid,@RequestParam(value="section",required=false) String section) {
 		
-		CookieUtils cookieUtils = CookieUtils.getInstance();
-		int result = cookieUtils.chkCookies(request, response, artid);
-		
+	/*	CookieUtils cookieUtils = CookieUtils.getInstance();
+		int result = cookieUtils.chkCookies(request, response, artid);*/
+/*		
 		if (result == 0) {
 			lifeInfoService.updateMsDetailViewCnt(artid);
-		}
+		}*/
+		
+		lifeInfoService.updateMsDetailViewCnt(artid); // 19.12.20 PV로 전환
+		
 		ArticleVO articleView = lifeInfoService.getMsDetailView(artid);
 		model.addAttribute("moreNewsURL",Constants.HOST_DOMAIN);
 		model.addAttribute("detailView",articleView);
@@ -135,12 +140,14 @@ public class LifeInfoController {
 			model.addAttribute("section","morenewslist");
 		}
 		
-		CookieUtils cookieUtils = CookieUtils.getInstance();
-		int result = cookieUtils.chkCookies(request, response, artid);
+/*		CookieUtils cookieUtils = CookieUtils.getInstance();
+		int result = cookieUtils.chkCookies(request, response, artid);*/
 		
-		if (result == 0) {
+		lifeInfoService.updateDetailViewCnt(artid); // 19.12.20 PV로 전환
+	/*	if (result == 0) { // 쿠키체크
 			lifeInfoService.updateDetailViewCnt(artid);
-		}
+		}*/
+		
 		articleView = lifeInfoService.getDetailView(artid);
 		chkCntURL(articleView.getPc_url());
 		model.addAttribute("moreNewsURL",Constants.HOST_DOMAIN);

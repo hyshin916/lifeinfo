@@ -98,16 +98,25 @@ function chkBoxCheck(intChkNumber) {
    }
 }
 </script>
-
 <ul id="sortable">
 	<c:forEach var="item" items="${newsList}" varStatus="status">
  		 <li class="ui-state-default" nsid="${item.nsid}"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
  		 <a href="http://${moreNewsURL}:8080/lifeinfo/back/news/write?view=true&nsid=${item.nsid}<c:if test="${pageView eq '?media=news'}">&media=news</c:if>"><c:if test="${item.pcode eq '0001'}"><B>[강원일보]</B></c:if><c:if test="${item.pcode eq '0002'}"><B>[강원도민일보]</B></c:if>${item.title}</a>
- 		 <c:if test="${pageView eq '?media=news'}">[${item.date}]</c:if><c:if test="${pageView ne '?media=news'}">[${item.start_date}]</c:if></li>
+ 		 <c:if test="${pageView eq '?media=news'}">[${item.date}]</c:if><c:if test="${pageView ne '?media=news'}">[${item.start_date}]</c:if><B>Line:<span style="color:red;">${item.orderbyNOLine}</span></B></li>
 	</c:forEach>
 </ul>
 <div style="width:100%;text-align:center;">
-	<util:pagination url="./list" name="pageHolder" parameters="title,pcode,lineYN,important,viewYN"/>
+
+	<c:choose>
+		<c:when test="${pageView eq '?media=news'}">
+			<util:pagination url="./list?media=news" name="pageHolder" parameters="title,pcode,lineYN,important,viewYN"/>
+		</c:when>
+		<c:otherwise>
+			<util:pagination url="./list" name="pageHolder" parameters="title,pcode,lineYN,important,viewYN"/>
+		</c:otherwise>
+	</c:choose>
+
+
 <form action="<c:if test="${pageView eq '?media=news'}">./list?media=news</c:if><c:if test="${pageView ne '?media=news'}">./list</c:if>" method="POST" name="searchFrm">
  		  <input type="checkbox" name="lineYN" value="Y" ${param.lineYN eq 'Y' ? 'checked' : ''}/><span style="font-size:15px;">라인뉴스</span>
           <c:if test="${pageView eq '?media=news'}">

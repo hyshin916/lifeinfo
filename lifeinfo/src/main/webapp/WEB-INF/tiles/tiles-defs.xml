@@ -7,20 +7,20 @@
        "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
 
 <tiles-definitions>
-<definition name=".write"
+	<definition name=".write"
 		template="/WEB-INF/views/back/main/layout.jsp"></definition>
-<definition name=".newsDetail"
+	<definition name=".newsDetail"
 		template="/WEB-INF/views/newsDetail.jsp"></definition>
-<definition name=".msNewsDetail"
+	<definition name=".msNewsDetail"
 		template="/WEB-INF/views/msNewsDetail.jsp"></definition>
-		
+
 	<definition name=".news"
 		template="/WEB-INF/views/newsTemp.jsp"></definition>
 	<definition name=".weather"
 		template="/WEB-INF/views/weathertemp.jsp">
 		<put-attribute name="mslifeList"
 			value="/WEB-INF/views/center/mslifeList.jsp" />
-					<put-attribute name="mainYoutube"
+		<put-attribute name="mainYoutube"
 			value="/WEB-INF/views/center/mainYoutube.jsp" />
 		<put-attribute name="mainNews"
 			value="/WEB-INF/views/center/news.jsp" />
@@ -28,43 +28,97 @@
 			value="/WEB-INF/views/center/newsall.jsp" />
 		<put-attribute name="oilInfoList"
 			value="/WEB-INF/views/center/oilInfoList.jsp" />
-		<!-- <put-attribute name="festival"
-			value="/WEB-INF/views/center/festival.jsp" />
-		<put-attribute name="positionInfra"
-			value="/WEB-INF/views/center/positionInfra.jsp" /> -->
+		<!-- <put-attribute name="festival" value="/WEB-INF/views/center/festival.jsp" 
+			/> <put-attribute name="positionInfra" value="/WEB-INF/views/center/positionInfra.jsp" 
+			/> -->
 	</definition>
 	<definition name=".main"
 		template="/WEB-INF/views/layout.jsp"></definition>
 	<definition name=".newslist"
 		template="/WEB-INF/views/getmall/layout.jsp"></definition>
-	
+
 	<definition name="back/*/*" extends=".write">
 		<put-attribute name="main"
 			value="/WEB-INF/views/back/{1}/{2}.jsp" />
 	</definition>
-	
-	<definition name="back/news/list" extends=".write">
+
+	<!-- <definition name="back/news/list" extends=".write"> <put-attribute 
+		name="main" value="/WEB-INF/views/back/news/list.jsp" /> </definition> -->
+
+	<definition name="franchList" extends=".write">
 		<put-attribute name="main"
-			value="/WEB-INF/views/back/news/list.jsp" />
+			value="/WEB-INF/views/back/franch/list.jsp" />
 	</definition>
-	
-	<definition name="back/news/statistics" extends=".write">
+	<definition name="statisList" extends=".write">
 		<put-attribute name="main"
-			value="/WEB-INF/views/back/news/statistics.jsp" />
+			value="/WEB-INF/views/back/franch/statisList.jsp" />
 	</definition>
-	
-	<!-- <definition name="*/*/*" extends=".newsDetail">
+	<definition name="franchEvent" extends=".write">
 		<put-attribute name="main"
-			value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
-	</definition> -->
-	
-	<definition name="passwd/reset" template="/WEB-INF/views/passwd/reset.jsp">
+			value="/WEB-INF/views/back/franch/franchEvent.jsp" />
 	</definition>
 
-	<definition name="allNew" template="/WEB-INF/views/allNew.jsp">
+	<definition name="franchWrite" extends=".write">
+		<put-attribute name="main"
+			value="/WEB-INF/views/back/franch/franchWrite.jsp" />
+	</definition>
+	<definition name="passwdReset" extends=".write">
+		<put-attribute name="main"
+			value="/WEB-INF/views/back/passwd/reset.jsp" />
+	</definition>
+
+	<definition name="passwdResetStore"
+		template="/WEB-INF/views/back/passwd/reset2.jsp" />
+
+	<definition name="groupAuthMap" extends=".write">
+		<put-attribute name="main"
+			value="/WEB-INF/views/back/userMgmt/userMgmt.jsp" />
+	</definition>
+	<definition name="newsControl" extends=".write">
+		<put-attribute name="main"
+			value="/WEB-INF/views/back/news/newsControl.jsp" />
 	</definition>
 
 
+	<definition name="etbAuthUser" extends=".write">
+		<put-attribute name="main"
+			value="/WEB-INF/views/back/login/etbAuthUser.jsp" />
+	</definition>
+	<definition name="milestone" extends=".write">
+		<put-attribute name="main"
+			value="/WEB-INF/views/back/prj/milestone.jsp" />
+	</definition>
+
+	<definition name="memRegister"
+		template="/WEB-INF/views/back/login/memRegister.jsp">
+	</definition>
+
+
+	<!-- <definition name="back/news/statistics" extends=".write"> <put-attribute 
+		name="main" value="/WEB-INF/views/back/news/statistics.jsp" /> </definition> -->
+
+	<!-- <definition name="*/*/*" extends=".newsDetail"> <put-attribute name="main" 
+		value="/WEB-INF/views/{1}/{2}/{3}.jsp" /> </definition> -->
+	<definition name="FCMTest"
+		template="/WEB-INF/views/fcmtest.jsp">
+	</definition>
+
+	<definition name="allNew"
+		template="/WEB-INF/views/allNew.jsp">
+	</definition>
+	<definition name="mstoday"
+		template="/WEB-INF/views/mstoday.jsp">
+	</definition>
+	<definition name="msappnew"
+		template="/WEB-INF/views/msappnew.jsp">
+	</definition>
+	<definition name="franch"
+		template="/WEB-INF/views/franch/index.jsp">
+	</definition>
+
+	<definition name="loginForm"
+		template="/WEB-INF/views/back/login/login.jsp">
+	</definition>
 
 	<definition name="*/*" extends=".newslist">
 		<put-attribute name="main"
@@ -75,11 +129,9 @@
 		<put-attribute name="main"
 			value="/WEB-INF/views/center/weather.jsp" />
 	</definition>
-	
-	<!-- <definition name="oilInfoList" extends=".weather">
-		<put-attribute name="main"
-			value="/WEB-INF/views/center/oilInfoList.jsp" />
-	</definition> -->
+
+	<!-- <definition name="oilInfoList" extends=".weather"> <put-attribute name="main" 
+		value="/WEB-INF/views/center/oilInfoList.jsp" /> </definition> -->
 
 	<definition name="positionDetail" extends=".news">
 		<put-attribute name="main"
@@ -114,16 +166,17 @@
 	</definition>
 
 
+	<!-- <definition name="newsDetail" extends=".newsDetail"> <put-attribute 
+		name="main" value="/WEB-INF/views/center/newsDetail.jsp" /> </definition> -->
+	<definition name="newsDetail"
+		template="/WEB-INF/views/center/newsDetail.jsp">
+	</definition>
+	<definition name="msNewsDetail"
+		template="/WEB-INF/views/center/msNewsDetail.jsp">
+	</definition>
 
-	<definition name="newsDetail" extends=".newsDetail">
-		<put-attribute name="main"
-			value="/WEB-INF/views/center/newsDetail.jsp" />
-	</definition>
-	<definition name="msNewsDetail" extends=".msNewsDetail">
-		<put-attribute name="main"
-			value="/WEB-INF/views/center/msNewsDetail.jsp" />
-	</definition>
-	
+	<!-- <definition name="msNewsDetail" extends=".msNewsDetail"> <put-attribute 
+		name="main" value="/WEB-INF/views/center/msNewsDetail.jsp" /> </definition> -->
 	<definition name="moreNewsList" extends=".newsDetail">
 		<put-attribute name="main"
 			value="/WEB-INF/views/center/moreNewsList.jsp" />
@@ -132,7 +185,7 @@
 		<put-attribute name="main"
 			value="/WEB-INF/views/center/morekadoNewsList.jsp" />
 	</definition>
-	
+
 	<definition name="detail" extends=".main">
 		<put-attribute name="main"
 			value="/WEB-INF/views/center/detail.jsp" />

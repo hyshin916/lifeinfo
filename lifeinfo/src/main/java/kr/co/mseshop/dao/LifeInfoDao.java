@@ -13,7 +13,7 @@ public interface LifeInfoDao {
 
 	List<ArticleVO> getImpNewsList();
 
-	List<ArticleVO> getNewsAllList();
+	List<ArticleVO> getNewsAllList(String date);
 
 	ArticleVO getDetailView(String artid);
 
@@ -44,5 +44,9 @@ public interface LifeInfoDao {
 	int getMorekadoNewsToCnt(SearchVO param);
 
 	List<ArticleVO> getMorekadoNewsList(SearchVO param);
+
+	PasswdResetVO getUserNewInfo(String id);
+
+	void passwdNewUpdate(PasswdResetVO resetVO);
 
 }

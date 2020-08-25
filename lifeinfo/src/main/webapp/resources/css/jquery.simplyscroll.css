@@ -157,7 +157,7 @@ Note all DIVs are generated and should not be hard-coded
 		}
 
 .simply-scroll .simply-scroll-list li a {
-	display: inline-block; width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+	display: inline-block; width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 
 .simply-scroll .simply-scroll-list li img {}

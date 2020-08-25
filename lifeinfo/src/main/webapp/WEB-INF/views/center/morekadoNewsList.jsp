@@ -341,7 +341,7 @@ if (window.performance) {
 		 */
 </script>
 <div>
-	<div id="newsListMain">
+	<div id="newsListMain" style="margin-top:60px;">
 		<ul id="newsList" style="padding: 2px; list-style: none;"></ul>
 	</div>
 </div>

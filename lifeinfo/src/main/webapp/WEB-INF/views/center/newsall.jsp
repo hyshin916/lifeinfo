@@ -5,24 +5,11 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
-
-<style>
-.newsallClass {
-	text-align: left;
-	margin: 5px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-</style>
-<div class="main">
-	<h2 class="sub-header">&nbsp;많이 본 뉴스</h2>
-	<div class="table-responsive">
-		<div>
-			<ul id="articleList">
-				<script src="./resources/js/newsall.js"></script>
-			</ul>
-		</div>
+<div class="newstopic_wrap">
+	<div class="all_title">
+		<h4><p><span>많이 본</span> 기사</p></h4>
 	</div>
+	<ul class="topic_list">
+		<script src="./resources/js/newsall.js"></script>
+	</ul>
 </div>
-

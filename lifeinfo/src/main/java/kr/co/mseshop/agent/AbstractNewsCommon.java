@@ -15,5 +15,4 @@ public abstract class AbstractNewsCommon {
 	}
 	abstract  void threadStart();
 	
-	
 }

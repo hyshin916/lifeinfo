@@ -13,14 +13,14 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum=scale=1.0,minimum-scale=1.0,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, height=device-height, maximum-scale=3.0, target-densityDpi=device-dpi">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="author" content="">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<link rel="icon" href="../../favicon.ico">
+<link rel="icon" href="../.sotkfk./favicon.ico">
 
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+
 <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
 <title>Crawling Product information</title>
 
@@ -60,7 +60,7 @@
 <body>
 <div data-role="page"
 	style="background-image: linear-gradient(#fff, #fff);">
-	<div data-role="header" data-position="fixed">
+	<div data-role="header" style="position:fixed;width:100%;z-index:9999;">
 		<c:if test="${section eq 'morenewslist'}"><a href="http://${moreNewsURL}:8080/lifeinfo/moreNewsList"></c:if>
 			<img src="http://${moreNewsURL}:8080/lifeinfo/resources/images/back.png"
 			style="float: left; margin: 15px; width: 30px; height: 30px;" 
@@ -70,8 +70,8 @@
 		<h3>
 		<c:if test="${section eq 'morenewslist'}"><a href="http://ms-eshop.co.kr/"></c:if>
 			<img
-				style="position: relative; margin: 10px; width: 100px; height: 20px;"
-				src="http://${moreNewsURL}:8080/lifeinfo/resources/msmart/skin/default/img/tab_logo.png" class="homeBack"><c:if test="${section eq 'morenewslist'}"></a></c:if>
+				style="position: relative; margin: 10px; width : 109.08px; height : 20px;"
+				src="http://${moreNewsURL}:8080/lifeinfo/resources/msmart/skin/default/img/mstoday_logo.png" class="homeBack"><c:if test="${section eq 'morenewslist'}"></a></c:if>
 		</h3>
 	</div>
 

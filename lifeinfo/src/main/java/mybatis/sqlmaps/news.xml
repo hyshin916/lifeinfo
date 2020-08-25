@@ -11,7 +11,7 @@
 			imgurl,
 			uv,
             date
-		 FROM msmartlife.article_tbl where pcode='0001' and viewYN = 'Y' and imgurl is not null order by date desc limit 4 ;
+		 FROM msmartlife.article_tbl where pcode='0001' and viewYN = 'Y' and imgurl is not null order by DATE DESC,RAND() LIMIT 2;
 	</select>
 	<select id="getKadoNewsList" resultType="kr.co.mseshop.model.ArticleVO">
 	SELECT 
@@ -21,7 +21,7 @@
 			imgurl,
 			uv,
             date
-		 FROM msmartlife.article_tbl where pcode='0002' and viewYN = 'Y' and imgurl is not null order by date desc limit 4 ;
+		 FROM msmartlife.article_tbl where pcode='0002' and viewYN = 'Y' and imgurl is not null order by date DESC,RAND() limit 2 ;
 	</select>
 
 	<select id="getImpNewsList" resultType="kr.co.mseshop.model.ArticleVO">
@@ -33,14 +33,14 @@
 		FROM msmartlife.article_tbl where viewYN = 'Y' and imgurl is not null and important = 'Y' order by date desc limit 5;
 	</select>
 	
-	<select id="getNewsAllList" resultType="kr.co.mseshop.model.ArticleVO">
-	SELECT uv,nsid,pcode,
-			title
-		FROM msmartlife.article_tbl where viewYN = 'Y' 
+	<select id="getNewsAllList" parameterType="String" resultType="kr.co.mseshop.model.ArticleVO">
+SELECT uv,nsid,pcode,
+			title,date
+		FROM msmartlife.article_tbl where viewYN = 'Y' AND date between (DATE_FORMAT(NOW(),'%Y-%m-%d')-INTERVAL 7 DAY) and DATE_FORMAT(now(),'%Y-%m-%d')
         union all
 	SELECT uv,nsid,pcode,
-			title
-		FROM msmartlife.ms_article_tbl where viewYN = 'Y' order by uv desc limit 10;
+			title,date
+		FROM msmartlife.ms_article_tbl where viewYN = 'Y' AND date between (DATE_FORMAT(NOW(),'%Y-%m-%d')-INTERVAL 7 DAY) and DATE_FORMAT(now(),'%Y-%m-%d') order by uv desc limit 10;
 	</select>
 	
 	<select id="getDetailView" resultType="kr.co.mseshop.model.ArticleVO">

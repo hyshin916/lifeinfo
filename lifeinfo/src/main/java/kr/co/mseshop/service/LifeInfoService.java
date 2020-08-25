@@ -39,7 +39,6 @@ public interface LifeInfoService {
 	public void updateMsDetailViewCnt(String artid);
 
 
-
 	public List<ArticleVO> getGetmallImpNewsList();
 
 
@@ -73,5 +72,11 @@ public interface LifeInfoService {
 
 
 	public List<ArticleVO> getMorekadoNewsList(SearchVO param);
+
+
+	public PasswdResetVO getUserNewInfo(String id);
+
+
+	public void passwdNewUpdate(PasswdResetVO resetVO);
 
 }

@@ -5,7 +5,6 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 %>
-<div id = "mainYoutube">
-<script src="./resources/js/youtube.js"></script>
-</div>
-
+      <div class="youtube_wrap">
+        <script src="./resources/js/youtube.js"></script>
+      </div>

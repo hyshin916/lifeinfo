@@ -59,8 +59,8 @@ public class LifeInfoServiceImpl implements LifeInfoService {
 			URLConnection uc;
 			uc = url.openConnection();
 
-			uc.setConnectTimeout(5000);
-			uc.setReadTimeout(5000);
+			uc.setConnectTimeout(10000);
+			uc.setReadTimeout(10000);
 
 			/*
 			 * uc.setDoOutput(true); //uc.setRequestProperty("shinid", "wow");
@@ -325,7 +325,10 @@ public class LifeInfoServiceImpl implements LifeInfoService {
 
 	@Override
 	public List<ArticleVO> getNewsALL() {
-		return lifeInfoDao.getNewsAllList();
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		String dateStr = format.format(date);
+		return lifeInfoDao.getNewsAllList(dateStr);
 	}
 
 	@Override
@@ -387,6 +390,16 @@ public class LifeInfoServiceImpl implements LifeInfoService {
 	@Override
 	public List<ArticleVO> getMorekadoNewsList(SearchVO param) {
 		return lifeInfoDao.getMorekadoNewsList(param);
+	}
+
+	@Override
+	public PasswdResetVO getUserNewInfo(String id) {
+		return lifeInfoDao.getUserNewInfo(id);
+	}
+
+	@Override
+	public void passwdNewUpdate(PasswdResetVO resetVO) {
+		lifeInfoDao.passwdNewUpdate(resetVO);
 	}
 
 

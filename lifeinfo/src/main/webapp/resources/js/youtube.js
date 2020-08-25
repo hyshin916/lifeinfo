@@ -1,1 +1,1 @@
-document.write('<iframe id="ytplayer" type="text/html" width="100%" height="200" src="https://www.youtube.com/embed/i-sX0qKNR0w?autoplay=1" frameborder="0"></iframe>');
+document.write('<iframe id="ytplayer" type="text/html" width="100%" height="200" src="https://www.youtube.com/embed/gEDxIbTIzbE?autoplay=1&controls=1&playsinline=1" frameborder="0" allowfullscreen></iframe>');

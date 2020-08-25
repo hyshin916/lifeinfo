@@ -30,6 +30,7 @@ public class ArticleVO {
 	public String press;
 	public String keyword;
 	public int orderbyno;
+	public int orderbyNOLine;
 	
 	public int uv;
 	public String viewYN;
@@ -46,11 +47,27 @@ public class ArticleVO {
 	public String fileUrl;
 	public String youtubeID;
 	public String lineYN;
+	public boolean youtubeYN;
 	
 	
 	
 	
-	
+	public boolean isYoutubeYN() {
+		return youtubeYN;
+	}
+
+	public void setYoutubeYN(boolean youtubeYN) {
+		this.youtubeYN = youtubeYN;
+	}
+
+	public int getOrderbyNOLine() {
+		return orderbyNOLine;
+	}
+
+	public void setOrderbyNOLine(int orderbyNOLine) {
+		this.orderbyNOLine = orderbyNOLine;
+	}
+
 	public String getLineYN() {
 		return lineYN;
 	}

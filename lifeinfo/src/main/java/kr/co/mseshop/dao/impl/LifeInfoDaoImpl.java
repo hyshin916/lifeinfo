@@ -33,8 +33,8 @@ public class LifeInfoDaoImpl implements LifeInfoDao{
 	}
 
 	@Override
-	public List<ArticleVO> getNewsAllList() {
-		return sqlSession.selectList("getNewsAllList");
+	public List<ArticleVO> getNewsAllList(String date) {
+		return sqlSession.selectList("getNewsAllList",date);
 	}
 
 	@Override
@@ -111,6 +111,16 @@ public class LifeInfoDaoImpl implements LifeInfoDao{
 	@Override
 	public List<ArticleVO> getMorekadoNewsList(SearchVO param) {
 		return sqlSession.selectList("getMorekadoNewsList",param);
+	}
+
+	@Override
+	public PasswdResetVO getUserNewInfo(String id) {
+		return sqlSession.selectOne("newsBack.getUserNewInfo",id);
+	}
+
+	@Override
+	public void passwdNewUpdate(PasswdResetVO resetVO) {
+		sqlSession.update("newsBack.passwdNewUpdate",resetVO);
 	}
 
 

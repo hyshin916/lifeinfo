@@ -48,23 +48,83 @@ public class DeployController {
 		String author = "";
 		StringBuffer buff = new StringBuffer();	
 		buff.append("document.write('");
+		buff.append("<ul class=\"article_box\">");
+		
+		
 		for (ArticleVO item : msNewsList) {
+			buff.append("<li>");
+			buff.append("<a href=\"http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/msNewsDetail?artid="+item.getNsid()+"\">");
+			buff.append("<div class=\"box_img\">");
+			buff.append("<img src=\"http://"+ Constants.HOST_DOMAIN + ":8080/lifeinfo/resources/articleImg/"+ item.getFileName() + "\">");
+			buff.append("</div>");
+			buff.append("<div class=\"box_text\">");
+			buff.append("<div class=\"txt_position\">");
+			buff.append("<h3>MS투데이</h3>");
+			buff.append("<div class=\"text_num\">" + item.getTitle().replace("'","") + "</div>");
+			buff.append("</div>");
+			buff.append("</div>");
+			buff.append("</a>");
+			buff.append("</li>");
+		}
+		
+		
+/*		int listSize = 3;
+		int totalRecord = msNewsList.size();
+		int pageSize = totalRecord/listSize;
+
+		if (totalRecord%listSize>0) {
+			pageSize++;
+		}
+		System.out.println("MsListSize : " + listSize);
+		System.out.println("totalRecord : " + totalRecord);
+		System.out.println("pageSize:" + pageSize);
+	
+		int k = 0;
+		int innerCnt = listSize;
+	
+		
+		for (int i=0; i<pageSize ; i++) {
+			
+			System.out.println("[getTitle] :" + msNewsList.get(k).getTitle());
+			
+			buff.append("<li><div class=\"article_box\">");
+			
+			try {
+				for (int j=k; j<innerCnt; k=j++) {
+					msNewsList.get(j);
+					String imgURL = "";
+					if (Constants.HOST_DOMAIN.equals("ms-eshop.co.kr")) {
+						imgURL = Constants.HOST_DOMAIN  +":8080/lifeinfo/resources/articleImg/" + msNewsList.get(j).getFileName();
+					} else {
+						imgURL = "ms-eshop.co.kr:8080/lifeinfo/resources/articleImg/yTJJ6dnTY8RmCYO2LSjkcAVORWvjql6X.jpg";
+					}
+					//buff.append("<a href=\"http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/msNewsDetail?artid=" + msNewsList.get(j).getNsid()+ "\"><img src=\"http://"+ Constants.HOST_DOMAIN + ":8080/lifeinfo/resources/articleImg/"+ msNewsList.get(j).getFileName()+ "\" width=\"550\" alt=\"\"><div><h3>| 생활</h3><p class=\"text_num\">"+msNewsList.get(j).getTitle() +"</p><p>MS투데이</p></div></a>");
+					buff.append("<a href=\"http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/msNewsDetail?artid=" + msNewsList.get(j).getNsid()+ "\"><div class=\"box_img\"><img src=\"http://" +  imgURL + "\" width=\"550\" alt=\"\"></div><div class=\"box_text\"><h3>| 생활</h3><p class=\"text_num\">"+msNewsList.get(j).getTitle().replace("'", "") +"</p><p>MS투데이</p></div></a>");
+				}
+				k++;
+				innerCnt = k+listSize;
+				System.out.println("k: " + k + "innerCnt:" + innerCnt);
+				buff.append("</div></li>");
+			} catch (IndexOutOfBoundsException e) {
+				break;
+			}
+			
+		
+		}*/
+		
+	/*	for (ArticleVO item : msNewsList) {
 			
 			if(item.getAuthor() == null){ 
 				author = "[MS투데이]";
 			} else { 
 				author = item.getAuthor(); 
 			};
-				buff.append("<a href=\"http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/msNewsDetail?artid=" + item.getNsid() + "\"><li class=\"movie\" style=\"width: 100%; height: 82px; text-align: left; display: inline-block;\">");
-				buff.append("<span class=\"thumb\" style=\"position: absolute;\"><img src=\"http://" +  Constants.HOST_DOMAIN + ":8080/lifeinfo/resources/articleImg/"+ item.getFileName() + "\" style=\"margin: 5px 0 0 0; width: 120px; height: 72px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;\" onerror=\"\"></span>");
-				buff.append("<span class=\"title\" style=\"color: #333; height: 62px; position: absolute; margin: 10px 20px 10px 130px;\"><span style=\"color:#606060;\"><B>[MS]</B></span><br>" + item.getTitle().replace("'","") + "</span>");
-			// 조회수	buff.append("<span style=\"position:absolute;color: #333; padding: 65px 0 0 130px; text-align: left; display: inline-block;\" class=\"author\"><img style=\"padding:16px 2px 0 0;\" class=\"author\" src=\"./resources/images/eye_1.png\"/>"+ item.getUv() + "</span>");
-				buff.append("<span style=\"position:absolute;color: #333; padding: 65px 0 0 130px; text-align: left; display: inline-block;\" class=\"author\"></span>");
-				buff.append("<span style=\"color: #333; padding: 75px 10px 0px 0; width: 100%; right: 40px; text-align: right; display: inline-block;\" class=\"author\">" +  author + "</span></li></a><hr style=\"margin: 0px;\">");
-		}
+			buff.append("<li><div class=\"article_box\"><a href=\"#\"><img src=\"./resources/front/img/ex9.PNG\" width=\"550\" alt=\"\"><div><h3>| 생활</h3><p class=\"text_num\">11월 첫 월요일 오전 맑음...미세먼지 등 대기환경도 맑아</p><p>MS투데이</p></div></a></div></li>");
+		}*/
+		buff.append("</ul>");
 		buff.append("');");
 			
-		makeFile(buff,PathClass.getMsNews());
+		//makeFile(buff,PathClass.getMsNews());
 	
 		HashMap<String,String> resultMap = new HashMap<String,String>();
 		resultMap.put("result", "success");
@@ -82,6 +142,7 @@ public class DeployController {
 		String detailURI = "";
 		for (ArticleVO article : lineNewsList) {
 			
+			
 			if (article.getPcode().equals("M001")) {
 				detailURI = "msNewsDetail";
 			} else {
@@ -89,16 +150,23 @@ public class DeployController {
 			}
 			
 			buff.append("<li>");
-			buff.append("<a href=\""+ "http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/"+ detailURI +"?artid="+ article.getNsid()+"\" >" +article.getTitle().replace("'","") +"</a></li>");
+			
+			String title = article.getTitle().replace("'","");
+			if (title.indexOf("긴급")!=-1 || title.indexOf("단독")!=-1 ) {
+				title = "<span style=\"color:#FF0000;\"><B>" + title+ "</B></span>";
+			}
+			
+			buff.append("<a href=\""+ "http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/"+ detailURI +"?artid="+ article.getNsid()+"\" >" + title +"</a></li>");
 		}
 		buff.append("</ul></div>');");
 		
 		try {
-			FileOutputStream out = new FileOutputStream(PathClass.getLine_news());
+			/*FileOutputStream out = new FileOutputStream(PathClass.getLine_news());
 			out.write(buff.toString().getBytes());
-			out.flush();
+			out.flush();*/
 			
 		} catch (Exception e) {
+			
 			e.printStackTrace();
 		}
 		
@@ -108,7 +176,7 @@ public class DeployController {
 	private void deployNewsAll(List<ArticleVO> newsALL) {
 		StringBuffer buff = new StringBuffer();	
 		buff.append("document.write('");
-		
+		int cnt = 1;
 		for (ArticleVO item : newsALL) {
 			String temp = "";
 			if (item.getPcode().equals("M001")) {
@@ -116,8 +184,14 @@ public class DeployController {
 			} else {
 				temp = "newsDetail";
 			}
-			
-			buff.append("<li class=\"newsallClass\"><a href=\"http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/" + temp + "?artid=" + item.nsid + "\">" + item.title.replace("'","") + "</a></li>");
+			String activeCnt = "";
+			if (cnt < 4) {
+				 activeCnt = "<span class=\"cd_num active\">" + cnt  + "</span>";
+			} else {
+				 activeCnt = "<span class=\"cd_num\">" + cnt  + "</span>";
+			}
+			buff.append("<li><a href=\"http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/" + temp + "?artid=" + item.nsid + "\">"+ activeCnt + item.title.replace("'","") + "</a></li>");
+			cnt++;
 		}
 		
 		buff.append("');");
@@ -127,20 +201,23 @@ public class DeployController {
 
 	/*카드뉴스리스트*/
 	private void deployNewsList(List<ArticleVO> newsList, String press) {
+		
 		StringBuffer buff = new StringBuffer();	
 		buff.append("document.write('");
+	
 		for (ArticleVO item : newsList) {
-			buff.append("<li style=\"display: block;\"><a href=\"http://" +  Constants.HOST_DOMAIN + ":8080/lifeinfo/newsDetail?artid=" + item.nsid + "\"><span class=\"thumb\"><img class=\"img_thum\" src=\"" + item.imgurl + "\" onerror=\"\"/></span></a>");
-			buff.append("<div class=\"alt_1_detail\" style=\"height:50px;\">");
-			buff.append("<a href=\"http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/newsDetail?artid=" + item.nsid + "\" class=\"alt_1_detail_link\"><strong>");
-			if (item.getPcode().equals("0001")) {
-				buff.append("[강원일보]");
-			} else if (item.getPcode().equals("0002")) {
-				buff.append("[도민일보]");
-			}
-			buff.append( "</strong>" + item.title.replace("'","") + "</a>");
-			// 조회수 buff.append("</div><div class=\"viewCntPrt\"><p class=\"viewCnt\"><img src=\"./resources/images/eye_1.png\"/>" + item.uv + "</p></div></li>");
-			buff.append("</div></li>");
+	
+
+			buff.append("<li>");
+			buff.append("<a href=\"http://" +  Constants.HOST_DOMAIN + ":8080/lifeinfo/newsDetail?artid=" + item.nsid + "\" class=\"artist_contents\">");
+			buff.append("<div class=\"content_img\">");
+			buff.append("<img src=\""+ item.imgurl +"\" alt=\"\">");
+			buff.append("</div>");
+			buff.append("<p class=\"subject\">");
+			buff.append(item.title.replace("'",""));
+			buff.append("</p>");
+			buff.append("</a></li>");
+			
 		}
 		buff.append("');");
 		makeFile(buff,PathClass.getNewsList(press));
@@ -150,10 +227,20 @@ public class DeployController {
 	private void deployImpNewsList(List<ArticleVO> impNewsList) {
 		StringBuffer buff = new StringBuffer();	
 		buff.append("document.write('");
+		buff.append("<div class=\"owl-carousel\">");
 		for (ArticleVO item : impNewsList) {
-			buff.append("<div class=\"swiper-slide\" id=\"mslifeA\">");
-			buff.append("<a href=\"http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/newsDetail?artid=" + item.nsid +"\"><div>" + item.title.replace("'", "")  +"</div><img src=\"" + item.imgurl +"\" alt=\""+ item.title.replace("'","") + "\" /></a>");
+			//buff.append("<a href=\"http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/newsDetail?artid=" + item.nsid +"\">");
+			buff.append("<div class=\"carousel_wrap\">");
+			buff.append("<a style=\"display:block;\" href=\"http://" + Constants.HOST_DOMAIN + ":8080/lifeinfo/newsDetail?artid=" + item.nsid +"\">");
+			buff.append("<div class=\"owl_imgwrap\">");
+			buff.append("<img src=\"" + item.imgurl +"\" alt=\""+ item.title.replace("'","") + "\"/>");
 			buff.append("</div>");
+			buff.append("<div class=\"sub\">");
+			buff.append(item.getTitle().replace("'",""));
+			buff.append("</div>");
+			buff.append("</a>");
+			buff.append("</div>");
+			//buff.append("</a>");
 		}
 		buff.append("');");
 		makeFile(buff,PathClass.getImpNews());
@@ -175,7 +262,7 @@ public class DeployController {
 	private void deployYoutube(String youtubeID) {
 		StringBuffer buff = new StringBuffer();	
 		buff.append("document.write('");
-		buff.append("<iframe id=\"ytplayer\" type=\"text/html\" width=\"100%\" height=\"200\" src=\"https://www.youtube.com/embed/" + youtubeID + "?autoplay=1\" frameborder=\"0\"></iframe>");
+		buff.append("<iframe id=\"ytplayer\" type=\"text/html\" width=\"100%\" height=\"200\" src=\"https://www.youtube.com/embed/" + youtubeID + "?autoplay=1&controls=1&playsinline=1\" frameborder=\"0\" allowfullscreen></iframe>");
 		buff.append("');");
 		makeFile(buff,PathClass.getYoutubeID());
 	}

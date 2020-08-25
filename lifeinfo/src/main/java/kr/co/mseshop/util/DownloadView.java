@@ -39,7 +39,8 @@ public class DownloadView extends AbstractView {
 
 		}
 
-		response.setContentType("application/download; charset=utf-8");
+		//response.setContentType("application/download; charset=utf-8");
+		response.setContentType("application/x-hwp; charset=utf-8"); // hwp 앱에서 한글 다운로드  
 		response.setContentLength((int) file.length());
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + downName + "\";"); // 이부분에 파일이름 파라미터를 넣어주면
 																									// 된다.

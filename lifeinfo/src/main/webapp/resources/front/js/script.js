@@ -1,6 +1,14 @@
 $(document).ready(function(){
 
+  //var arrX=["../img/ex4.png","../img/ex5.jpg","../img/ex10.png"];
+  //var $slider = $('#slider');
+  //var li = $('#slider li');
+  //var slider_img = $('#slider li .slider_imgwrap');
+  //var len = li.length;
 
+  //for(var i=0; i<len;i++){
+  //   li.eq(i).next().attr('url',arrX[i]);
+  //}
       var windowWidth = 0;
       var ini_h = 0;
       var h = 0;
@@ -8,6 +16,20 @@ $(document).ready(function(){
 
       var galery_onoff = false; //갤러리형 버튼이 눌렸을 때 변경되는 값(=갤러리버튼 스위치)
       var width_onoff = false; // 모바일 기기 너비가 세로 or 가로모드(반대)로 변경되었을 때의 값(=너비변경 스위치)
+      var new_len = 0;
+
+
+      new_len = $('.article_box li').length;
+
+    //  alert(new_len);
+      for(var i=0;i<new_len;i++)
+      {
+        if($('.article_box li').eq(i).children().first().children().children().first().attr('src')== "")
+       {
+            jQuery('.article_box li').eq(i).children().first().children().first().remove();
+            jQuery('.article_box li').eq(i).children().first().children().css('width','100%');
+       }
+      }
 
   windowWidth = $( window ).width();
   h2 = $('.contents_list_wrap ul').height();
@@ -18,11 +40,15 @@ $(document).ready(function(){
   $('.slider').bxSlider({
     speed: 1000,
     auto: true,
+    pager: ($("#slider li").length > 1) ? true: false,
+    touchEnabled: ($("#slider li").length > 1) ? true: false,
   });
 
   $('.text_slider').bxSlider({
     speed: 1000,
     auto: false,
+    pager: ($("#slider li").length > 1) ? true: false,
+    touchEnabled: ($("#slider li").length > 1) ? true: false,
   });
 
   $('ul.tabs li').click(function(){
@@ -60,6 +86,7 @@ $(function(){
 
       var check_onoff = false; //더블클릭 체크
       var num = 0;
+      var extra = 0;
 
 
 $(window).on("orientationchange",function(){
@@ -123,6 +150,7 @@ $(window).on("orientationchange",function(){
    $('.iconSpan1').click(function(){
   //   check_onoff = false;
        galery_onoff = false;
+       check_onoff = false;
     //  var num = 0;
   //    num = $('.contents_list_wrap ul li').height();
     //  num = num * $('.contents_list_wrap ul li').length;
@@ -194,12 +222,8 @@ $(window).on("orientationchange",function(){
       galery_onoff = false;
       width_onoff = false;
 
+     extra = num;
 
-      if(check_onoff!=false)
-      {
-        alert(num);
-        jQuery('.contents_list_wrap ul').css("height", num);
-      }
     // alert("a");
    });
 
@@ -209,6 +233,11 @@ $(window).on("orientationchange",function(){
    $('.iconSpan2').click(function(){
 
        galery_onoff = true;
+
+       if(check_onoff!=false)
+       {
+           return 0;
+       }
 
        jQuery('.img_wrap02').css("width", "100%");
        jQuery('.content_list').css("display", "block");
@@ -225,7 +254,24 @@ $(window).on("orientationchange",function(){
 
        jQuery('.contents_list_wrap ul li').css("width", "46%");
        $('.contents_list_wrap ul').resize();
+
         check_onoff = true;
     //      $('.contents_list_wrap ul').resize();
-   })
+
+  });
+$(".owl-carousel").owlCarousel({
+  nav:true,
+  loop: true,
+  dots: false,
+  autoplay:true,
+  rewind: true,
+  autoplayTimeout: 2000,
+  margin:10,
+  responsiveClass:true,
+  responsive:
+  { 0:
+    { items:2.5, nav:false },
+    600:{ items:3.5, nav:false },
+    1000:{ items:6, nav:false, loop:false } }
+  });
 });

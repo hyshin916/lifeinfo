@@ -188,7 +188,7 @@ $(function() {
         </tr>
         <tr>
 						<td>썸네일 업로드</td>
-						<td><c:if test="${mode eq 'update'}"><a href="./fileDownload?fileName=${detail.fileName}&fileOriName=${detail.fileOriName}">${detail.fileOriName}</a><input type="file" name="mediaFile"></c:if><c:if test="${mode ne 'update'}"><input type="file" name="mediaFile"></c:if><label style="color:red;">${detail.imgurl}</label></td>
+						<td><c:if test="${mode eq 'update'}"><a href="../../fileDownload?fileName=${detail.fileName}&fileOriName=${detail.fileOriName}">${detail.fileOriName}</a><input type="file" name="mediaFile"></c:if><c:if test="${mode ne 'update'}"><input type="file" name="mediaFile"></c:if><label style="color:red;">${detail.imgurl}</label></td>
 						<input type="hidden" name="fno" value="${detail.fno}"/>
 						<input type="hidden" name="fileName" value="${detail.fileName}"/>
 						<input type="hidden" name="fileOriName" value="${detail.fileOriName}"/>

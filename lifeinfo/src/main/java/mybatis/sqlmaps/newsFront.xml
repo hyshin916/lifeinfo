@@ -7,15 +7,16 @@
 	SELECT 
 			  pcode,
               nsid,
-			  title
+			  title,orderbyNOLine
 		FROM msmartlife.article_tbl  WHERE  lineYN = 'Y'
         union all
 	SELECT 
 			  pcode,
 			  nsid,
-			  title
+			  title,orderbyNOLine
 		FROM msmartlife.ms_article_tbl  WHERE
 		lineYN = 'Y'
+        order by orderbyNOLine asc;
 </select>
 
 
@@ -50,9 +51,9 @@
 
 <select id="getYoutubeID" resultType="String">
 	SELECT
-		youtubeID
+	youtubeID
 	FROM
-		msmartlife.ms_article_tbl ORDER BY orderbyno DESC LIMIT 1; 
+	msmartlife.ms_article_tbl WHERE youtubeYN = 1 ORDER BY DATE DESC LIMIT 1;
 </select>
 
 </mapper>

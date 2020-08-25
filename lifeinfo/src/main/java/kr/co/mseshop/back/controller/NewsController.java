@@ -56,7 +56,7 @@ public class NewsController {
 				model.addAttribute("pageView","lifeinfo");
 				article = lifeInfoBackService.getDetail(nsid);
 				article.setContent(article.getContent().replace("./", "../../"));
-				
+				System.out.println("[youtubeYN] : " + article.isYoutubeYN());
 			}
 			model.addAttribute("detail",article);
 			model.addAttribute("mode","update");
@@ -66,10 +66,10 @@ public class NewsController {
 	}
 	
 	@RequestMapping(value="/back/news/list")
-	public String list(Model model,BbsInfoCriteria criteria,@RequestParam(value="media",required=false) String media) {
+	public String list(Model model,HttpServletRequest request,BbsInfoCriteria criteria,@RequestParam(value="media",required=false) String media) {
 		 PageHolder pageHolder = null;
 		 List<ArticleVO> list = null;
-		 
+		 System.out.println("[Session] back ..." + request.getSession().getAttribute("user"));
 		 
 		if (media!=null && media.equals("news")) {
 			int rowCount = lifeInfoBackService.getNewsRowCount(criteria);
@@ -89,6 +89,7 @@ public class NewsController {
 		}
 		model.addAttribute("moreNewsURL",Constants.HOST_DOMAIN);
 		model.addAttribute("newsList",list);
+		
 		return "back/news/list";
 	}
 	
@@ -100,6 +101,8 @@ public class NewsController {
 		String sourceFileName = mediaFile.getOriginalFilename();
 		String sourceFileNameExtension = FilenameUtils.getExtension(sourceFileName).toLowerCase();
 		String destinationFileName = RandomStringUtils.randomAlphanumeric(32) + "." + sourceFileNameExtension;
+		
+		System.out.println("[OrderByNO ...] " + articleVO.getOrderbyNOLine());
 		articleVO = getArticleVO("add", articleVO, startTime, endTime);
 		lifeInfoBackService.add(articleVO);
 		fileUpload(articleVO,mediaFile,sourceFileName,destinationFileName);
@@ -140,7 +143,7 @@ public class NewsController {
 			} 
 	}
 	
-	@RequestMapping(value="/back/news/fileDownload",method = RequestMethod.GET)
+	@RequestMapping(value="/fileDownload",method = RequestMethod.GET)
 	public ModelAndView fileDownload(HttpServletRequest request,String fileName,String fileOriName) {
 		File file = new File(PathClass.getArticle_upload() + fileName);
 		request.setAttribute("fileOriName", fileOriName);

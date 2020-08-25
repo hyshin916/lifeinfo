@@ -3,7 +3,7 @@ $(document)
 		.ready(
 				function() {
 					// https://api.openweathermap.org/data/2.5/forecast?q=Chuncheon&appid=4cacfeb31c3db06c06ff3c3b2960fd54
-					var apiURI = "https://api.openweathermap.org/data/2.5/weather?q=Chuncheon&appid=4cacfeb31c3db06c06ff3c3b2960fd54";
+					var apiURI = "https://api.openweathermap.org/data/2.5/weather?q=Chuncheon&appid=4cacfeb31c3db06c06ff3c3b2960fd54&lang=kr";
 					$
 							.ajax({
 								url : apiURI,
@@ -12,14 +12,12 @@ $(document)
 								async : "true",
 								success : function(resp) {
 
+									
 									// console.log(resp);
 									// console.log("현재온도 : "+ (resp.main.temp-
 									// 273.15) );
-									$("#currentTemp")
-											.html(
-													"<B>"
-															+ parseInt(resp.main.temp - 273.15)
-															+ " ℃" + "<B>");
+									$("#currentTemp").text(parseInt(resp.main.temp - 273.15));
+															
 									$("#minTemp")
 											.text(
 													parseInt(resp.main.temp_min - 273.15)
@@ -28,12 +26,8 @@ $(document)
 											.text(
 													parseInt(resp.main.temp_max - 273.15)
 															+ " ℃");
-									$("#humidity")
-											.text(
-													parseInt(resp.main.humidity)
-															+ " %");
-									$("#wind").text(
-											parseInt(resp.wind.speed) + " m/s");
+									$("#humidity").text(parseInt(resp.main.humidity));
+									$("#wind").text(parseInt(resp.wind.speed));
 
 									// console.log("현재습도 : "+
 									// resp.main.humidity);
@@ -41,7 +35,10 @@ $(document)
 									// );
 									var weatherIcon = '<img src="http://openweathermap.org/img/wn/' +  resp.weather[0].icon   + '@2x.png"/>';
 									$("#currentValue").html(weatherIcon);
-
+									
+									
+									$("#currentValueTxt").text(resp.weather[0].description);
+									
 									// console.log("상세날씨설명 : "+
 									// resp.weather[0].description );
 									// console.log("날씨 이미지 : "+
@@ -73,20 +70,25 @@ $(document)
 						async : "true",
 						success : function(resp) {
 							if (resp.mise == 1) {
-								output += '<img style="width:50px;height:50px;" src="./resources/images/weather01.png"/>';
+								output += '<img style="width:50px;height:50px;" src="./resources/front/img/good.png"/>';
 								$('#miseTemp').html(output);
+								$('#miseTxt').html("<p style=\"color:#5CAD5C;\">좋음</p>");
+								
 							}
 							if (resp.mise == 2) {
-								output += '<img style="width:50px;height:50px;" src="./resources/images/weather02.png"/>';
+								output += '<img style="width:50px;height:50px;" src="./resources/front/img/great.png"/>';
 								$('#miseTemp').html(output);
+								$('#miseTxt').html("<p style=\"color:#008000;\">매우좋음</p>");
 							}
 							if (resp.mise == 3) {
-								output += '<img style="width:50px;height:50px;" src="./resources/images/weather03.png"/>';
+								output += '<img style="width:50px;height:50px;" src="./resources/front/img/bad.png"/>';
 								$('#miseTemp').html(output);
+								$('#miseTxt').html("<p style=\"color:#FF9900;\">나쁨</p>");
 							}
 							if (resp.mise == 4) {
-								output += '<img style="width:50px;height:50px;" src="./resources/images/weather04.png"/>';
+								output += '<img style="width:50px;height:50px;" src="./resources/front/img/sobad.png"/>';
 								$('#miseTemp').html(output);
+								$('#miseTxt').html("<p style=\"color:#CC0000;\">매우나쯤</p>");
 							}
 						}
 					})

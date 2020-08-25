@@ -108,6 +108,12 @@ $(function() {
 <input type="hidden" name="nsid" value="${param.articleNO}"/>
 </c:otherwise>
 </c:choose>
+<style>
+.ui-timepicker-table td a {
+	width: 2.2em;
+}
+</style>
+
 <table width="100%">
 		<tr>
 			<td>분류</td>
@@ -154,6 +160,11 @@ $(function() {
             /></td>
         </tr>
         <tr>
+            <td>라인뉴스 우선순위</td>
+            <td><input type="text" id="orderbyNOLine" name="orderbyNOLine" value="<c:if test="${detail.orderbyNOLine ne null}">${detail.orderbyNOLine}</c:if><c:if test="${detail.orderbyNOLine eq null}">0</c:if>"></td>
+        </tr>
+        <tr>
+        
             <td>제목</td>
             <td><input type="text" id="title" name="title" style="width:800px" value="${detail.title}"/></td>
         </tr>
@@ -188,7 +199,7 @@ $(function() {
         </tr>
         <tr>
 						<td>썸네일 업로드</td>
-						<td><c:if test="${mode eq 'update'}"><a href="./fileDownload?fileName=${detail.fileName}&fileOriName=${detail.fileOriName}">${detail.fileOriName}</a><input type="file" name="mediaFile"></c:if><c:if test="${mode ne 'update'}"><input type="file" name="mediaFile"></c:if><label style="color:red;">${detail.imgurl}</label></td>
+						<td><c:if test="${mode eq 'update'}"><a href="../../fileDownload?fileName=${detail.fileName}&fileOriName=${detail.fileOriName}">${detail.fileOriName}</a><input type="file" name="mediaFile"></c:if><c:if test="${mode ne 'update'}"><input type="file" name="mediaFile"></c:if><label style="color:red;">${detail.imgurl}</label></td>
 						<input type="hidden" name="fno" value="${detail.fno}"/>
 						<input type="hidden" name="fileName" value="${detail.fileName}"/>
 						<input type="hidden" name="fileOriName" value="${detail.fileOriName}"/>
@@ -196,6 +207,10 @@ $(function() {
 		 <tr>
 						<td>유투브 동영상ID</td>
 						<td><input type="text" name="youtubeID" value="${detail.youtubeID}"></td>
+		</tr>
+		 <tr>
+						<td>유투브 메인등록</td>
+						<td><input type="checkbox" name="youtubeYN" ${detail.youtubeYN eq true ? 'checked' : 'unchecked'}/></td>
 		</tr>
 			<tr>
             <td colspan="2">

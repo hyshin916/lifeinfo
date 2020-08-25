@@ -64,40 +64,28 @@
 
 
 
-<h2 class="sub-header">&nbsp;춘천 날씨</h2>
-<div class="table-responsive" style="height:155px">
-	<form name="my_form">
-		<table class="table table-striped">
-			<thead>
-			</thead>
-			<tbody>
-				<tr>
-					<td><div style="height:155px">
-								<span id="currentValue" class="currentValue">
-								</span> 
-								<span id="currentTemp" class="currentTemp">
-								</span> 
-								<span id="minTemp" class="minTemp">
-								</span> 
-								<span id="maxTemp" class="maxTemp">
-								</span>
-								<span class="humidityLabel">
-								습도</span>
-								<span id="humidity" class="humidity">
-								</span>
-								<span class="windLabel">
-								풍속</span>
-								<span id="wind" class="wind">
-								</span>
-								<span class="miseTempLabel">
-								미세먼지</span>
-								<span id="miseTemp" class="miseTemp">
-								</span>
-								
-						</div></td>
-				</tr>
-			</tbody>
-		</table>
-	</form>
+<div class="weather_head">
+	<div class="all_title">
+		<h4><p>오늘의 <span>날씨</span></p></h4>
+	</div>
+	<div class="address">
+		<a href="#"><img src="./resources/front/img/marker2.png"
+			alt="maker"></a> <span>강원도 춘천시</span>
+	</div>
+</div>
+<div class="weather_condition">
+	  <table style="text-align:center;padding: 0 2% 2% 2%;color: #222;">
+		<tr>
+			  <td rowspan="2" style="width:20%;"><span id="currentValue"></span></td>
+			  <td colspan="3" style="text-align:left;"><p id="currentValueTxt"></p></td>
+			  <td style="text-align:right;">미세먼지</td>
+		</tr>
+		<tr>
+		          <td><p><span><span id="currentTemp"></span><span class="small_p">℃</span></span></p></td>
+				  <td style="text-align:left;"><p>풍속 : <span id="wind" style="font-size:1.5rem;"></span> m/s</p></td>
+            <td style="text-align:left;"><p>습도 : <span id="humidity" style="font-size:1.5rem;"></span>%</p></td>
+            <td style="color:#CE3636;text-align:right;"><p id="miseTxt"></p></td>
+		</tr>
+	</table>
 </div>
 

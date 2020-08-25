@@ -6,17 +6,12 @@
 	request.setCharacterEncoding("UTF-8");
 %>
 
-<!-- swiper -->
-<link rel="stylesheet" href="./resources/css/swiper.min.css">
-<!-- swiper -->
-
-<script type="text/javascript"
-	src="./resources/msmart/js/jquery-3.2.1.min.js"></script>
-<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"> -->
-<div style="width:100%;margin:10px;">
-    <span style="position:absolute;"><h2 class="sub-header">&nbsp;MS생활뉴스</h2></span>
-    <div style="position:relative;top:5px;right:25px;width:100%;text-align:right;"><span><a href="javascript:alert('준비중입니다.');">더보기></a></span></div>
+<!--생활뉴스 컨텐츠 시작-->
+<div class="lifenew_wrap">
+	<div class="all_title">
+		<h4><p>MS <span>주요</span>뉴스</p></h4>
+	</div>
+	<div class="ms_new_wrap">
+				<script src="./resources/js/msnews.js"></script>
+	</div>
 </div>
-	<ul class="article_list_type1" id="mslifeList">
-	<script src="./resources/js/msnews.js"></script>
-	</ul>

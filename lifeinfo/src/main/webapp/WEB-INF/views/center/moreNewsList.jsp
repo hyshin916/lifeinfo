@@ -61,6 +61,18 @@
 	});
 </script>
 
+<!--  20.04.29 추가  Author : Mr.shin -->
+<style>
+.active-color {background-color:red;}
+</style>
+<script>
+	$('a').click(function(){
+			alert('ttt');
+			toggleClass('.active-color');
+	});
+</script>
+<!--  20.04.29 추가  Author : Mr.shin -->
+
 <script>
 var offset;
 var value;
@@ -68,8 +80,9 @@ function fnMove(seq){
      offset = $("#news" + seq).offset();
      //alert(offset.top);
      localStorage.setItem('offset',offset.top);
-     // $('html, body').animate({scrollTop : offset.top}, 10); 
-  	location.href= 'http://${moreNewsURL}:8080/lifeinfo/newsDetail?artid=' + seq + '&section=morenewslist';
+     // $('html, body').animate({scrollTop : offset.top}, 10);
+     Android.showToast('http://${moreNewsURL}:8080/lifeinfo/newsDetail?artid=' + seq + '&section=morenewslist');
+  	 //window.open('http://${moreNewsURL}:8080/lifeinfo/newsDetail?artid=' + seq + '&section=morenewslist');
   }
 function test() {
 	value = localStorage.getItem('offset');
@@ -341,7 +354,7 @@ if (window.performance) {
 		 */
 </script>
 <div>
-	<div id="newsListMain">
+	<div id="newsListMain" style="margin-top:60px;">
 		<ul id="newsList" style="padding: 2px; list-style: none;"></ul>
 	</div>
 </div>

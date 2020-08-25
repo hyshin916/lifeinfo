@@ -9,6 +9,7 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
+		<jackson.version>2.9.2</jackson.version>
 		<java-version>1.6</java-version>
 		<org.springframework-version>3.1.1.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
@@ -19,37 +20,137 @@
 		<org.mybatis.spring-version>1.2.0</org.mybatis.spring-version>
 		<!-- add dependencies version DB end -->
 		<failOnMissingWebXml>false</failOnMissingWebXml>
+		<project.youtube.version>v3-rev8-1.12.0-beta</project.youtube.version>
+		<project.http.version>1.12.0-beta</project.http.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<repositories>
+		<repository>
+			<id>google-api-services</id>
+			<url>http://google-api-client-libraries.appspot.com/mavenrepo</url>
+		</repository>
+		<repository>
+			<id>codehaus</id>
+			<url>http://repository.codehaus.org/org/codehaus</url>
+		</repository>
+	</repositories>
+
 	<dependencies>
 	<dependency>
-    <groupId>commons-dbcp</groupId>
-    <artifactId>commons-dbcp</artifactId>
-    <version>1.4</version>
+    <groupId>com.google.appengine</groupId>
+    <artifactId>appengine-api-1.0-sdk</artifactId>
+    <version>1.6.1</version> <!-- Check your version --> 
 </dependency>
-	
-	<dependency>
-		<groupId>commons-fileupload</groupId>
-		<artifactId>commons-fileupload</artifactId>
-		<version>1.3.1</version>
-	</dependency>
-	<dependency>
-		<groupId>commons-io</groupId>
-		<artifactId>commons-io</artifactId>
-		<version>2.4</version>
-	</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-admin -->
+		<dependency>
+			<groupId>com.google.firebase</groupId>
+			<artifactId>firebase-admin</artifactId>
+			<version>6.7.0</version>
+		</dependency>
+		 <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.26.0</version>
+        </dependency>
+                        
+        <!-- https://mvnrepository.com/artifact/com.google.oauth-client/google-oauth-client -->
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client</artifactId>
+            <version>1.26.0</version>
+        </dependency>
+                
+        <!-- https://mvnrepository.com/artifact/com.google.http-client/google-http-client -->
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client</artifactId>
+            <version>1.26.0</version>
+        </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/com.google.http-client/google-http-client-jackson2 -->
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-jackson2</artifactId>
+            <version>1.26.0</version>
+        </dependency>  
+        
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>27.0.1-jre</version>
+        </dependency>
 
-<!-- cglib -->
 
-<dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.8.5</version>
+		</dependency>
 
-    <groupId>com.kenai.nbpwr</groupId>
 
-    <artifactId>net-sf-cglib</artifactId>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-youtube</artifactId>
+			<version>${project.youtube.version}</version>
+		</dependency>
 
-    <version>2.1.3-201003011305</version>
+		<dependency>
+			<groupId>com.google.http-client</groupId>
+			<artifactId>google-http-client-jackson2</artifactId>
+			<version>${project.http.version}</version>
+		</dependency>
 
-</dependency>
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
 
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+		<!-- cglib -->
+		<dependency>
+
+			<groupId>com.kenai.nbpwr</groupId>
+
+			<artifactId>net-sf-cglib</artifactId>
+
+			<version>2.1.3-201003011305</version>
+
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.zxing</groupId>
+			<artifactId>javase</artifactId>
+			<version>3.1.0</version>
+		</dependency>
 
 
 		<dependency>
@@ -284,10 +385,30 @@
 		</dependency>
 
 
-
 	</dependencies>
 	<build>
 		<plugins>
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<configuration>
+					<mainClass>com.google.api.services.samples.youtube.cmdline.youtube_cmdline_search_sample.Search</mainClass>
+				</configuration>
+			</plugin>
+			<!-- Forces Maven to use Java 1.6 -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<compilerArgument></compilerArgument>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<version>2.9</version>

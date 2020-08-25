@@ -4,11 +4,59 @@
 <mapper namespace="newsBack">
 
 <insert id="newsAdd" parameterType="kr.co.mseshop.model.ArticleVO">
-	INSERT INTO msmartlife.ms_article_tbl(nsid,pcode,catecode,title,sub_title,content,keyword,date,start_date,expire_date,orderbyno,viewYN,important,youtubeID,lineYN) VALUES(#{nsid},#{pcode},#{catecode},#{title},#{sub_title},#{content},#{keyword},#{date},#{start_date},#{expire_date},#{orderbyno},#{viewYN},#{important},#{youtubeID},#{lineYN});
+	INSERT INTO msmartlife.ms_article_tbl(nsid,pcode,catecode,title,sub_title,content,keyword,date,start_date,expire_date,orderbyno,viewYN,important,youtubeID,lineYN,orderbyNOLine,youtubeYN) VALUES(#{nsid},#{pcode},#{catecode},#{title},#{sub_title},#{content},#{keyword},#{date},#{start_date},#{expire_date},#{orderbyno},#{viewYN},#{important},#{youtubeID},#{lineYN},#{orderbyNOLine},#{youtubeYN});
 </insert>
 <insert id="fileUpload" parameterType="kr.co.mseshop.model.FileVO">
 	INSERT INTO msmartlife.file_tbl(bno,fileName,fileOriName,fileUrl,fileSize,pressCd) VALUES(#{bno},#{fileName},#{fileOriName},#{fileUrl},#{fileSize},#{pressCd});
 </insert>
+
+<insert id="addMember" parameterType="kr.co.mseshop.model.MemberVO">
+	INSERT INTO msmartlife.member_tbl(mem_id,mem_name,mem_passwd,mem_regDate,mem_status) VALUES(#{mem_id},#{mem_name},#{mem_passwd},#{mem_regDate},'N');
+</insert>
+
+<insert id="addGrpMenu" parameterType="HashMap">
+	INSERT INTO msmartlife.menu_group_tbl(menu_id,group_id) VALUES(#{menu_id},#{group_id});
+</insert>
+
+<delete id="delGrpMenu">
+DELETE FROM menu_group_tbl WHERE group_id = #{group_id};
+</delete>
+
+<select id="getLogin" resultType="int" parameterType="HashMap">
+	SELECT COUNT(*) FROM msmartlife.member_tbl WHERE mem_id = #{user_id} AND mem_passwd = #{user_passwd} AND mem_status = 'Y';
+</select>
+
+<select id="getGroupMenuList" resultType="String" parameterType="String">
+SELECT LPAD(menu_id,4,0) FROM menu_group_tbl WHERE group_id = #{group_id};
+</select>
+
+<select id="getEtbAuthUser" resultType="kr.co.mseshop.model.MemberVO">
+ SELECT mem_id,mem_name,mem_regDate,mem_status,group_id FROM msmartlife.member_tbl;
+</select>
+
+<select id="getMenuList" resultType="kr.co.mseshop.model.MenuVO"
+	parameterType="String">
+	SELECT LPAD(b.menu_id,4,0) menu_id,
+	 b.group_id,
+	 a.menu_parent,
+	 a.menu_name,
+	 a.menu_link,
+	 a.menu_target,
+	 a.menu_mobile,
+	 a.menu_pc,
+	 a.menu_order
+	 FROM menu_tbl AS a INNER join menu_group_tbl as b ON a.menu_id = b.menu_id AND
+	b.group_id = (SELECT group_id FROM member_tbl WHERE mem_id = #{user_id})
+	ORDER BY a.menu_parent ASC,a.menu_order ASC;
+</select>
+
+<select id="chkUserID" resultType="int" parameterType="String">
+	SELECT count(*) FROM member_tbl WHERE mem_id = #{user_id};
+</select>
+
+<select id="getMemberInfo" resultType="kr.co.mseshop.model.MemberVO" parameterType="String">
+	SELECT mem_id,mem_name,mem_email,mem_authority,mem_regDate,mem_status,group_id FROM msmartlife.member_tbl WHERE mem_id = #{user_id};
+</select>
 
 <select id="getLineStatus" resultType="kr.co.mseshop.model.ArticleVO">
 SELECT pcode,uv,title,date,start_date,expire_date FROM msmartlife.ms_article_tbl where lineYN = 'Y'
@@ -70,10 +118,10 @@ SELECT uv,title,date,start_date,expire_date FROM msmartlife.ms_article_tbl where
 <!--  언론사 뉴스 리스트 -->
 
 <select id="getDetail" resultType="kr.co.mseshop.model.ArticleVO">
-SELECT a.pcode,a.nsid,a.title,a.sub_title,a.content,a.keyword,a.start_date,a.expire_date,a.youtubeID,a.viewYN,a.important,a.lineYN,b.fileOriName,b.fileName,b.fileUrl,b.fno,b.bno FROM msmartlife.ms_article_tbl AS a, msmartlife.file_tbl AS b WHERE a.nsid = b.bno AND b.bno = #{nsid};
+SELECT a.pcode,a.nsid,a.title,a.sub_title,a.content,a.keyword,a.start_date,a.expire_date,a.youtubeID,a.viewYN,a.important,a.lineYN,a.orderbyNOLine,a.youtubeYN,b.fileOriName,b.fileName,b.fileUrl,b.fno,b.bno FROM msmartlife.ms_article_tbl AS a, msmartlife.file_tbl AS b WHERE a.nsid = b.bno AND b.bno = #{nsid};
 </select>
 <select id="getNewsDetail" resultType="kr.co.mseshop.model.ArticleVO">
-SELECT nsid,pcode,title,sub_title,content,keyword,start_date,expire_date,youtubeID,viewYN,important,lineYN,imgurl,
+SELECT nsid,pcode,title,sub_title,content,keyword,start_date,expire_date,youtubeID,viewYN,important,lineYN,orderbyNOLine,imgurl,
 (select fno from file_tbl where bno = #{id})as fno,
 (select bno from file_tbl where bno = #{id})as bno,
 (select fileUrl from file_tbl where bno = #{id})as fileUrl,
@@ -90,7 +138,6 @@ SELECT nsid,pcode,title,sub_title,content,keyword,start_date,expire_date,youtube
 SELECT imgurl 
 FROM msmartlife.article_tbl WHERE nsid=#{nsid};
 </select>
-
 
 <select id="getRowCount" parameterType="kr.co.mseshop.criteria.BbsInfoCriteria" resultType="Integer">
 	SELECT count(*) FROM msmartlife.ms_article_tbl
@@ -115,15 +162,19 @@ FROM msmartlife.article_tbl WHERE nsid=#{nsid};
 </update>
 
 <update id="updateArticle" parameterType="kr.co.mseshop.model.ArticleVO">
-	UPDATE msmartlife.ms_article_tbl SET title = #{title},sub_title=#{sub_title},content=#{content},keyword=#{keyword},start_date=#{start_date},expire_date=#{expire_date},update_date=#{update_date},viewYN=#{viewYN},important=#{important},youtubeID=#{youtubeID},pcode=#{pcode},catecode=#{catecode},lineYN=#{lineYN} WHERE nsid=#{nsid}; 
+	UPDATE msmartlife.ms_article_tbl SET title = #{title},sub_title=#{sub_title},content=#{content},keyword=#{keyword},start_date=#{start_date},expire_date=#{expire_date},update_date=#{update_date},viewYN=#{viewYN},important=#{important},youtubeID=#{youtubeID},youtubeYN=#{youtubeYN},pcode=#{pcode},catecode=#{catecode},lineYN=#{lineYN},orderbyNOLine = #{orderbyNOLine} WHERE nsid=#{nsid}; 
 </update>
 
 <update id="updateNewsArticle" parameterType="kr.co.mseshop.model.ArticleVO">
-UPDATE msmartlife.article_tbl <set>title = #{title},sub_title=#{sub_title},content=#{content},keyword=#{keyword},start_date=#{start_date},expire_date=#{expire_date},update_date=#{update_date},viewYN=#{viewYN},important=#{important},youtubeID=#{youtubeID},pcode=#{pcode},catecode=#{catecode},lineYN=#{lineYN},<if test="imgurl!=null">imgurl=#{imgurl}</if></set>  WHERE nsid=#{nsid}; 
+UPDATE msmartlife.article_tbl <set>title = #{title},sub_title=#{sub_title},content=#{content},keyword=#{keyword},start_date=#{start_date},expire_date=#{expire_date},update_date=#{update_date},viewYN=#{viewYN},important=#{important},youtubeID=#{youtubeID},pcode=#{pcode},catecode=#{catecode},lineYN=#{lineYN},orderbyNOLine=#{orderbyNOLine},<if test="imgurl!=null">imgurl=#{imgurl}</if></set>  WHERE nsid=#{nsid}; 
 </update>
 
 <update id="updateFile" parameterType="kr.co.mseshop.model.FileVO">
 		UPDATE msmartlife.file_tbl SET fileName = #{fileName},fileOriName = #{fileOriName},fileUrl = #{fileUrl},fileSize = #{fileSize},pressCd = #{pressCd} WHERE fno = #{fno} AND bno = #{bno};
+</update>
+
+<update id="approveUser" parameterType="HashMap">
+	UPDATE msmartlife.member_tbl SET mem_status = #{mem_status},group_id = #{group_id} WHERE mem_id = #{mem_id};
 </update>
 
 <delete id="deleteFile" parameterType="String">
@@ -138,4 +189,24 @@ UPDATE msmartlife.article_tbl <set>title = #{title},sub_title=#{sub_title},conte
 		UPDATE msmartshop.tblmember_MSAPP SET nm_pw = #{passwd} where no_htel = #{id};
 	</update>
 	<!--  패스워드 초기화 -->
+	<!-- 신규앱 패스워드 초기화 -->
+	<select id="getUserNewInfo" parameterType="String"
+		resultType="kr.co.mseshop.model.PasswdResetVO">
+		SELECT id,name,nickname,home_addr,no_coad,no_card_sc FROM
+		msmartshop.tblmember WHERE id = #{id};
+	</select>
+	<update id="passwdNewUpdate"
+		parameterType="kr.co.mseshop.model.PasswdResetVO">
+		UPDATE
+		msmartshop.tblmember
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="passwd!=null and passwd!=''">passwd=#{passwd},</if>
+			<if test="name!=null and name!=''">name=#{name},</if>
+			<if test="nickname!=null and name!=''">nickname=#{nickname},</if>
+			<if test="no_coad!=null and no_coad!=''">no_coad=#{no_coad},</if>
+			<if test="no_card_sc!=null and no_card_sc!=''">no_card_sc=#{no_card_sc}</if>
+		</trim>
+		WHERE id = #{id};
+	</update>
+	<!-- 신규앱 패스워드 초기화 -->
 </mapper>

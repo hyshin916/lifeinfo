@@ -29,6 +29,7 @@
 </head>
 
 <body>
+
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -65,10 +66,38 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div id="shinnav" class="col-sm-3 col-md-2 sidebar">
+				<div><button onclick="javascript:location.href='../news/logout'">로그아웃</button></div>
+<style>
+ul ul {display :none;}
+</style>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+ $(document).ready(function(){
+	 $('.menu').on('click',function(){
+		 $('ul ul').css('display','none');
+	 	 var a = $(this).attr('id');
+	 	 $('.'+a).css('display','block');
+	 });
+ });
+</script>
+
+
+<ul class="nav nav-sidebar">
+<c:forEach var="item" items="${menuList}" varStatus = "status">
+<li><c:if test="${item.menu_order eq 0}"><a href="#" class="menu" id="menu_${item.menu_id}">${item.menu_name}</a></c:if>
+	<ul class="menu_${item.menu_id}">
+    <c:forEach var="item_sub" items="${menuList}" varStatus = "status">
+			<c:if test="${item.menu_parent eq item_sub.menu_parent}"><c:if test="${item_sub.menu_order eq 1}"><li><a href="#">${item_sub.menu_name}</a></li></c:if></c:if>
+			<c:if test="${item.menu_parent eq item_sub.menu_parent}"><c:if test="${item_sub.menu_order eq 2}"><li><a href="#">${item_sub.menu_name}</a></li></c:if></c:if>
+	</c:forEach>
+	</ul>
+</li>
+</c:forEach>
+</ul>
 				<ul class="nav nav-sidebar">
-					<li><a href="list">MS생활뉴스</a></li>
+					<!-- <li><a href="list">MS생활뉴스</a></li>
 					<li><a href="list?media=news">언론사뉴스</a></li>
-					<li><a href="statistics">통계</a></li>
+					<li><a href="statistics">통계</a></li> -->
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
