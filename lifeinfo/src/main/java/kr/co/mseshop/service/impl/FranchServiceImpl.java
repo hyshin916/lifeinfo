@@ -16,6 +16,7 @@ import kr.co.mseshop.dao.FranchDao;
 import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchEvtVO;
 import kr.co.mseshop.model.FranchSellerVO;
+import kr.co.mseshop.model.RentalVO;
 import kr.co.mseshop.model.StatisVO;
 import kr.co.mseshop.service.FranchService;
 
@@ -224,6 +225,12 @@ public class FranchServiceImpl implements FranchService {
 	@Override
 	public int getEvtRowCount(EventCriteria criteria) {
 		return franchDao.getEvtRowCount(criteria);
+	}
+
+
+	@Override
+	public void addRentalInfo(RentalVO rentalVO) {
+		franchDao.addRentalInfo(rentalVO);
 	}
 
 	

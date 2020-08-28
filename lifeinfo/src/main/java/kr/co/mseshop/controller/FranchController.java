@@ -24,8 +24,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import kr.co.mseshop.criteria.RentalCriteria;
+import kr.co.mseshop.exceptions.RentalSvcException;
 import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchSellerVO;
+import kr.co.mseshop.model.RentalVO;
 import kr.co.mseshop.service.FranchService;
 import kr.co.mseshop.util.MakeMD5;
 
@@ -273,13 +276,30 @@ public class FranchController {
 	
 	@RequestMapping(value = "/msFranchRentalRcv.json", produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String rentalRcv(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public String rentalRcv(RentalCriteria rentalCriteria,RentalVO rentalVO) throws IOException {
+		Gson gson = new Gson();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 		
+		String tireSetValue = rentalCriteria.getTire1() + "/" + rentalCriteria.getTire2() + "R " + rentalCriteria.getTire3(); 
 		
+		rentalVO.setId(rentalCriteria.getUserID());
+		rentalVO.setKind(rentalCriteria.getCarKind());
+		rentalVO.setSize(tireSetValue);
+		rentalVO.setLocal(rentalCriteria.getRentalLocal());
+		rentalVO.setCode(rentalCriteria.getCode());
+		try {
+			if (rentalCriteria.getUserID() == "") {
+				throw new RentalSvcException("id null");
+			}
+			franchService.addRentalInfo(rentalVO);
+			resultMap.put("result", "1");
+			
+		} catch (RentalSvcException e) {
+			System.out.println("[System msg]:" + e.getMessage());
+			resultMap.put("result", "0");
+		}
 		
-		
-	
-		return "";
+		return gson.toJson(resultMap);
 	}
 	
 	

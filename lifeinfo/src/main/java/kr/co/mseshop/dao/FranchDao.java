@@ -9,6 +9,7 @@ import kr.co.mseshop.criteria.EventCriteria;
 import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchEvtVO;
 import kr.co.mseshop.model.FranchSellerVO;
+import kr.co.mseshop.model.RentalVO;
 import kr.co.mseshop.model.StatisVO;
 
 public interface FranchDao {
@@ -60,5 +61,7 @@ public interface FranchDao {
 	int __getAllUseCnt(HashMap<String, String> map);
 
 	int getEvtRowCount(EventCriteria criteria);
+
+	void addRentalInfo(RentalVO rentalVO);
 
 }

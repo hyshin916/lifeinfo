@@ -326,6 +326,35 @@
 }
 </style>
 
+<script>
+
+	function rentalRcv() {
+		var userID = '01094275467';
+		jQuery.ajax({
+			url : 'http://localhost:8080/lifeinfo/msFranchRentalRcv.json',
+			type : 'POST',
+			data : {
+				userID : '01094275467',
+				code : '2222',
+				carKind : '말리부',
+				tire1 : '230',
+				tire2 : '25',
+				tire3 : '13',
+				rentalLocal : '춘천'
+			},
+			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+			dataType : 'json',
+			error : function(e) {
+				alert('실행 중 오류가 발생 하였습니다. \n관리자에게 문의 바랍니다.');
+				alert(e.descript);
+			},
+			success : function(result) {
+				alert(result.result);
+			}
+		});
+	}
+</script>
+
 		<form name="dpFrm" action="./event?status=searchDP" method="POST">
 			<div>
 				<span>날짜검색 : </span> <span><input type="text"
@@ -333,6 +362,9 @@
 				<span><input type="text" name="endDate_1"
 					id="testDatepicker1" value="${param.endDate_1}"></span>
 				<button class="btn btn-primary" onclick="searchEvt();">검색</button>
+				
+				<button class="btn btn-primary" onclick="rentalRcv();">렌탈서비스</button>
+				
 			</div>
 		</form>
 		<div class="allUsers_right">

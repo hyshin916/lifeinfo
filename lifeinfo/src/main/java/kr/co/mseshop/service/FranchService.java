@@ -10,6 +10,7 @@ import kr.co.mseshop.criteria.EventCriteria;
 import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchEvtVO;
 import kr.co.mseshop.model.FranchSellerVO;
+import kr.co.mseshop.model.RentalVO;
 import kr.co.mseshop.model.StatisVO;
 
 public interface FranchService {
@@ -61,6 +62,8 @@ public interface FranchService {
 	int __getAllUseCnt(String startDate, String endDate);
 
 	int getEvtRowCount(EventCriteria criteria);
+
+	void addRentalInfo(RentalVO rentalVO);
 
 
 	

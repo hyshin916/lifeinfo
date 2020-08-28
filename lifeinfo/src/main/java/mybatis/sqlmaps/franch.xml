@@ -111,4 +111,9 @@
 		DELETE FROM msmartlife.franch_tbl WHERE no = #{no};
 	</delete>
 	
+	<insert id="addRentalInfo" parameterType="kr.co.mseshop.model.RentalVO">
+		INSERT INTO msmartlife.rental_tbl(id,kind,size,local,code,date) VALUES(#{id},#{kind},#{size},#{local},#{code},now( ));
+	</insert>
+	
+	
 </mapper>
