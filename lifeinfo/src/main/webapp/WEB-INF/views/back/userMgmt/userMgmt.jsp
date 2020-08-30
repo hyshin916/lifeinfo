@@ -391,6 +391,14 @@ body {
 						value="이용자 추첨이벤트">
 				</div>
 			</div>
+			<div class="col-lg-6">
+				<div class="input-group">
+					<span class="input-group-addon"> <input type="checkbox"
+						name="chkMenu" id="0011" aria-label="...">
+					</span> <input type="text" class="form-control" aria-label="..."
+						value="렌탈서비스 접수조회">
+				</div>
+			</div>
 			<!-- /input-group -->
 		</form>
 	</div>

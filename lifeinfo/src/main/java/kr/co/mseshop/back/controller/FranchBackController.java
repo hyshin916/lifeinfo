@@ -203,4 +203,10 @@ public class FranchBackController {
 		}
 	}
 
+	@RequestMapping(value="/back/franch/rentalSVC")
+	public String getRentalSVC() {
+		return "rentalSVC";
+	}
+	
+	
 }

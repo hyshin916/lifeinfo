@@ -272,16 +272,16 @@ public class FranchController {
 		}
 
 	}
-	
-	
+
 	@RequestMapping(value = "/msFranchRentalRcv.json", produces = "application/json; charset=utf8")
 	@ResponseBody
-	public String rentalRcv(RentalCriteria rentalCriteria,RentalVO rentalVO) throws IOException {
+	public String rentalRcv(RentalCriteria rentalCriteria, RentalVO rentalVO) throws IOException {
 		Gson gson = new Gson();
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
-		String tireSetValue = rentalCriteria.getTire1() + "/" + rentalCriteria.getTire2() + "R " + rentalCriteria.getTire3(); 
-		
+
+		String tireSetValue = rentalCriteria.getTire1() + "/" + rentalCriteria.getTire2() + "R "
+				+ rentalCriteria.getTire3();
+
 		rentalVO.setId(rentalCriteria.getUserID());
 		rentalVO.setKind(rentalCriteria.getCarKind());
 		rentalVO.setSize(tireSetValue);
@@ -293,15 +293,13 @@ public class FranchController {
 			}
 			franchService.addRentalInfo(rentalVO);
 			resultMap.put("result", "1");
-			
+
 		} catch (RentalSvcException e) {
 			System.out.println("[System msg]:" + e.getMessage());
 			resultMap.put("result", "0");
 		}
-		
+
 		return gson.toJson(resultMap);
 	}
-	
-	
-	
+
 }
