@@ -363,7 +363,7 @@
 					id="testDatepicker1" value="${param.endDate_1}"></span>
 				<button class="btn btn-primary" onclick="searchEvt();">검색</button>
 				
-				<button class="btn btn-primary" onclick="rentalRcv();">렌탈서비스</button>
+				<!-- <button class="btn btn-primary" onclick="rentalRcv();">렌탈서비스</button> -->
 				
 			</div>
 		</form>
@@ -394,6 +394,8 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		
+		<c:if test="${status ne 'evt'}">
 		<div style="width: 100%; text-align: center;">
 			<c:if test="${status eq 'evt'}">
 			<util:pagination url="./event?status=evtStart&flag=N" name="pageHolder"
@@ -404,6 +406,7 @@
 				parameters="startDate_1,endDate_1" />
 			</c:if>
 		</div>
+		</c:if>
 	</div>
 
 </body>

@@ -22,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.mseshop.common.Constants;
 import kr.co.mseshop.criteria.EventCriteria;
+import kr.co.mseshop.criteria.RentalSearchCriteria;
 import kr.co.mseshop.model.FranchEvtVO;
 import kr.co.mseshop.model.FranchSellerVO;
+import kr.co.mseshop.model.RentalVO;
 import kr.co.mseshop.model.StatisVO;
 import kr.co.mseshop.service.FranchService;
 import kr.co.mseshop.taglib.PageHolder;
@@ -114,7 +116,7 @@ public class FranchBackController {
 	        model.addAttribute("currentPage",criteria.getPage());
 	        model.addAttribute("displayNum",criteria.getListSize());
 
-			franchEvtList = franchService.getFranchEvent(startDate[0], endDate[0],criteria.getRowBounds());
+			franchEvtList = franchService.getFranchEvent(startDate[0], endDate[0]);
 			String value = String.valueOf(paramMap.get("flag")[0]);
 			System.out.println("[value]:" + value);
 			if (!value.equals("N")) {
@@ -204,7 +206,26 @@ public class FranchBackController {
 	}
 
 	@RequestMapping(value="/back/franch/rentalSVC")
-	public String getRentalSVC() {
+	public String getRentalSVC(Model model,RentalSearchCriteria rentalSearchCriteria,HttpServletRequest req) {
+		
+		
+		if (req.getParameter("status").equals("search")) {
+			System.out.println("[1]" + rentalSearchCriteria.getRentalStatus());
+			System.out.println("[1]" + rentalSearchCriteria.getStartDate());
+			System.out.println("[1]" + rentalSearchCriteria.getEndDate());
+			List<RentalVO> rentalList = franchService.getRentalSvcList(rentalSearchCriteria,rentalSearchCriteria.getRowBounds());
+			
+			int rowCount = franchService.getRentalRowCount(rentalSearchCriteria);
+			PageHolder pageHolder = null;
+	        pageHolder = new PageHolder(rowCount, rentalSearchCriteria.getPage(), rentalSearchCriteria.getListSize());
+	        model.addAttribute("pageHolder", pageHolder);
+	        
+	        model.addAttribute("totalCount",rowCount);
+	        model.addAttribute("currentPage",rentalSearchCriteria.getPage());
+	        model.addAttribute("displayNum",rentalSearchCriteria.getListSize());
+	        model.addAttribute("rentalList",rentalList);
+		}
+		
 		return "rentalSVC";
 	}
 	

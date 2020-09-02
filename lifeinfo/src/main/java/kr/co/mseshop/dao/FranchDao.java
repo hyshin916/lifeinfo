@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 
 import kr.co.mseshop.criteria.EventCriteria;
+import kr.co.mseshop.criteria.RentalSearchCriteria;
 import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchEvtVO;
 import kr.co.mseshop.model.FranchSellerVO;
@@ -46,7 +47,7 @@ public interface FranchDao {
 
 	List<FranchEvtVO> getFranchEvent();
 
-	List<FranchEvtVO> getFranchEvent(HashMap<String, String> dateMap, RowBounds rowBounds);
+	List<FranchEvtVO> getFranchEvent(HashMap<String, String> dateMap);
 
 	FranchEvtVO getNameByID(String id);
 
@@ -63,5 +64,9 @@ public interface FranchDao {
 	int getEvtRowCount(EventCriteria criteria);
 
 	void addRentalInfo(RentalVO rentalVO);
+
+	int getRentalRowCount(RentalSearchCriteria rentalSearchCriteria);
+
+	List<RentalVO> getRentalSvcList(RentalSearchCriteria rentalSearchCriteria, RowBounds rowBounds);
 
 }

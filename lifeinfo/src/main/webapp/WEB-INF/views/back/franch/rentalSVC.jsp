@@ -214,12 +214,7 @@
 
 	<h2 class="sub-header">렌탈서비스 접수조회</h2>
 	<script>
-		var searchEvt = function() {
-			dpFrm.submit();
-		}
-
-		var franchEvtFunc = function() {
-
+		var searchRentalSvc = function() {
 			if (document.franchEvtFrm.startDate.value == null
 					|| document.franchEvtFrm.startDate.value == "") {
 				alert('시작날짜를 입력해 주세요!');
@@ -232,37 +227,11 @@
 				document.franchEvtFrm.endDate.focus();
 				return false;
 			}
-			if (document.franchEvtFrm.userCnt.value == null
-					|| document.franchEvtFrm.userCnt.value == "") {
-				alert('추첨인원수를 입력해 주세요!');
-				document.franchEvtFrm.userCnt.focus();
-				return false;
-			}
-
-			var pattern = /[0-9]{4}-[0-9]{2}-[0-9]{2}/;
-
-			if (!pattern.test(document.franchEvtFrm.startDate.value)) {
-				alert("날짜형식이 아닙니다.올바르게 입력해 주세요!");
-				document.franchEvtFrm.startDate.focus();
-				return false;
-			}
-			if (!pattern.test(document.franchEvtFrm.endDate.value)) {
-				alert("날짜형식이 아닙니다.올바르게 입력해 주세요!");
-				document.franchEvtFrm.endDate.focus();
-				return false;
-			}
-
-			if (isNaN(Number(document.franchEvtFrm.userCnt.value))) {
-				alert('숫자형식이 아닙니다.');
-				document.franchEvtFrm.userCnt.focus();
-				return false;
-			}
-
 			loadingCall();
-			var frm = document.franchEvtFrm;
-			frm.submit();
-
+			dpFrm.submit();
 		}
+
+
 		var loadingCall = function() {
 			setInterval(function() {
 				$('#loading').hide();
@@ -273,7 +242,7 @@
 
 
 
-		<style>
+	<style>
 .allUsers_right {
 	text-align: right;
 }
@@ -283,34 +252,7 @@
 }
 </style>
 
-<script>
 
-	function rentalRcv() {
-		var userID = '01094275467';
-		jQuery.ajax({
-			url : 'http://localhost:8080/lifeinfo/msFranchRentalRcv.json',
-			type : 'POST',
-			data : {
-				userID : '01094275467',
-				code : '2222',
-				carKind : '말리부',
-				tire1 : '230',
-				tire2 : '25',
-				tire3 : '13',
-				rentalLocal : '춘천'
-			},
-			contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
-			dataType : 'json',
-			error : function(e) {
-				alert('실행 중 오류가 발생 하였습니다. \n관리자에게 문의 바랍니다.');
-				alert(e.descript);
-			},
-			success : function(result) {
-				alert(result.result);
-			}
-		});
-	}
-</script>
 	<style>
 select {
 	width: 200px;
@@ -318,37 +260,34 @@ select {
 	border: 1px solid #999;
 	font-family: inherit;
 	background: url('../../resources/images/arrow.png') no-repeat 100%;
-	background-size :30px 30px;
+	background-size: 30px 30px;
 	border-radius: 0px;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 }
-select::-ms-expand {
-display: none;
-}
 
+select::-ms-expand {
+	display: none;
+}
 </style>
 
 	<div class="table-responsive">
-		<form name="dpFrm" action="./event?status=searchDP" method="POST">
+		<form name="dpFrm" action="./rentalSVC?status=search" method="POST">
 			<div>
-				<span>업체명 :</span>
-				<span>
-					<select name="rentalStatus">
-							<option value="2222">넥센타이어렌탈</option>
-					</select>
-				
-				</span>
-				<span>날짜검색 : </span> <span><input type="text"
-					name="startDate" id="testDatepicker" value="${param.startDate_1}"></span>
-				<span><input type="text" name="endDate"
-					id="testDatepicker1" value="${param.endDate_1}"></span>
+				<span>업체명 :</span> <span> <select name="rentalStatus">
+						<option value="2222">넥센타이어렌탈</option>
+				</select>
+
+				</span> <span>날짜검색 : </span> <span><input type="text"
+					name="startDate" id="testDatepicker" value="${param.startDate}"></span>
+				<span><input type="text" name="endDate" id="testDatepicker1"
+					value="${param.endDate}"></span>
 				<button class="btn btn-primary" onclick="searchRentalSvc();">검색</button>
 			</div>
 		</form>
 		<div class="allUsers_right">
-			 <span class="allUsers">전체 신청 수 : ${allUseCnt}</span>
+			<span class="allUsers">전체 신청 수 : ${totalCount}</span>
 		</div>
 		<table class="table table-striped">
 			<thead>
@@ -363,26 +302,28 @@ display: none;
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="item" items="${franchEvtList}" varStatus="status">
+				<c:forEach var="item" items="${rentalList}" varStatus="status">
 					<tr>
 						<td><c:if test="${totalCount ne null}">${(totalCount-status.index)-((currentPage-1)*displayNum)}</c:if>
 							<c:if test="${totalCount eq null}">${status.index + 1}</c:if></td>
 						<td>${item.name}</td>
-						<td>${item.userID}</td>
+						<td>${item.id}</td>
+						<td>${item.kind}</td>
+						<td>${item.size}</td>
+						<td>${item.local}</td>
 						<td>${item.date}</td>
-						<td>${item.cnt}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<div style="width: 100%; text-align: center;">
 			<c:if test="${status eq 'evt'}">
-			<util:pagination url="./event?status=evtStart&flag=N" name="pageHolder"
-				parameters="startDate,endDate" />
+				<util:pagination url="./event?status=evtStart&flag=N"
+					name="pageHolder" parameters="startDate,endDate" />
 			</c:if>
 			<c:if test="${status ne 'evt'}">
-			<util:pagination url="./event?status=searchDP" name="pageHolder"
-				parameters="startDate_1,endDate_1" />
+				<util:pagination url="./event?status=searchDP" name="pageHolder"
+					parameters="startDate_1,endDate_1" />
 			</c:if>
 		</div>
 	</div>

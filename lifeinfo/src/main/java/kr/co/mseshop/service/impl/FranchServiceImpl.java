@@ -12,6 +12,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import kr.co.mseshop.criteria.EventCriteria;
+import kr.co.mseshop.criteria.RentalSearchCriteria;
 import kr.co.mseshop.dao.FranchDao;
 import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchEvtVO;
@@ -155,12 +156,12 @@ public class FranchServiceImpl implements FranchService {
 
 
 	@Override
-	public List<FranchEvtVO> getFranchEvent(String startDate, String endDate,RowBounds rowBounds) {
+	public List<FranchEvtVO> getFranchEvent(String startDate, String endDate) {
 		HashMap<String,String> dateMap = new HashMap<String,String>();
 		dateMap.put("startDate", startDate);
 		dateMap.put("endDate", endDate);
 		
-		return franchDao.getFranchEvent(dateMap,rowBounds);
+		return franchDao.getFranchEvent(dateMap);
 	}
 
 
@@ -231,6 +232,18 @@ public class FranchServiceImpl implements FranchService {
 	@Override
 	public void addRentalInfo(RentalVO rentalVO) {
 		franchDao.addRentalInfo(rentalVO);
+	}
+
+
+	@Override
+	public int getRentalRowCount(RentalSearchCriteria rentalSearchCriteria) {
+		return franchDao.getRentalRowCount(rentalSearchCriteria);
+	}
+
+
+	@Override
+	public List<RentalVO> getRentalSvcList(RentalSearchCriteria rentalSearchCriteria, RowBounds rowBounds) {
+		return franchDao.getRentalSvcList(rentalSearchCriteria,rowBounds);
 	}
 
 	

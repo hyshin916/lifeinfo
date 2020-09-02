@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import kr.co.mseshop.criteria.EventCriteria;
+import kr.co.mseshop.criteria.RentalSearchCriteria;
 import kr.co.mseshop.dao.FranchDao;
 import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchEvtVO;
@@ -111,8 +112,8 @@ public class FranchDaoImpl implements FranchDao {
 	}
 
 	@Override
-	public List<FranchEvtVO> getFranchEvent(HashMap<String, String> dateMap,RowBounds rowBounds) {
-		return sqlSession.selectList("franch.getFranchEvent",dateMap,rowBounds);
+	public List<FranchEvtVO> getFranchEvent(HashMap<String, String> dateMap) {
+		return sqlSession.selectList("franch.getFranchEvent",dateMap);
 	}
 
 	@Override
@@ -158,6 +159,16 @@ public class FranchDaoImpl implements FranchDao {
 	@Override
 	public void addRentalInfo(RentalVO rentalVO) {
 		sqlSession.insert("franch.addRentalInfo",rentalVO);
+	}
+
+	@Override
+	public int getRentalRowCount(RentalSearchCriteria rentalSearchCriteria) {
+		return sqlSession.selectOne("franch.getRentalRowCount",rentalSearchCriteria);
+	}
+
+	@Override
+	public List<RentalVO> getRentalSvcList(RentalSearchCriteria rentalSearchCriteria, RowBounds rowBounds) {
+		return sqlSession.selectList("franch.getRentalSvcList",rentalSearchCriteria,rowBounds);
 	}
 
 
