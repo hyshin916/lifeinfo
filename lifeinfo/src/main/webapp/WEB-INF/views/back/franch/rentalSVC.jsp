@@ -276,7 +276,7 @@ select::-ms-expand {
 		<form name="dpFrm" action="./rentalSVC?status=search" method="POST">
 			<div>
 				<span>업체명 :</span> <span> <select name="rentalStatus">
-						<option value="2222">넥센타이어렌탈</option>
+						<option value="3499">넥센타이어렌탈</option>
 				</select>
 
 				</span> <span>날짜검색 : </span> <span><input type="text"

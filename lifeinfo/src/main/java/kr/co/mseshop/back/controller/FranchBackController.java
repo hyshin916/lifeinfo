@@ -208,7 +208,6 @@ public class FranchBackController {
 	@RequestMapping(value="/back/franch/rentalSVC")
 	public String getRentalSVC(Model model,RentalSearchCriteria rentalSearchCriteria,HttpServletRequest req) {
 		
-		
 		if (req.getParameter("status").equals("search")) {
 			System.out.println("[1]" + rentalSearchCriteria.getRentalStatus());
 			System.out.println("[1]" + rentalSearchCriteria.getStartDate());
