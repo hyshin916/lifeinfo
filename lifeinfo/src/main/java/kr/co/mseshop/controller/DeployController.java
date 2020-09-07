@@ -124,7 +124,7 @@ public class DeployController {
 		buff.append("</ul>");
 		buff.append("');");
 			
-		//makeFile(buff,PathClass.getMsNews());
+		makeFile(buff,PathClass.getMsNews("js"));
 	
 		HashMap<String,String> resultMap = new HashMap<String,String>();
 		resultMap.put("result", "success");
