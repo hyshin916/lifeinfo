@@ -73,5 +73,9 @@
 		class="kr.co.mseshop.agent.ShinClass">
 		<beans:property name="destValue" value="hyunyouong" />
 	</beans:bean>
+	
+	<beans:bean id="exceptionResolver" class="kr.co.mseshop.exceptions.BaseExceptionResolver">
+		<beans:property name="view" value="error/error"></beans:property>
+	</beans:bean>
 
 </beans:beans>

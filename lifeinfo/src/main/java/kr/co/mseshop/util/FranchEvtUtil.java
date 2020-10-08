@@ -37,9 +37,11 @@ public class FranchEvtUtil {
 			setBox.add(getWeightedRandom(w, rand));
 		}
 	}
-
+	
+	public boolean startEvt = true;
 	public List<String> rtnCvtIntValue(List<FranchEvtVO> franchList, int size, int start) {
-
+		
+		
 		Map<String, Double> w = new HashMap<String, Double>();
 		Random rand = new Random();
 
@@ -66,7 +68,7 @@ public class FranchEvtUtil {
 		System.out.println("[start]" + start);
 		System.out.println("[setBox Size]" + setBox.size() + "[start]" + start);
 
-		boolean startEvt = true;
+		
 		while (startEvt) {
 			try {
 				Thread.sleep(1000);

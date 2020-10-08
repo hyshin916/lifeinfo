@@ -43,7 +43,7 @@ public class LineNewsAgent implements Runnable {
 				StringBuffer buff = new StringBuffer();
 				Thread.sleep(this.interval);
 
-				String path = "http://www.mstoday.co.kr/rss/autobox_data_46.xml";
+				String path = "https://www.mstoday.co.kr/rss/autobox_data_46.xml";
 				// String path = "http://192.168.0.13:8080/lifeinfo/resources/data.xml";
 				url = new URL(path);
 				uc = url.openConnection();
@@ -80,7 +80,8 @@ public class LineNewsAgent implements Runnable {
 						} else if (node.getNodeName().equals("pubDate")) {
 							articleVO.setPubDate(node.getTextContent());
 						} else if (node.getNodeName().equals("image")) {
-							articleVO.setImage(node.getTextContent());
+							
+							articleVO.setImage(node.getTextContent().replace("http:", "https:"));
 						}
 					}
 					lineNewsList.add(articleVO);
@@ -99,7 +100,7 @@ public class LineNewsAgent implements Runnable {
 						title = "<span style=\"color:#FF0000;\"><B>" + title + "</B></span>";
 					}
 					localBuff.append(
-							"<a href=\"http://www.mstoday.co.kr/" + article.getLink() + "\">" + title + "</a></li>");
+							"<a href=\"https://www.mstoday.co.kr/" + article.getLink() + "\">" + title + "</a></li>");
 				}
 				localBuff.append("</ul></div>");
 				//20.06.12(겟몰요청건) 
@@ -119,7 +120,7 @@ public class LineNewsAgent implements Runnable {
 						title = "<span style=\"color:#FF0000;\"><B>" + title + "</B></span>";
 					}
 					localBuff.append(
-							"<a href=\"http://www.mstoday.co.kr/" + article.getLink() + "\">" + title + "</a></li>");
+							"<a href=\"https://www.mstoday.co.kr/" + article.getLink() + "\">" + title + "</a></li>");
 				}
 				localBuff.append("</ul></div>");
 				makeFile(localBuff, PathClass.getLine_news("html"));
@@ -127,12 +128,12 @@ public class LineNewsAgent implements Runnable {
 				
 				// 최하단 생생정보 뉴스 (라인뉴스 중 4~8까지의 기사를 노출함) START (JS파일생성)
 				StringBuffer localBuff1 = new StringBuffer();
-				localBuff1.append("document.write('<link rel=\"stylesheet\" href=\"http://"+ Constants.HOST_DOMAIN +":8080/lifeinfo/resources/front/css/life_news.css\">");
+				localBuff1.append("document.write('");
 				localBuff1.append("<div class=\"ms_nContent\">");
 				localBuff1.append("<ul class=\"msitem-nlists\">");
 				for (int i=4; i<8; i++) {
 					localBuff1.append("<li class=\"nitem\">");
-					localBuff1.append("<a href=\"http://www.mstoday.co.kr/" + lineNewsList.get(i).getLink() + "\">");
+					localBuff1.append("<a href=\"https://www.mstoday.co.kr/" + lineNewsList.get(i).getLink() + "\">");
 					localBuff1.append("<span class=\"img-nbox\">");
 					localBuff1.append("<span class=\"img-nthumb\">");
 					localBuff1.append("<span class=\"img-ncenter\">");
@@ -160,7 +161,7 @@ public class LineNewsAgent implements Runnable {
 				localBuff1.append("<ul class=\"msitem-nlists\">");
 				for (int i=4; i<8; i++) {
 					localBuff1.append("<li class=\"nitem\">");
-					localBuff1.append("<a href=\"http://www.mstoday.co.kr/" + lineNewsList.get(i).getLink() + "\">");
+					localBuff1.append("<a href=\"https://www.mstoday.co.kr/" + lineNewsList.get(i).getLink() + "\">");
 					localBuff1.append("<span class=\"img-nbox\">");
 					localBuff1.append("<span class=\"img-nthumb\">");
 					localBuff1.append("<span class=\"img-ncenter\">");
@@ -188,7 +189,7 @@ public class LineNewsAgent implements Runnable {
 				
 				for (int i=0; i<4; i++) {
 					localBuff2.append("<li>");
-					localBuff2.append("<a href=\"http://www.mstoday.co.kr/" + lineNewsList.get(i).getLink() + "\">");
+					localBuff2.append("<a href=\"https://www.mstoday.co.kr/" + lineNewsList.get(i).getLink() + "\">");
 					localBuff2.append("<div class=\"box_img\">");
 					localBuff2.append("<img src=\"" + lineNewsList.get(i).getImage() + "\">");
 					localBuff2.append("</div>");
@@ -211,7 +212,7 @@ public class LineNewsAgent implements Runnable {
 				localBuff2.append("<ul class=\"article_box\" style=\"top:0px;\">");
 				for (int i=0; i<4; i++) {
 					localBuff2.append("<li>");
-					localBuff2.append("<a href=\"http://www.mstoday.co.kr/" + lineNewsList.get(i).getLink() + "\">");
+					localBuff2.append("<a href=\"https://www.mstoday.co.kr/" + lineNewsList.get(i).getLink() + "\">");
 					localBuff2.append("<div class=\"box_img\">");
 					localBuff2.append("<img src=\"" + lineNewsList.get(i).getImage() + "\">");
 					localBuff2.append("</div>");

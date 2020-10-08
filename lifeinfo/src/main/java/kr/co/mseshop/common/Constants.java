@@ -11,10 +11,10 @@ public interface Constants {
 	
 	String NEWS_ETC_OS = "/"; // "/"=Linux "\\"=window
 
-	//String HOST_DOMAIN = "192.168.0.13";
+	//String HOST_DOMAIN = "192.168.0.227";
 	String HOST_DOMAIN = "183.111.169.187";
 
-	String LOCAL_IP = "192.168.0.13";
+	String LOCAL_IP = "192.168.0.227";
 	
 	String USER_SESSION_KEY = "user";
 	String USER_SESSION_MENU = "menu";

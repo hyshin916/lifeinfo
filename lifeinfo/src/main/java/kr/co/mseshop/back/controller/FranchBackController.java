@@ -61,86 +61,96 @@ public class FranchBackController {
 	}
 
 	@RequestMapping(value = "/back/franch/event")
-	public String getFranchEvent(Model model, String status, EventCriteria criteria, HttpServletRequest request, HttpServletRequest response) {
-		System.out.println("[event] start...");
-		List<FranchEvtVO> franchEvtList = null;
-		List<FranchEvtVO> franchSuggestList = null;
-		ArrayList<String> suggestEvt = null;
-		PageHolder pageHolder = null;
-		 
-		int allUsersCnt = franchService.getAllUsersCnt();
-		int allUseCnt = franchService.getAllUseCnt();
-		
-		Map<String, String[]> paramMap = request.getParameterMap();
-		
-		if (status.equals("list")) {
-			franchEvtList = franchService.getFranchEvent();
-		} else if (status.equals("searchDP")) { //datepicker
-			System.out.println("[searchDP]....");
-			String[] startDate = paramMap.get("startDate_1");
-			String[] endDate = paramMap.get("endDate_1");
-			System.out.println("[startDate1]" + startDate[0]);
-			System.out.println("[endDate1]" + endDate[0]);
-			
-			int rowCount = franchService.getEvtRowCount(criteria);
-			
-	        pageHolder = new PageHolder(rowCount, criteria.getPage(), criteria.getListSize());
-	        model.addAttribute("pageHolder", pageHolder);
-	        
-	        model.addAttribute("totalCount",rowCount);
-	        model.addAttribute("currentPage",criteria.getPage());
-	        model.addAttribute("displayNum",criteria.getListSize());
-			
-			franchEvtList = franchService.getFranchDatePickerEvent(startDate[0],endDate[0],criteria.getRowBounds());
-			allUsersCnt = franchService.__getAllUsersCnt(startDate[0],endDate[0]);
-			allUseCnt = franchService.__getAllUseCnt(startDate[0],endDate[0]);
-			// All Use count
-			// All Users
-			// select datepicker list ...
-		}
-		else {
-			
-			String[] startDate = paramMap.get("startDate");
-			String[] endDate = paramMap.get("endDate");
-			String[] userCnt = paramMap.get("userCnt");
+	public String getFranchEvent(Model model, String status, EventCriteria criteria, HttpServletRequest request,
+			HttpServletRequest response) throws Exception {
 
-			System.out.println("[startDate]" + startDate[0]);
-			System.out.println("[endDate]" + endDate[0]);
-			
-			int rowCount = franchService.getEvtRowCount(criteria);
-			
-	        pageHolder = new PageHolder(rowCount, criteria.getPage(), criteria.getListSize());
-	        model.addAttribute("pageHolder", pageHolder);
-	        
-	        model.addAttribute("totalCount",rowCount);
-	        model.addAttribute("currentPage",criteria.getPage());
-	        model.addAttribute("displayNum",criteria.getListSize());
+		FranchEvtUtil franchEvtUtil = null;
+		try {
+			List<FranchEvtVO> franchEvtList = null;
+			List<FranchEvtVO> franchSuggestList = null;
+			ArrayList<String> suggestEvt = null;
+			PageHolder pageHolder = null;
 
-			franchEvtList = franchService.getFranchEvent(startDate[0], endDate[0]);
-			String value = String.valueOf(paramMap.get("flag")[0]);
-			System.out.println("[value]:" + value);
-			if (!value.equals("N")) {
-				FranchEvtUtil franchEvtUtil = new FranchEvtUtil();
-				suggestEvt = (ArrayList<String>) franchEvtUtil.rtnCvtIntValue(franchEvtList, franchEvtList.size(),
-						Integer.parseInt(userCnt[0]));
-	
-				for (String list : suggestEvt) {
-					System.out.println("[list]" + list);
+			int allUsersCnt = franchService.getAllUsersCnt();
+			int allUseCnt = franchService.getAllUseCnt();
+
+			Map<String, String[]> paramMap = request.getParameterMap();
+
+			if (status.equals("list")) {
+				franchEvtList = franchService.getFranchEvent();
+			} else if (status.equals("searchDP")) { // datepicker
+				System.out.println("[searchDP]....");
+				String[] startDate = paramMap.get("startDate_1");
+				String[] endDate = paramMap.get("endDate_1");
+				System.out.println("[startDate1]" + startDate[0]);
+				System.out.println("[endDate1]" + endDate[0]);
+
+				int rowCount = franchService.getEvtRowCount(criteria);
+
+				pageHolder = new PageHolder(rowCount, criteria.getPage(), criteria.getListSize());
+				model.addAttribute("pageHolder", pageHolder);
+
+				model.addAttribute("totalCount", rowCount);
+				model.addAttribute("currentPage", criteria.getPage());
+				model.addAttribute("displayNum", criteria.getListSize());
+
+				franchEvtList = franchService.getFranchDatePickerEvent(startDate[0], endDate[0],
+						criteria.getRowBounds());
+				allUsersCnt = franchService.__getAllUsersCnt(startDate[0], endDate[0]);
+				allUseCnt = franchService.__getAllUseCnt(startDate[0], endDate[0]);
+				// All Use count
+				// All Users
+				// select datepicker list ...
+			} else {
+
+				String[] startDate = paramMap.get("startDate");
+				String[] endDate = paramMap.get("endDate");
+				String[] userCnt = paramMap.get("userCnt");
+
+				System.out.println("[startDate]" + startDate[0]);
+				System.out.println("[endDate]" + endDate[0]);
+
+				int rowCount = franchService.getEvtRowCount(criteria);
+
+				pageHolder = new PageHolder(rowCount, criteria.getPage(), criteria.getListSize());
+				model.addAttribute("pageHolder", pageHolder);
+
+				model.addAttribute("totalCount", rowCount);
+				model.addAttribute("currentPage", criteria.getPage());
+				model.addAttribute("displayNum", criteria.getListSize());
+
+				franchEvtList = franchService.getFranchEvent(startDate[0], endDate[0]);
+				String value = String.valueOf(paramMap.get("flag")[0]);
+				System.out.println("[value]:" + value);
+				if (!value.equals("N")) {
+					franchEvtUtil = new FranchEvtUtil();
+					suggestEvt = (ArrayList<String>) franchEvtUtil.rtnCvtIntValue(franchEvtList, franchEvtList.size(),
+							Integer.parseInt(userCnt[0]));
+
+					for (String list : suggestEvt) {
+						System.out.println("[list]" + list);
+					}
+
+					franchSuggestList = franchService.getFranchSuggestList(suggestEvt);
 				}
-	
-				franchSuggestList = franchService.getFranchSuggestList(suggestEvt);
+
+				allUsersCnt = franchService.__getAllUsersCnt(startDate[0], endDate[0]);
+				allUseCnt = franchService.__getAllUseCnt(startDate[0], endDate[0]);
+				model.addAttribute("status", "evt");
 			}
-			
-			allUsersCnt = franchService.__getAllUsersCnt(startDate[0],endDate[0]);
-			allUseCnt = franchService.__getAllUseCnt(startDate[0],endDate[0]);
-			model.addAttribute("status","evt");
+
+			model.addAttribute("franchEvtList", franchEvtList);
+			model.addAttribute("franchSuggestList", franchSuggestList);
+			model.addAttribute("allUsersCnt", allUsersCnt);
+			model.addAttribute("allUseCnt", allUseCnt);
+
+		} catch (Exception e) {
+
+			franchEvtUtil.startEvt = false;
+			throw new Exception("[Franch Event] event error ...",e);
+
 		}
 
-		model.addAttribute("franchEvtList", franchEvtList);
-		model.addAttribute("franchSuggestList", franchSuggestList);
-		model.addAttribute("allUsersCnt",allUsersCnt);
-		model.addAttribute("allUseCnt",allUseCnt);
-		
 		return "franchEvent";
 	}
 
@@ -159,7 +169,7 @@ public class FranchBackController {
 				jObj.put("result", "fail");
 			}
 
-			responseResult(response, jObj);
+			__responseResult(response, jObj);
 
 		} else if (flag != null && flag.equals("view")) {
 
@@ -177,7 +187,7 @@ public class FranchBackController {
 			} catch (Exception e) {
 				jObj.put("result", "fail");
 			}
-			responseResult(response, jObj);
+			__responseResult(response, jObj);
 		} else if (flag != null && flag.equals("delete")) {
 			try {
 
@@ -188,13 +198,13 @@ public class FranchBackController {
 			} catch (Exception e) {
 				jObj.put("result", "fail");
 			}
-			responseResult(response, jObj);
+			__responseResult(response, jObj);
 		}
 
 		return "franchWrite";
 	}
 
-	public void responseResult(HttpServletResponse response, JSONObject jObj) {
+	private void __responseResult(HttpServletResponse response, JSONObject jObj) {
 		PrintWriter pw;
 		try {
 			pw = response.getWriter();
@@ -205,28 +215,29 @@ public class FranchBackController {
 		}
 	}
 
-	@RequestMapping(value="/back/franch/rentalSVC")
-	public String getRentalSVC(Model model,RentalSearchCriteria rentalSearchCriteria,HttpServletRequest req) {
-		
+	@RequestMapping(value = "/back/franch/rentalSVC")
+	public String getRentalSVC(Model model, RentalSearchCriteria rentalSearchCriteria, HttpServletRequest req) {
+
 		if (req.getParameter("status").equals("search")) {
 			System.out.println("[1]" + rentalSearchCriteria.getRentalStatus());
 			System.out.println("[1]" + rentalSearchCriteria.getStartDate());
 			System.out.println("[1]" + rentalSearchCriteria.getEndDate());
-			List<RentalVO> rentalList = franchService.getRentalSvcList(rentalSearchCriteria,rentalSearchCriteria.getRowBounds());
-			
+			List<RentalVO> rentalList = franchService.getRentalSvcList(rentalSearchCriteria,
+					rentalSearchCriteria.getRowBounds());
+
 			int rowCount = franchService.getRentalRowCount(rentalSearchCriteria);
 			PageHolder pageHolder = null;
-	        pageHolder = new PageHolder(rowCount, rentalSearchCriteria.getPage(), rentalSearchCriteria.getListSize());
-	        model.addAttribute("pageHolder", pageHolder);
-	        
-	        model.addAttribute("totalCount",rowCount);
-	        model.addAttribute("currentPage",rentalSearchCriteria.getPage());
-	        model.addAttribute("displayNum",rentalSearchCriteria.getListSize());
-	        model.addAttribute("rentalList",rentalList);
+			pageHolder = new PageHolder(rowCount, rentalSearchCriteria.getPage(), rentalSearchCriteria.getListSize());
+			model.addAttribute("pageHolder", pageHolder);
+
+			model.addAttribute("totalCount", rowCount);
+			model.addAttribute("currentPage", rentalSearchCriteria.getPage());
+			model.addAttribute("displayNum", rentalSearchCriteria.getListSize());
+			model.addAttribute("rentalList", rentalList);
+			model.addAttribute("status", "rentalSVC");
 		}
-		
+
 		return "rentalSVC";
 	}
-	
-	
+
 }

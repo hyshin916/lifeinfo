@@ -317,12 +317,16 @@ select::-ms-expand {
 			</tbody>
 		</table>
 		<div style="width: 100%; text-align: center;">
-			<c:if test="${status eq 'evt'}">
+			<%-- <c:if test="${status eq 'evt'}">
 				<util:pagination url="./event?status=evtStart&flag=N"
 					name="pageHolder" parameters="startDate,endDate" />
 			</c:if>
 			<c:if test="${status ne 'evt'}">
 				<util:pagination url="./event?status=searchDP" name="pageHolder"
+					parameters="startDate_1,endDate_1" />
+			</c:if> --%>
+			<c:if test="${status eq 'rentalSVC'}">
+				<util:pagination url="./rentalSVC?status=search" name="pageHolder"
 					parameters="startDate_1,endDate_1" />
 			</c:if>
 		</div>

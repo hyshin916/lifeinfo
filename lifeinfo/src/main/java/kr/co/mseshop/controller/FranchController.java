@@ -30,6 +30,7 @@ import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchSellerVO;
 import kr.co.mseshop.model.RentalVO;
 import kr.co.mseshop.service.FranchService;
+import kr.co.mseshop.util.Base64Util;
 import kr.co.mseshop.util.MakeMD5;
 
 @Controller
@@ -279,24 +280,36 @@ public class FranchController {
 		Gson gson = new Gson();
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 
-		String tireSetValue = rentalCriteria.getTire1() + "/" + rentalCriteria.getTire2() + "R "
-				+ rentalCriteria.getTire3();
-
-		rentalVO.setId(rentalCriteria.getUserID());
-		rentalVO.setKind(rentalCriteria.getCarKind());
-		rentalVO.setSize(tireSetValue);
-		rentalVO.setLocal(rentalCriteria.getRentalLocal());
-		rentalVO.setCode(rentalCriteria.getCode());
 		try {
-			if (rentalCriteria.getUserID() == "") {
+			String[] tire = rentalCriteria.getTire1().split("_");
+			String tireSetValue = tire[0] +"/"+ tire[1] +"R " + tire[2];
+			if (rentalCriteria.getUserID() == "" || rentalCriteria.getUserID() == null) {
 				throw new RentalSvcException("id null");
 			}
+			rentalVO.setId(rentalCriteria.getUserID());
+			
+			/*System.out.println("[Rental CarKind]" + Base64Util.getInstance().deCoder(rentalCriteria.getCarKind()));
+			System.out.println("[Rental Local]" + Base64Util.getInstance().deCoder(rentalCriteria.getRentalLocal()));
+			*/
+			//rentalVO.setKind(Base64Util.getInstance().deCoder(rentalCriteria.getCarKind()));
+			rentalVO.setKind(rentalCriteria.getCarKind());
+			rentalVO.setSize(tireSetValue);
+			//rentalVO.setLocal(Base64Util.getInstance().deCoder(rentalCriteria.getRentalLocal()));
+			rentalVO.setLocal(rentalCriteria.getRentalLocal());
+			rentalVO.setCode(rentalCriteria.getCode());
+			
 			franchService.addRentalInfo(rentalVO);
 			resultMap.put("result", "1");
 
 		} catch (RentalSvcException e) {
 			System.out.println("[System msg]:" + e.getMessage());
 			resultMap.put("result", "0");
+		} catch (ArrayIndexOutOfBoundsException ex) {
+			resultMap.put("result", "0");
+			throw new RentalSvcException("Tire Size value Error...");
+		} catch (NullPointerException ex1) {
+			resultMap.put("result", "0");
+			throw new RentalSvcException("Tire parameter name Error...");
 		}
 
 		return gson.toJson(resultMap);

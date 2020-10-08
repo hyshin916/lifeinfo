@@ -10,6 +10,15 @@ import java.util.Iterator;
 
 import kr.co.mseshop.common.Constants;
 
+/**
+ * <pre>
+ * <b>History:</b>
+ * Mr.shin, 1.0, 2019.08.01 최초작성
+ * </pre>
+ * FTP 전송 데이터 체크로직
+ * @author Mr.shin
+ *
+ */
 public class NewsAgentThread implements Runnable {
 
 	boolean start = false;

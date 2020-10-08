@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ShinClass {
-
+	
 	String destValue;
 
 	public String getDestValue() {

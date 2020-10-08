@@ -81,8 +81,8 @@ function fnMove(seq){
      //alert(offset.top);
      localStorage.setItem('offset',offset.top);
      // $('html, body').animate({scrollTop : offset.top}, 10);
-     Android.showToast('http://${moreNewsURL}:8080/lifeinfo/newsDetail?artid=' + seq + '&section=morenewslist');
-  	 //window.open('http://${moreNewsURL}:8080/lifeinfo/newsDetail?artid=' + seq + '&section=morenewslist');
+     //Android.showToast('http://${moreNewsURL}:8080/lifeinfo/newsDetail?artid=' + seq + '&section=morenewslist');
+  	 window.open('http://${moreNewsURL}:8080/lifeinfo/newsDetail?artid=' + seq + '&section=morenewslist');
   }
 function test() {
 	value = localStorage.getItem('offset');

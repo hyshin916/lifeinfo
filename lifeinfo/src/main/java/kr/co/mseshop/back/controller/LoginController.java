@@ -2,22 +2,21 @@ package kr.co.mseshop.back.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.co.mseshop.agent.ShinClass;
 import kr.co.mseshop.back.service.LoginService;
 import kr.co.mseshop.common.Constants;
 import kr.co.mseshop.model.MemberVO;
@@ -27,6 +26,8 @@ import kr.co.mseshop.util.CommandToken;
 @Controller
 public class LoginController {
 
+	Logger logger = Logger.getLogger(this.getClass());
+	
 	@Resource
 	LoginService loginService;
 
@@ -37,8 +38,11 @@ public class LoginController {
 	 * @description : 로그인 화면로딩
 	 * @return
 	 */
+	@Resource
+	ShinClass shinClass;
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login() {
+	public String login(HttpServletRequest request,HttpServletResponse response) {
 		return "loginForm";
 	}
 
@@ -88,7 +92,7 @@ public class LoginController {
 		}
 
 		jObj.put("chkMember", isLoginChk);
-		responseWrite(response, jObj);
+		__responseWrite(response, jObj);
 	}
 
 	@RequestMapping(value = "/memRegister", method = RequestMethod.GET)
@@ -105,7 +109,7 @@ public class LoginController {
 		int chkUserCnt = loginService.chkUserID(mem_id);
 
 		jObj.put("chkID", chkUserCnt);
-		responseWrite(response, jObj);
+		__responseWrite(response, jObj);
 	}
 
 	@RequestMapping(value = "/addMember", method = RequestMethod.POST)
@@ -120,7 +124,7 @@ public class LoginController {
 			jObj.put("result", "fail");
 		}
 
-		responseWrite(response, jObj);
+		__responseWrite(response, jObj);
 	}
 
 	@RequestMapping(value = "/back/login/etbAuthUser")
@@ -165,11 +169,11 @@ public class LoginController {
 			jObj.put("result", "fail");
 		}
 
-		responseWrite(response, jObj);
+		__responseWrite(response, jObj);
 
 	}
 
-	private void responseWrite(HttpServletResponse response, JSONObject jObj) {
+	private void __responseWrite(HttpServletResponse response, JSONObject jObj) {
 		PrintWriter pw;
 		try {
 			pw = response.getWriter();
