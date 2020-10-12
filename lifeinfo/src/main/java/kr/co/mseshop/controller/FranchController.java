@@ -29,6 +29,7 @@ import kr.co.mseshop.exceptions.RentalSvcException;
 import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchSellerVO;
 import kr.co.mseshop.model.RentalVO;
+import kr.co.mseshop.model.RentalVO2;
 import kr.co.mseshop.service.FranchService;
 import kr.co.mseshop.util.Base64Util;
 import kr.co.mseshop.util.MakeMD5;
@@ -279,7 +280,7 @@ public class FranchController {
 	public String rentalRcv(RentalCriteria rentalCriteria, RentalVO rentalVO) throws IOException {
 		Gson gson = new Gson();
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-
+		
 		try {
 			String[] tire = rentalCriteria.getTire1().split("_");
 			String tireSetValue = tire[0] +"/"+ tire[1] +"R " + tire[2];
@@ -310,6 +311,24 @@ public class FranchController {
 		} catch (NullPointerException ex1) {
 			resultMap.put("result", "0");
 			throw new RentalSvcException("Tire parameter name Error...");
+		}
+
+		return gson.toJson(resultMap);
+	}
+	
+	@RequestMapping(value = "/msFranchRentalRcv2.json", produces = "application/json; charset=utf8")
+	@ResponseBody
+	public String rentalRcv2(RentalVO2 rentalVO2) throws IOException {
+		Gson gson = new Gson();
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try {
+		
+			franchService.addRentalInfo2(rentalVO2);
+			resultMap.put("result", "1");
+
+		} catch (Exception e) {
+			resultMap.put("result", "0");
 		}
 
 		return gson.toJson(resultMap);

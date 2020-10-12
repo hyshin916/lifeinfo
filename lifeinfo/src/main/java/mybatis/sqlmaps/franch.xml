@@ -153,12 +153,36 @@
 			AND DATE(DATE) BETWEEN #{startDate} AND #{endDate};
 		</if>
 	</select>
+	<select id="getRentalRowCount2"
+		parameterType="kr.co.mseshop.criteria.RentalSearchCriteria"
+		resultType="int">
+		SELECT count(*) FROM msmartlife.rental2_tbl WHERE 1=1
+		<if test="rentalStatus!=null and rentalStatus!=''">
+			AND CODE = #{rentalStatus}
+		</if>
+		<if test="startDate!=null and startDate!=''">
+			AND DATE(DATE) BETWEEN #{startDate} AND #{endDate};
+		</if>
+	</select>
 
 	<select id="getRentalSvcList"
 		parameterType="kr.co.mseshop.criteria.RentalSearchCriteria"
 		resultType="kr.co.mseshop.model.RentalVO">
 		SELECT (SELECT NAME FROM msmartshop.tblmember WHERE id = a.id) AS
 		NAME, id, kind,size,LOCAL,DATE FROM msmartlife.rental_tbl AS a WHERE
+		1=1
+		<if test="rentalStatus!=null and rentalStatus!=''">
+			AND CODE = #{rentalStatus}
+		</if>
+		<if test="startDate!=null and startDate!=''">
+			AND DATE(DATE) BETWEEN #{startDate} AND #{endDate};
+		</if>
+	</select>
+	<select id="getRentalSvcList2"
+		parameterType="kr.co.mseshop.criteria.RentalSearchCriteria"
+		resultType="kr.co.mseshop.model.RentalVO2">
+		SELECT (SELECT NAME FROM msmartshop.tblmember WHERE id = a.id) AS
+		NAME, id, description, DATE FROM msmartlife.rental2_tbl AS a WHERE
 		1=1
 		<if test="rentalStatus!=null and rentalStatus!=''">
 			AND CODE = #{rentalStatus}
@@ -197,6 +221,13 @@
 		INSERT INTO
 		msmartlife.rental_tbl(id,kind,size,local,code,date)
 		VALUES(#{id},#{kind},#{size},#{local},#{code},now( ));
+	</insert>
+	
+	<insert id="addRentalInfo2"
+		parameterType="kr.co.mseshop.model.RentalVO2">
+		INSERT INTO
+		msmartlife.rental2_tbl(id,description,code,date)
+		VALUES(#{id},#{description},#{code},now( ));
 	</insert>
 
 

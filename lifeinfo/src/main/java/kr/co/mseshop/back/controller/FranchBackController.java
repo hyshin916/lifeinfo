@@ -26,6 +26,7 @@ import kr.co.mseshop.criteria.RentalSearchCriteria;
 import kr.co.mseshop.model.FranchEvtVO;
 import kr.co.mseshop.model.FranchSellerVO;
 import kr.co.mseshop.model.RentalVO;
+import kr.co.mseshop.model.RentalVO2;
 import kr.co.mseshop.model.StatisVO;
 import kr.co.mseshop.service.FranchService;
 import kr.co.mseshop.taglib.PageHolder;
@@ -219,9 +220,6 @@ public class FranchBackController {
 	public String getRentalSVC(Model model, RentalSearchCriteria rentalSearchCriteria, HttpServletRequest req) {
 
 		if (req.getParameter("status").equals("search")) {
-			System.out.println("[1]" + rentalSearchCriteria.getRentalStatus());
-			System.out.println("[1]" + rentalSearchCriteria.getStartDate());
-			System.out.println("[1]" + rentalSearchCriteria.getEndDate());
 			List<RentalVO> rentalList = franchService.getRentalSvcList(rentalSearchCriteria,
 					rentalSearchCriteria.getRowBounds());
 
@@ -238,6 +236,28 @@ public class FranchBackController {
 		}
 
 		return "rentalSVC";
+	}
+	
+	@RequestMapping(value = "/back/franch/rentalSVC2")
+	public String getRentalSVC2(Model model, RentalSearchCriteria rentalSearchCriteria, HttpServletRequest req) {
+
+		if (req.getParameter("status").equals("search")) {
+			List<RentalVO2> rentalList = franchService.getRentalSvcList2(rentalSearchCriteria,
+					rentalSearchCriteria.getRowBounds());
+
+			int rowCount = franchService.getRentalRowCount2(rentalSearchCriteria);
+			PageHolder pageHolder = null;
+			pageHolder = new PageHolder(rowCount, rentalSearchCriteria.getPage(), rentalSearchCriteria.getListSize());
+			model.addAttribute("pageHolder", pageHolder);
+
+			model.addAttribute("totalCount", rowCount);
+			model.addAttribute("currentPage", rentalSearchCriteria.getPage());
+			model.addAttribute("displayNum", rentalSearchCriteria.getListSize());
+			model.addAttribute("rentalList", rentalList);
+			model.addAttribute("status", "rentalSVC2");
+		}
+
+		return "rentalSVC2";
 	}
 
 }

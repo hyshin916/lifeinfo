@@ -61,6 +61,10 @@
 		<put-attribute name="main"
 			value="/WEB-INF/views/back/franch/rentalSVC.jsp" />
 	</definition>
+	<definition name="rentalSVC2" extends=".write">
+		<put-attribute name="main"
+			value="/WEB-INF/views/back/franch/rentalSVC2.jsp" />
+	</definition>
 
 	<definition name="franchWrite" extends=".write">
 		<put-attribute name="main"

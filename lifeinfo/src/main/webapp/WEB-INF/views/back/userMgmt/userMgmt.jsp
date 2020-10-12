@@ -399,6 +399,14 @@ body {
 						value="렌탈서비스 접수조회">
 				</div>
 			</div>
+			<div class="col-lg-6">
+				<div class="input-group">
+					<span class="input-group-addon"> <input type="checkbox"
+						name="chkMenu" id="0012" aria-label="...">
+					</span> <input type="text" class="form-control" aria-label="..."
+						value="렌탈서비스 접수조회(코웨이)">
+				</div>
+			</div>
 			<!-- /input-group -->
 		</form>
 	</div>

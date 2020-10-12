@@ -100,6 +100,7 @@ ul ul {display :none;}
 			<c:if test="${item.menu_order eq 2}"><li><a href="${item.menu_link}">&nbsp;&nbsp;▶ ${item.menu_name}</a></li></c:if>
 			<c:if test="${item.menu_order eq 3}"><li><a href="${item.menu_link}">&nbsp;&nbsp;▶ ${item.menu_name}</a></li></c:if>
 			<c:if test="${item.menu_order eq 4}"><li><a href="${item.menu_link}">&nbsp;&nbsp;▶ ${item.menu_name}</a></li></c:if>
+			<c:if test="${item.menu_order eq 5}"><li><a href="${item.menu_link}">&nbsp;&nbsp;▶ ${item.menu_name}</a></li></c:if>
 </c:forEach>
 </ul>
 				<ul class="nav nav-sidebar">

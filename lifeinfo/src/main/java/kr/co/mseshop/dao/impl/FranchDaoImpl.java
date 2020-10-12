@@ -16,6 +16,7 @@ import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchEvtVO;
 import kr.co.mseshop.model.FranchSellerVO;
 import kr.co.mseshop.model.RentalVO;
+import kr.co.mseshop.model.RentalVO2;
 import kr.co.mseshop.model.StatisVO;
 
 @Repository("franchDao")
@@ -169,6 +170,21 @@ public class FranchDaoImpl implements FranchDao {
 	@Override
 	public List<RentalVO> getRentalSvcList(RentalSearchCriteria rentalSearchCriteria, RowBounds rowBounds) {
 		return sqlSession.selectList("franch.getRentalSvcList",rentalSearchCriteria,rowBounds);
+	}
+
+	@Override
+	public void addRentalInfo2(RentalVO2 rentalVO2) {
+		sqlSession.insert("franch.addRentalInfo2",rentalVO2);
+	}
+
+	@Override
+	public List<RentalVO2> getRentalSvcList2(RentalSearchCriteria rentalSearchCriteria, RowBounds rowBounds) {
+		return sqlSession.selectList("franch.getRentalSvcList2",rentalSearchCriteria,rowBounds);
+	}
+
+	@Override
+	public int getRentalRowCount2(RentalSearchCriteria rentalSearchCriteria) {
+		return sqlSession.selectOne("franch.getRentalRowCount2",rentalSearchCriteria);
 	}
 
 

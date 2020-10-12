@@ -12,6 +12,7 @@ import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchEvtVO;
 import kr.co.mseshop.model.FranchSellerVO;
 import kr.co.mseshop.model.RentalVO;
+import kr.co.mseshop.model.RentalVO2;
 import kr.co.mseshop.model.StatisVO;
 
 public interface FranchService {
@@ -69,6 +70,12 @@ public interface FranchService {
 	int getRentalRowCount(RentalSearchCriteria rentalSearchCriteria);
 
 	List<RentalVO> getRentalSvcList(RentalSearchCriteria rentalSearchCriteria, RowBounds rowBounds);
+
+	void addRentalInfo2(RentalVO2 rentalVO2);
+
+	List<RentalVO2> getRentalSvcList2(RentalSearchCriteria rentalSearchCriteria, RowBounds rowBounds);
+
+	int getRentalRowCount2(RentalSearchCriteria rentalSearchCriteria);
 
 
 	

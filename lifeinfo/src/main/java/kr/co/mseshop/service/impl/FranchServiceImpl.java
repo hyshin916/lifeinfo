@@ -18,6 +18,7 @@ import kr.co.mseshop.model.FranchAdminVO;
 import kr.co.mseshop.model.FranchEvtVO;
 import kr.co.mseshop.model.FranchSellerVO;
 import kr.co.mseshop.model.RentalVO;
+import kr.co.mseshop.model.RentalVO2;
 import kr.co.mseshop.model.StatisVO;
 import kr.co.mseshop.service.FranchService;
 
@@ -244,6 +245,24 @@ public class FranchServiceImpl implements FranchService {
 	@Override
 	public List<RentalVO> getRentalSvcList(RentalSearchCriteria rentalSearchCriteria, RowBounds rowBounds) {
 		return franchDao.getRentalSvcList(rentalSearchCriteria,rowBounds);
+	}
+
+
+	@Override
+	public void addRentalInfo2(RentalVO2 rentalVO2) {
+		franchDao.addRentalInfo2(rentalVO2);
+	}
+
+
+	@Override
+	public List<RentalVO2> getRentalSvcList2(RentalSearchCriteria rentalSearchCriteria, RowBounds rowBounds) {
+		return franchDao.getRentalSvcList2(rentalSearchCriteria,rowBounds);
+	}
+
+
+	@Override
+	public int getRentalRowCount2(RentalSearchCriteria rentalSearchCriteria) {
+		return franchDao.getRentalRowCount2(rentalSearchCriteria);
 	}
 
 	
