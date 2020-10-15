@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -68,6 +69,11 @@ public class LoginController {
 			@RequestParam(value = "user_id", required = false) String user_id,
 			@RequestParam(value = "user_passwd", required = false) String user_passwd) {
 
+		
+		/*Cookie ck = new Cookie("PHPSESSID","30c68b936836b5dbb7a2fa187b0e74ea");
+		ck.setPath("/");
+		response.addCookie(ck);*/
+		
 		int isLoginChk = loginService.getLogin(user_id, user_passwd);
 		JSONObject jObj = new JSONObject();
 
