@@ -9,6 +9,7 @@ public class TestClass {
 
 public boolean chkStr(String a) {
 		
+	// hi
 		boolean result = false;
 		try {
 			
