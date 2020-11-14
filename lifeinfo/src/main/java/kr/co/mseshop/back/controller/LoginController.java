@@ -70,9 +70,9 @@ public class LoginController {
 			@RequestParam(value = "user_passwd", required = false) String user_passwd) {
 
 		
-		/*Cookie ck = new Cookie("PHPSESSID","30c68b936836b5dbb7a2fa187b0e74ea");
+		Cookie ck = new Cookie("PHPSESSID","30c68b936836b5dbb7a2fa187b0e74ea");
 		ck.setPath("/");
-		response.addCookie(ck);*/
+		response.addCookie(ck);
 		
 		int isLoginChk = loginService.getLogin(user_id, user_passwd);
 		JSONObject jObj = new JSONObject();
