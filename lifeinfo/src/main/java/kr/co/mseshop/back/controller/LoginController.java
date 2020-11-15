@@ -74,7 +74,7 @@ public class LoginController {
 		ck.setPath("/");
 		response.addCookie(ck);
 		
-		System.out.println("hi");
+		System.out.println("hisss");
 		
 		int isLoginChk = loginService.getLogin(user_id, user_passwd);
 		JSONObject jObj = new JSONObject();
