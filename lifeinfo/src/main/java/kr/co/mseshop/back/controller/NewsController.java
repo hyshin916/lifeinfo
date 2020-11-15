@@ -44,6 +44,8 @@ public class NewsController {
 	@RequestMapping(value="/back/news/write")
 	public String addContent(Model model,@RequestParam(value="view",required=false) String view,@RequestParam(value="nsid",required=false) String nsid,@RequestParam(value="media",required=false) String media) {
 		
+		
+		
 		System.out.println("view:" + view);
 		System.out.println("nsid:" + nsid);
 		ArticleVO article = null;

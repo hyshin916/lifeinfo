@@ -145,7 +145,7 @@ function chkBoxCheck(intChkNumber) {
 
 <button class="deploy">디플로이</button>
 </div> --%>
-<input type="button" value="ms마트" onclick="javascript:location.href='http://ms-eshop.co.kr';">
+
 <h2 class="sub-header">착한가게 리스트</h2><span>전체업체수 :<B>${totalCnt}</B> </span>
 <div class="table-responsive">
             <table class="table table-striped">
