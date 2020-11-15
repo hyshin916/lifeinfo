@@ -74,7 +74,7 @@ public class LoginController {
 		ck.setPath("/");
 		response.addCookie(ck);
 		
-		System.out.println("dadfsdf");
+		System.out.println("sss");
 		
 		int isLoginChk = loginService.getLogin(user_id, user_passwd);
 		JSONObject jObj = new JSONObject();
