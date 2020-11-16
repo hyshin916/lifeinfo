@@ -74,7 +74,7 @@ public class LoginController {
 		ck.setPath("/");
 		response.addCookie(ck);
 		
-		System.out.println("hisss");
+		System.out.println("ssbranch merge");
 		
 		int isLoginChk = loginService.getLogin(user_id, user_passwd);
 		JSONObject jObj = new JSONObject();
