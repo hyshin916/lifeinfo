@@ -8,18 +8,26 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import kr.co.mseshop.agent.ShinClass;
 import kr.co.mseshop.back.service.LoginService;
 import kr.co.mseshop.common.Constants;
+import kr.co.mseshop.common.Member;
 import kr.co.mseshop.model.MemberVO;
 import kr.co.mseshop.model.MenuVO;
 import kr.co.mseshop.util.CommandToken;
@@ -52,6 +60,26 @@ public class LoginController {
 		request.getSession().invalidate();
 		return "redirect:/login";
 	}
+	
+	@RequestMapping(value="/validator", method = RequestMethod.POST)
+	@ResponseBody
+	@ResponseStatus(value=HttpStatus.NO_CONTENT)
+    public void saveMember(@Valid Member member,BindingResult bindingResult) {
+		System.out.println("[Start Validator]");
+		System.out.println("##############");
+		System.out.println(member.getPassword());
+         System.out.println("pass:"+member.getPassword());
+         System.out.println("error:"+bindingResult.hasErrors());
+         
+        if(bindingResult.hasErrors()){
+              List<ObjectError> list =  bindingResult.getAllErrors();
+              for(ObjectError e : list) {
+                   System.out.println(e.getDefaultMessage());
+              }
+        }
+	
+    }
+	
 
 	/**
 	 * @date : 2020. 3. 25.
