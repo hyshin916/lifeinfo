@@ -5,8 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -120,7 +120,7 @@ public class NewsParser extends AbstractCommon {
 		return instance;
 	}
 
-	Logger logger = Logger.getLogger(this.getClass());
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@SuppressWarnings("unchecked")
 	public NewsParser(Model model, String viewName, Object obj, String newsMethod) {

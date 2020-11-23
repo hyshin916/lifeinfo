@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,7 +35,7 @@ import kr.co.mseshop.util.CommandToken;
 @Controller
 public class LoginController {
 
-	Logger logger = Logger.getLogger(this.getClass());
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Resource
 	LoginService loginService;
@@ -103,7 +103,7 @@ public class LoginController {
 		response.addCookie(ck);
 		
 		System.out.println("ssbranch merge1111");
-		
+		logger.error("error...");
 		int isLoginChk = loginService.getLogin(user_id, user_passwd);
 		JSONObject jObj = new JSONObject();
 

@@ -1,11 +1,12 @@
 package kr.co.mseshop.exceptions;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("serial")
 public class UserException extends RuntimeException {
 
-	Logger logger = Logger.getLogger(this.getClass());
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	public UserException(String msg) {
 		super(msg);
@@ -15,8 +16,7 @@ public class UserException extends RuntimeException {
 		System.out.println("########################################################");
 		System.out.println(msg);
 		e.printStackTrace();
-		logger.error(msg);
-		logger.error(e);
+		logger.error(msg,e);
 		System.out.println("########################################################");
 	}
 	

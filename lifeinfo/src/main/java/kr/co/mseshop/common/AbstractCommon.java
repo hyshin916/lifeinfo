@@ -3,27 +3,24 @@ package kr.co.mseshop.common;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import kr.co.mseshop.model.ArticleVO;
 
 public abstract class AbstractCommon<T> implements Action {
 
@@ -40,7 +37,7 @@ public abstract class AbstractCommon<T> implements Action {
 	public Model model;
 	public String method;
 
-	Logger logger = Logger.getLogger(this.getClass());
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	String mode;
 

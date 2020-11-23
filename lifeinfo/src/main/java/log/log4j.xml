@@ -6,24 +6,23 @@
     xmlns:log4j="http://jakarta.apache.org/log4j/">
      
     <!-- 콘솔 로그 -->
-    <appender name="console" class="org.apache.log4j.ConsoleAppender">
-        <!-- 패턴 레이아웃 설정.. -->
+ <!--    <appender name="console" class="org.apache.log4j.ConsoleAppender">
          <layout class="org.apache.log4j.PatternLayout">
               <param name="ConversionPattern" value="%d %p [%c{5}] %m [%X{userId}]%n" />
          </layout>   
-    </appender>
+    </appender> -->
      
     <!-- 날짜별 로그 파일 생성 -->
-    <appender name="rollingFile" class="org.apache.log4j.DailyRollingFileAppender">
-        <!-- 날짜별로  로그를 남김. 파일명.확장자.DatePattern으로 정의 함-->  
-      <!--   <param name="File" value="D:\\log\\all.log"/> -->
+<!--     <appender name="rollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+        날짜별로  로그를 남김. 파일명.확장자.DatePattern으로 정의 함  
+        <param name="File" value="D:\\log\\all.log"/>
         <param name="File" value="/usr/local/cmslog/all.log"/>
         <param name="Append" value="true"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/> 
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %p [%C{10}] %m [%X{userId}]%n" />
         </layout>   
-    </appender>
+    </appender> -->
      
 <!--     날짜별 로그 파일 생성
     <appender name="springFile" class="org.apache.log4j.DailyRollingFileAppender">
@@ -37,10 +36,9 @@
      
     <!-- 날짜별 로그 파일 생성(에러만) -->
     <appender name="errFile" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="Threshold" value="ERROR"/>
-        <!-- <param name="File" value="D:\\log\\error.log"/> -->
-        <param name="File" value="/usr/local/cmslog/error.log"/>
-        <param name="Append" value="true"/>
+      	<param name="Append" value="true"/>
+        <param name="File" value="D:\\log\\error.log"/>
+        <!-- <param name="File" value="/usr/local/cmslog/error.log"/> -->
         <param name="DatePattern" value="'.'yyyy-MM-dd"/> 
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %5p [%C{1}] %m [%X{userId}]%n" />
@@ -79,10 +77,8 @@
  
     <!-- 기본적으로 출력 될 로그 출력, appender-ref 를 통해 해당 appender 참조 -->
  	<root>
-        <level value="ERROR" />
-        <appender-ref ref="console" />
+ 		<level value="ERROR"/>
         <appender-ref ref="errFile"/>
-       <!--  <appender-ref ref="rollingFile"/> -->
     </root> 
     
 </log4j:configuration>

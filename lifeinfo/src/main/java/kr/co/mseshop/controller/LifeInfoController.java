@@ -8,7 +8,8 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,6 @@ import kr.co.mseshop.model.ArticleVO;
 import kr.co.mseshop.model.SearchVO;
 import kr.co.mseshop.service.LifeInfoService;
 import kr.co.mseshop.util.Base64Util;
-import kr.co.mseshop.util.CookieUtils;
 import kr.co.mseshop.util.NewsMLParser;
 
 @Controller
@@ -33,7 +33,7 @@ public class LifeInfoController {
 	@Inject
 	LifeInfoService lifeInfoService;
 
-	Logger logger = Logger.getLogger(this.getClass());
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	/**
 	 * 작성자 : 신현영 내용 : 지역축제정보 가져오기
 	 * 
