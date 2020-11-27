@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +38,8 @@ import kr.co.mseshop.util.FranchEvtUtil;
 @Controller
 public class FranchBackController {
 
+	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	@Resource
 	private FranchService franchService;
 
@@ -55,9 +59,19 @@ public class FranchBackController {
 	@RequestMapping(value = "/back/franch/statisList", method = RequestMethod.GET)
 	public String getFranchStatistics(Model model, HttpServletRequest request, HttpServletRequest response) {
 
-		List<StatisVO> statisList = franchService.getStatistics();
+		String timepigFlag = request.getParameter("event");
+		System.out.println("[timepigFlag]" + timepigFlag);
+		
+		List<StatisVO> statisList = franchService.getStatistics(timepigFlag);
 
+		if (String.valueOf(timepigFlag)!="null") {
+			model.addAttribute("flag","timepig");
+		} else {
+			model.addAttribute("flag","general");
+		}
+		
 		model.addAttribute("statisList", statisList);
+		
 		return "statisList";
 	}
 
@@ -163,6 +177,7 @@ public class FranchBackController {
 		JSONObject jObj = new JSONObject();
 		if (flag != null && flag.equals("register")) {
 			try {
+				
 				franchService.addFranchSellerInfo(franchSellerVO);
 				jObj.put("result", "success");
 				actionLogUtil.actionLogUtil(request, "save");
@@ -180,7 +195,7 @@ public class FranchBackController {
 
 		} else if (flag != null && flag.equals("update")) {
 			try {
-
+				System.out.println("[Event log] " + franchSellerVO.getEvent());
 				franchService.updateSellerInfo(franchSellerVO);
 				jObj.put("result", "success");
 				actionLogUtil.actionLogUtil(request, "update");
@@ -223,6 +238,8 @@ public class FranchBackController {
 			List<RentalVO> rentalList = franchService.getRentalSvcList(rentalSearchCriteria,
 					rentalSearchCriteria.getRowBounds());
 
+			System.out.println("[rentalStatus]" +  rentalSearchCriteria.getRentalStatus());
+			
 			int rowCount = franchService.getRentalRowCount(rentalSearchCriteria);
 			PageHolder pageHolder = null;
 			pageHolder = new PageHolder(rowCount, rentalSearchCriteria.getPage(), rentalSearchCriteria.getListSize());
@@ -233,6 +250,15 @@ public class FranchBackController {
 			model.addAttribute("displayNum", rentalSearchCriteria.getListSize());
 			model.addAttribute("rentalList", rentalList);
 			model.addAttribute("status", "rentalSVC");
+			
+			if (rentalSearchCriteria.getRentalStatus().equals("3499")) {
+				System.out.println("[status]3499");
+				model.addAttribute("rentalStatus","3499");
+				
+			} else if (rentalSearchCriteria.getRentalStatus().equals("1111")) {
+				model.addAttribute("rentalStatus","1111");
+			}
+			
 		}
 
 		return "rentalSVC";

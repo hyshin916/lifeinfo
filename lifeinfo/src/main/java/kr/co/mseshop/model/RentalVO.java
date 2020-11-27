@@ -10,6 +10,28 @@ public class RentalVO {
 	private String local;
 	private String code;
 	private String date;
+	private String rtquestion;
+	private String rental_yn;
+	
+	
+	
+	
+
+	public String getRtquestion() {
+		return rtquestion;
+	}
+
+	public void setRtquestion(String rtquestion) {
+		this.rtquestion = rtquestion;
+	}
+
+	public String getRental_yn() {
+		return rental_yn;
+	}
+
+	public void setRental_yn(String rental_yn) {
+		this.rental_yn = rental_yn;
+	}
 
 	public String getName() {
 		return name;

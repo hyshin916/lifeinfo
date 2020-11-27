@@ -76,4 +76,8 @@ public interface FranchDao {
 
 	int getRentalRowCount2(RentalSearchCriteria rentalSearchCriteria);
 
+	void addFranchTpInfo(HashMap<String, String> map);
+
+	List<StatisVO> getTpStatistics();
+
 }

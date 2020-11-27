@@ -67,6 +67,12 @@
 		INNER JOIN franch_use_tbl AS b ON a.sellerCd = b.sellerCd GROUP BY
 		b.sellerCd ORDER BY cnt DESC;
 	</select>
+	<select id="getTpStatistics"
+		resultType="kr.co.mseshop.model.StatisVO">
+		SELECT a.name,count(b.sellerCd) AS cnt,a.event FROM franch_tbl AS a
+		INNER JOIN franch_use_tbl AS b ON a.sellerCd = b.sellerCd AND a.event='Y' AND b.eventNm = 'timepig' GROUP BY
+		b.sellerCd ORDER BY cnt DESC;
+	</select>
 
 	<select id="getFranchEventList"
 		resultType="kr.co.mseshop.model.FranchEvtVO">
@@ -169,7 +175,7 @@
 		parameterType="kr.co.mseshop.criteria.RentalSearchCriteria"
 		resultType="kr.co.mseshop.model.RentalVO">
 		SELECT (SELECT NAME FROM msmartshop.tblmember WHERE id = a.id) AS
-		NAME, id, kind,size,LOCAL,DATE FROM msmartlife.rental_tbl AS a WHERE
+		NAME, id, kind,size,LOCAL,DATE,rtquestion,rental_yn FROM msmartlife.rental_tbl AS a WHERE
 		1=1
 		<if test="rentalStatus!=null and rentalStatus!=''">
 			AND CODE = #{rentalStatus}
@@ -177,6 +183,7 @@
 		<if test="startDate!=null and startDate!=''">
 			AND DATE(DATE) BETWEEN #{startDate} AND #{endDate};
 		</if>
+		ORDER BY date DESC;
 	</select>
 	<select id="getRentalSvcList2"
 		parameterType="kr.co.mseshop.criteria.RentalSearchCriteria"
@@ -190,6 +197,7 @@
 		<if test="startDate!=null and startDate!=''">
 			AND DATE(DATE) BETWEEN #{startDate} AND #{endDate};
 		</if>
+		ORDER BY date DESC;
 	</select>
 
 	<insert id="addFranchInfo" parameterType="HashMap">
@@ -197,18 +205,23 @@
 		msmartlife.franch_use_tbl(id,sellerCd,date)
 		VALUES(#{id},#{sellerCd},#{date});
 	</insert>
+	<insert id="addFranchTpInfo" parameterType="HashMap">
+		INSERT INTO
+		msmartlife.franch_use_tbl(id,sellerCd,date,eventNm)
+		VALUES(#{id},#{sellerCd},#{date},#{eventNm});
+	</insert>
 
 	<insert id="addFranchSellerInfo"
 		parameterType="kr.co.mseshop.model.FranchSellerVO">
 		INSERT INTO
-		msmartlife.franch_tbl(name,sellerCd,passwd,comment)
-		VALUES(#{name},#{sellerCd},#{passwd},#{comment});
+		msmartlife.franch_tbl(name,sellerCd,passwd,comment,event)
+		VALUES(#{name},#{sellerCd},#{passwd},#{comment},#{event});
 	</insert>
 
 	<update id="updateSellerInfo"
 		parameterType="kr.co.mseshop.model.FranchSellerVO">
 		UPDATE msmartlife.franch_tbl SET
-		name=#{name},sellerCd=#{sellerCd},passwd=#{passwd},comment=#{comment}
+		name=#{name},sellerCd=#{sellerCd},passwd=#{passwd},comment=#{comment},event=#{event}
 		WHERE no = #{no};
 	</update>
 	<delete id="deleteSellerInfo" parameterType="int">

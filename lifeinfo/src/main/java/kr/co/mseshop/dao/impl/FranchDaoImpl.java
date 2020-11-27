@@ -187,5 +187,15 @@ public class FranchDaoImpl implements FranchDao {
 		return sqlSession.selectOne("franch.getRentalRowCount2",rentalSearchCriteria);
 	}
 
+	@Override
+	public void addFranchTpInfo(HashMap<String, String> map) {
+		sqlSession.insert("franch.addFranchTpInfo",map);
+	}
+
+	@Override
+	public List<StatisVO> getTpStatistics() {
+		return sqlSession.selectList("franch.getTpStatistics");
+	}
+
 
 }

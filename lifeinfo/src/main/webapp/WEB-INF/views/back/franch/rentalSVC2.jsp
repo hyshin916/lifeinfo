@@ -323,7 +323,7 @@ select::-ms-expand {
 			</c:if> --%>
 			<c:if test="${status eq 'rentalSVC2'}">
 				<util:pagination url="./rentalSVC2?status=search" name="pageHolder"
-					parameters="startDate_1,endDate_1" />
+					parameters="startDate,endDate,rentalStatus" />
 			</c:if>
 		</div>
 	</div>

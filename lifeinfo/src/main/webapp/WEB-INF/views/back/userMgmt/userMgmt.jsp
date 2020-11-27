@@ -370,19 +370,12 @@ body {
 			<div class="col-lg-6">
 				<div class="input-group">
 					<span class="input-group-addon"> <input type="checkbox"
-						name="chkMenu" id="0008" aria-label="...">
-					</span> <input type="text" class="form-control" aria-label="..."
-						value="신규프로젝트마일스톤">
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="input-group">
-					<span class="input-group-addon"> <input type="checkbox"
 						name="chkMenu" id="0009" aria-label="...">
 					</span> <input type="text" class="form-control" aria-label="..."
 						value="뉴스파서시작/종료">
 				</div>
 			</div>
+
 			<div class="col-lg-6">
 				<div class="input-group">
 					<span class="input-group-addon"> <input type="checkbox"

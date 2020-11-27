@@ -186,10 +186,12 @@ public class FranchController {
 		String passwd = request.getParameter("passwd");
 		String view_board = request.getParameter("view_board");
 		String view_num = request.getParameter("view_num");
+		String eventNm = request.getParameter("eventNm");
 		System.out.println("[id]:" + userID);
 		System.out.println("[pw]:" + passwd);
 		System.out.println("[view_board]:" + view_board);
 		System.out.println("[view_num]:" + view_num);
+		System.out.println("[eventNm]:" + eventNm);
 
 		FranchAdminVO franchAdminVO = franchService.getPasswd(view_num);
 
@@ -203,7 +205,17 @@ public class FranchController {
 			if (view_num.equals("2426") && getUseCnt(userID, view_num) == 3) { // 메가박스 하루에 한번 인증처리
 				resultMap.put("isMember", "3");
 			} else {
-				franchService.addFranchInfo(userID, view_num);
+				
+				if (eventNm.equals("")) {
+					System.out.println("공백이 맞음");
+					franchService.addFranchInfo(userID, view_num);
+				} else {
+					System.out.println("공백이 아님");
+					franchService.addFranchTpInfo(userID, view_num, eventNm);
+				}
+				
+				
+				
 				resultMap.put("isMember", "1");
 			}
 		} else {

@@ -92,10 +92,6 @@
 		<put-attribute name="main"
 			value="/WEB-INF/views/back/login/etbAuthUser.jsp" />
 	</definition>
-	<definition name="milestone" extends=".write">
-		<put-attribute name="main"
-			value="/WEB-INF/views/back/prj/milestone.jsp" />
-	</definition>
 
 	<definition name="memRegister"
 		template="/WEB-INF/views/back/login/memRegister.jsp">

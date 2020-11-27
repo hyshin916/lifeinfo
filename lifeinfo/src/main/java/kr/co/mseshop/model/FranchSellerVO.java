@@ -8,8 +8,19 @@ public class FranchSellerVO {
 	private String useCnt;
 	private String passwd;
 	private String comment;
+	private String event;
 	
 	
+	
+	
+
+	public String getEvent() {
+		return event;
+	}
+
+	public void setEvent(String event) {
+		this.event = event;
+	}
 
 	public String getComment() {
 		return comment;

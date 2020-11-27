@@ -137,8 +137,23 @@ function chkBoxCheck(intChkNumber) {
 
 <button class="deploy">디플로이</button>
 </div> --%>
+<script>
+	var moveStatisURL = function(obj) {
+		if (obj.value == 'general') {
+			location.href = './statisList';
+		} else if (obj.value == 'timepig') {
+			location.href = './statisList?event=timepig';
+		}
+	}
+</script>
 <h2 class="sub-header">착한가게 이용자통계</h2>
-<div class="table-responsive">
+	<div>
+		<span>업체명 :</span><select name="rentalStatus" id="rentalStatus" onchange="moveStatisURL(this);">
+				<option value="general" <c:if test="${flag eq 'general'}">selected</c:if>>우동착 일반업체 이용통계</option>
+				<option value="timepig" <c:if test="${flag eq 'timepig'}">selected</c:if>>우동착 타임돼지 이용통계</option>
+		</select>
+	</div>
+	<div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>

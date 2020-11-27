@@ -60,7 +60,7 @@ $(document).ready(function() {
 			$('#passwd').focus();
 			return false;
 		} 
-		
+		var eventYN = __rtnEventYN();
 		$.ajax({
 			url : './franchWrite',
 			dataType : 'json',
@@ -70,6 +70,7 @@ $(document).ready(function() {
 				sellerCd : $('#sellerCd').val(),
 				passwd : $('#passwd').val(),
 				comment : $('#comment').val(),
+				event : $('#timepig').val(),
 				flag : 'register'
 			},
 			async : true,
@@ -85,7 +86,18 @@ $(document).ready(function() {
 			}
 		});
 	});
-	
+
+			var __rtnEventYN = function() {
+
+				var eventYN;
+				if ($("input:checkbox[id='timepig']").is(":checked") == true) {
+					eventYN = "Y";
+				} else {
+					eventYN = "N";
+				}
+				return eventYN;
+
+			};
 	
 	$('#update').on('click', function() {
 		if ($('#name').val() == '') {
@@ -103,6 +115,7 @@ $(document).ready(function() {
 			$('#passwd').focus();
 			return false;
 		} 
+		var eventYN = __rtnEventYN();
 		
 		$.ajax({
 			url : './franchWrite',
@@ -114,6 +127,7 @@ $(document).ready(function() {
 				sellerCd : $('#sellerCd').val(),
 				passwd : $('#passwd').val(),
 				comment : $('#comment').val(),
+				event : eventYN,
 				flag : 'update'
 			},
 			async : true,

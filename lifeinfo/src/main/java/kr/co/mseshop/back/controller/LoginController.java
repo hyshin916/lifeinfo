@@ -61,25 +61,19 @@ public class LoginController {
 		return "redirect:/login";
 	}
 	
-	@RequestMapping(value="/validator", method = RequestMethod.POST)
+	// Validation TEST 
+	/*@RequestMapping(value="/validator", method = RequestMethod.POST)
 	@ResponseBody
 	@ResponseStatus(value=HttpStatus.NO_CONTENT)
     public void saveMember(@Valid Member member,BindingResult bindingResult) {
-		System.out.println("[Start Validator]");
-		System.out.println("##############");
-		System.out.println(member.getPassword());
-         System.out.println("pass:"+member.getPassword());
-         System.out.println("error:"+bindingResult.hasErrors());
-         
         if(bindingResult.hasErrors()){
               List<ObjectError> list =  bindingResult.getAllErrors();
               for(ObjectError e : list) {
                    System.out.println(e.getDefaultMessage());
               }
         }
-	
     }
-	
+	*/
 
 	/**
 	 * @date : 2020. 3. 25.
@@ -102,8 +96,6 @@ public class LoginController {
 		ck.setPath("/");
 		response.addCookie(ck);
 		
-		System.out.println("ssbranch merge1111");
-		logger.error("error...");
 		int isLoginChk = loginService.getLogin(user_id, user_passwd);
 		JSONObject jObj = new JSONObject();
 
@@ -171,18 +163,6 @@ public class LoginController {
 		model.addAttribute("memberList", memberList);
 
 		return "etbAuthUser";
-	}
-
-	/**
-	 * @date : 2020. 4. 3.
-	 * @author : 사용자
-	 * @version : 1.0
-	 * @description : 프로젝트 마일스톤 정보
-	 * @return
-	 */
-	@RequestMapping(value = "/back/prj/milestone")
-	public String getMilestone() {
-		return "milestone";
 	}
 
 	@RequestMapping(value = "/back/login/approveUser")

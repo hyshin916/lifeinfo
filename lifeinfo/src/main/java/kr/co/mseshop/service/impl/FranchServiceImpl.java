@@ -115,8 +115,14 @@ public class FranchServiceImpl implements FranchService {
 
 
 	@Override
-	public List<StatisVO> getStatistics() {
-		return franchDao.getStatistics();
+	public List<StatisVO> getStatistics(String eventFlag) {
+		
+		if (String.valueOf(eventFlag)!="null") {
+			return franchDao.getTpStatistics();
+		} else {
+			return franchDao.getStatistics();
+		}
+		
 	}
 
 
@@ -263,6 +269,22 @@ public class FranchServiceImpl implements FranchService {
 	@Override
 	public int getRentalRowCount2(RentalSearchCriteria rentalSearchCriteria) {
 		return franchDao.getRentalRowCount2(rentalSearchCriteria);
+	}
+
+
+	@Override
+	public void addFranchTpInfo(String userID, String franch, String eventNm) {
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.format(date);
+		
+		HashMap<String,String> map = new HashMap<String,String>();
+		map.put("id", userID);
+		map.put("sellerCd", franch);
+		map.put("date", sdf.format(date));
+		map.put("eventNm", eventNm);
+		
+		franchDao.addFranchTpInfo(map);
 	}
 
 	

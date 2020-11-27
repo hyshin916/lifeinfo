@@ -33,7 +33,7 @@ public interface FranchService {
 
 	List<FranchSellerVO> getFranchList();
 
-	List<StatisVO> getStatistics();
+	List<StatisVO> getStatistics(String eventFlag);
 
 	void addFranchSellerInfo(FranchSellerVO franchSellerVO);
 
@@ -76,6 +76,8 @@ public interface FranchService {
 	List<RentalVO2> getRentalSvcList2(RentalSearchCriteria rentalSearchCriteria, RowBounds rowBounds);
 
 	int getRentalRowCount2(RentalSearchCriteria rentalSearchCriteria);
+
+	void addFranchTpInfo(String userID, String franch, String eventNm);
 
 
 	

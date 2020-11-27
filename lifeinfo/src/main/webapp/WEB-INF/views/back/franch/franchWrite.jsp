@@ -251,6 +251,12 @@ body {
 						</div>
 					</div>
 					<div class="form-group">
+						<label class="control-label col-sm-2">타임돼지:</label>
+						<div class="col-sm-10">
+							<input type="checkbox" class="custom-control-input" id="timepig">
+						</div>
+					</div>
+					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<c:if test="${param.flag ne 'view'}"><button type="button" class="btn btn-default" id="register">등록</button></c:if>
 							<c:if test="${param.flag eq 'view'}"><button type="button" class="btn btn-default" id="update">수정</button></c:if>

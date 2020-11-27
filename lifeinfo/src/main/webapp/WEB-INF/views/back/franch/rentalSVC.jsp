@@ -215,6 +215,7 @@
 	<h2 class="sub-header">렌탈서비스 접수조회</h2>
 	<script>
 		var searchRentalSvc = function() {
+			
 			if (document.franchEvtFrm.startDate.value == null
 					|| document.franchEvtFrm.startDate.value == "") {
 				alert('시작날짜를 입력해 주세요!');
@@ -275,8 +276,9 @@ select::-ms-expand {
 	<div class="table-responsive">
 		<form name="dpFrm" action="./rentalSVC?status=search" method="POST">
 			<div>
-				<span>업체명 :</span> <span> <select name="rentalStatus">
-						<option value="3499">넥센타이어렌탈</option>
+				<span>업체명 :</span> <span> <select name="rentalStatus" id="rentalStatus">
+						<option value="3499" <c:if test="${rentalStatus eq '3499'}">selected</c:if>>넥센타이어렌탈</option>
+						<option value="1111" <c:if test="${rentalStatus eq '1111'}">selected</c:if>>SK렌터카</option>
 				</select>
 
 				</span> <span>날짜검색 : </span> <span><input type="text"
@@ -289,6 +291,7 @@ select::-ms-expand {
 		<div class="allUsers_right">
 			<span class="allUsers">전체 신청 수 : ${totalCount}</span>
 		</div>
+		<c:if test="${rentalStatus eq '3499'}">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -316,6 +319,35 @@ select::-ms-expand {
 				</c:forEach>
 			</tbody>
 		</table>
+		</c:if>
+		<c:if test="${rentalStatus eq '1111'}">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>NO</th>
+					<th>이용자명</th>
+					<th>전화번호</th>
+					<th>차종</th>
+					<th>문의사항</th>
+					<th>신청날짜</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach var="item" items="${rentalList}" varStatus="status">
+					<tr>
+						<td><c:if test="${totalCount ne null}">${(totalCount-status.index)-((currentPage-1)*displayNum)}</c:if>
+							<c:if test="${totalCount eq null}">${status.index + 1}</c:if></td>
+						<td>${item.name}</td>
+						<td>${item.id}</td>
+						<td>${item.kind}</td>
+						<td>${item.rtquestion}</td>
+						<td>${item.date}</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		</c:if>
+		
 		<div style="width: 100%; text-align: center;">
 			<%-- <c:if test="${status eq 'evt'}">
 				<util:pagination url="./event?status=evtStart&flag=N"
@@ -327,7 +359,7 @@ select::-ms-expand {
 			</c:if> --%>
 			<c:if test="${status eq 'rentalSVC'}">
 				<util:pagination url="./rentalSVC?status=search" name="pageHolder"
-					parameters="startDate_1,endDate_1" />
+					parameters="startDate,endDate,rentalStatus" />
 			</c:if>
 		</div>
 	</div>
