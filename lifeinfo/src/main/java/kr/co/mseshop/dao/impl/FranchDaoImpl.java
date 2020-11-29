@@ -197,5 +197,10 @@ public class FranchDaoImpl implements FranchDao {
 		return sqlSession.selectList("franch.getTpStatistics");
 	}
 
+	@Override
+	public int __getUcFromSellerCd(String view_num) {
+		return sqlSession.selectOne("franch.__getUcFromSellerCd",view_num);
+	}
+
 
 }

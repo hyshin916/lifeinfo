@@ -181,12 +181,11 @@ public class FranchController {
 		Gson gson = new Gson();
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
 
-		// 전송된 데이터를 추출(id와 콜백 메소드명)
-		String userID = request.getParameter("userID");
-		String passwd = request.getParameter("passwd");
-		String view_board = request.getParameter("view_board");
-		String view_num = request.getParameter("view_num");
-		String eventNm = request.getParameter("eventNm");
+		String userID = String.valueOf(request.getParameter("userID"));
+		String passwd = String.valueOf(request.getParameter("passwd"));
+		String view_board = String.valueOf(request.getParameter("view_board"));
+		String view_num = String.valueOf(request.getParameter("view_num"));
+		String eventNm = String.valueOf(request.getParameter("eventNm"));
 		System.out.println("[id]:" + userID);
 		System.out.println("[pw]:" + passwd);
 		System.out.println("[view_board]:" + view_board);
@@ -195,27 +194,17 @@ public class FranchController {
 
 		FranchAdminVO franchAdminVO = franchService.getPasswd(view_num);
 
-		System.out.println("[franchAdmin passwd]:" + franchAdminVO.getPasswd());
-		// 반환 될 데이터
-		if (passwd != null && passwd.equals(franchAdminVO.getPasswd())) {
-			// 저장
-			System.out.println("[msFranch passwd same...");
-			System.out.println("[userID]:" + userID + "[view_num]:" + view_num);
-			System.out.println(getUseCnt(userID, view_num));
-			if (view_num.equals("2426") && getUseCnt(userID, view_num) == 3) { // 메가박스 하루에 한번 인증처리
+		if (passwd != "null" && passwd.equals(franchAdminVO.getPasswd())) {
+			if (eventNm.equals("timepig") && getUseCnt(userID, view_num) == 3) { 
 				resultMap.put("isMember", "3");
 			} else {
-				
+
 				if (eventNm.equals("")) {
-					System.out.println("공백이 맞음");
 					franchService.addFranchInfo(userID, view_num);
 				} else {
-					System.out.println("공백이 아님");
 					franchService.addFranchTpInfo(userID, view_num, eventNm);
 				}
-				
-				
-				
+
 				resultMap.put("isMember", "1");
 			}
 		} else {
@@ -292,25 +281,28 @@ public class FranchController {
 	public String rentalRcv(RentalCriteria rentalCriteria, RentalVO rentalVO) throws IOException {
 		Gson gson = new Gson();
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
+
 		try {
 			String[] tire = rentalCriteria.getTire1().split("_");
-			String tireSetValue = tire[0] +"/"+ tire[1] +"R " + tire[2];
+			String tireSetValue = tire[0] + "/" + tire[1] + "R " + tire[2];
 			if (rentalCriteria.getUserID() == "" || rentalCriteria.getUserID() == null) {
 				throw new RentalSvcException("id null");
 			}
 			rentalVO.setId(rentalCriteria.getUserID());
-			
-			/*System.out.println("[Rental CarKind]" + Base64Util.getInstance().deCoder(rentalCriteria.getCarKind()));
-			System.out.println("[Rental Local]" + Base64Util.getInstance().deCoder(rentalCriteria.getRentalLocal()));
-			*/
-			//rentalVO.setKind(Base64Util.getInstance().deCoder(rentalCriteria.getCarKind()));
+
+			/*
+			 * System.out.println("[Rental CarKind]" +
+			 * Base64Util.getInstance().deCoder(rentalCriteria.getCarKind()));
+			 * System.out.println("[Rental Local]" +
+			 * Base64Util.getInstance().deCoder(rentalCriteria.getRentalLocal()));
+			 */
+			// rentalVO.setKind(Base64Util.getInstance().deCoder(rentalCriteria.getCarKind()));
 			rentalVO.setKind(rentalCriteria.getCarKind());
 			rentalVO.setSize(tireSetValue);
-			//rentalVO.setLocal(Base64Util.getInstance().deCoder(rentalCriteria.getRentalLocal()));
+			// rentalVO.setLocal(Base64Util.getInstance().deCoder(rentalCriteria.getRentalLocal()));
 			rentalVO.setLocal(rentalCriteria.getRentalLocal());
 			rentalVO.setCode(rentalCriteria.getCode());
-			
+
 			franchService.addRentalInfo(rentalVO);
 			resultMap.put("result", "1");
 
@@ -327,15 +319,15 @@ public class FranchController {
 
 		return gson.toJson(resultMap);
 	}
-	
+
 	@RequestMapping(value = "/msFranchRentalRcv2.json", produces = "application/json; charset=utf8")
 	@ResponseBody
 	public String rentalRcv2(RentalVO2 rentalVO2) throws IOException {
 		Gson gson = new Gson();
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
+
 		try {
-		
+
 			franchService.addRentalInfo2(rentalVO2);
 			resultMap.put("result", "1");
 

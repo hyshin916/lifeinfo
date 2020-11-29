@@ -17,6 +17,9 @@ public class LoginDaoImpl implements LoginDao {
 
 	@Resource
 	private SqlSession sqlSession;
+	
+	@Resource
+	private SqlSession sqlSession2;
 
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
@@ -61,6 +64,10 @@ public class LoginDaoImpl implements LoginDao {
 	@Override
 	public void approveUser(HashMap<String, String> map) {
 		sqlSession.update("newsBack.approveUser",map);
+	}
+	@Override
+	public List<String> getHyposTest() {
+		return sqlSession2.selectList("newsBack.getHyposTest");
 	}
 	
 

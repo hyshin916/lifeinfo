@@ -80,4 +80,6 @@ public interface FranchDao {
 
 	List<StatisVO> getTpStatistics();
 
+	int __getUcFromSellerCd(String view_num);
+
 }

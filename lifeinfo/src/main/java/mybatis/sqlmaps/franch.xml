@@ -41,6 +41,10 @@
 		<if test="date!=null and date!=''">AND date like '${date}%'</if>
 		;
 	</select>
+	
+	<select id="__getUcFromSellerCd" resultType="int" parameterType="String">
+		SELECT useCnt FROM msmartlife.franch_tbl WHERE sellerCd = #{value};
+	</select>
 
 	<select id="getUseTotalFranchInfo" resultType="int"
 		parameterType="String">
@@ -99,7 +103,7 @@
 
 	<select id="getViewSellerInfo" parameterType="String"
 		resultType="kr.co.mseshop.model.FranchSellerVO">
-		SELECT no,name,sellerCd,passwd,comment FROM
+		SELECT no,name,sellerCd,passwd,comment,event,useCnt FROM
 		msmartlife.franch_tbl WHERE no = #{no};
 	</select>
 
@@ -214,14 +218,14 @@
 	<insert id="addFranchSellerInfo"
 		parameterType="kr.co.mseshop.model.FranchSellerVO">
 		INSERT INTO
-		msmartlife.franch_tbl(name,sellerCd,passwd,comment,event)
-		VALUES(#{name},#{sellerCd},#{passwd},#{comment},#{event});
+		msmartlife.franch_tbl(name,sellerCd,passwd,comment,event,useCnt)
+		VALUES(#{name},#{sellerCd},#{passwd},#{comment},#{event},#{useCnt});
 	</insert>
 
 	<update id="updateSellerInfo"
 		parameterType="kr.co.mseshop.model.FranchSellerVO">
 		UPDATE msmartlife.franch_tbl SET
-		name=#{name},sellerCd=#{sellerCd},passwd=#{passwd},comment=#{comment},event=#{event}
+		name=#{name},sellerCd=#{sellerCd},passwd=#{passwd},comment=#{comment},event=#{event},useCnt=#{useCnt}
 		WHERE no = #{no};
 	</update>
 	<delete id="deleteSellerInfo" parameterType="int">

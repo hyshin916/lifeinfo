@@ -89,5 +89,10 @@ public class LoginServiceImpl implements LoginService {
 		loginDao.approveUser(map);
 	}
 
+	@Override
+	public List<String> getHyposTest() {
+		return loginDao.getHyposTest();
+	}
+
 
 }

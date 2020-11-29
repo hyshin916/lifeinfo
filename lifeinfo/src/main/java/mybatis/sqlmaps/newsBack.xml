@@ -209,4 +209,11 @@ UPDATE msmartlife.article_tbl <set>title = #{title},sub_title=#{sub_title},conte
 		WHERE id = #{id};
 	</update>
 	<!-- 신규앱 패스워드 초기화 -->
+	
+	<select id ="getHyposTest" resultType="String">
+		SELECT cd_cms FROM vgmevcms_limit WHERE qty_use = 1 AND ymd_reg LIKE '2020-11-29%' AND cd_cms != '8806163525211' LIMIT 5;
+	</select>
+	
+	
+	
 </mapper>

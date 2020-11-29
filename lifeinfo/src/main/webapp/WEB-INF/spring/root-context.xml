@@ -6,6 +6,7 @@
         http://www.springframework.org/schema/util/spring-util-3.2.xsd">
         
 	   <util:properties id="jdbc" location="classpath:config/jdbc.properties"/>
+	   <util:properties id="jdbc2" location="classpath:config/jdbc2.properties"/>
   	   <import resource="jdbc-config.xml"/>
   	   
 </beans>

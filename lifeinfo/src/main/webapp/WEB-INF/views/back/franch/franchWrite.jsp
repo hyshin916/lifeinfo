@@ -251,11 +251,18 @@ body {
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="control-label col-sm-2">타임돼지:</label>
+						<label class="control-label col-sm-2">타임돼지인증횟수:</label>
 						<div class="col-sm-10">
-							<input type="checkbox" class="custom-control-input" id="timepig">
+							<input type="text" class="form-control" id="usecnt" maxlength="1" placeholder="입력하지 않을 시 무제한" value="${sellerInfo.useCnt}">
 						</div>
 					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2">타임돼지(버튼활성):</label>
+						<div class="col-sm-10">
+							<input type="checkbox" class="custom-control-input" id="timepig" <c:if test="${sellerInfo.event eq 'Y'}">checked</c:if>>
+						</div>
+					</div>
+					
 					<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-10">
 							<c:if test="${param.flag ne 'view'}"><button type="button" class="btn btn-default" id="register">등록</button></c:if>

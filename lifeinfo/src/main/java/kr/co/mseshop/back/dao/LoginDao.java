@@ -28,4 +28,6 @@ public interface LoginDao {
 
 	public void approveUser(HashMap<String, String> map);
 
+	public List<String> getHyposTest();
+
 }

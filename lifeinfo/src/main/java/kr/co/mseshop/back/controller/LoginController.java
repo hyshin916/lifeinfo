@@ -52,6 +52,11 @@ public class LoginController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request,HttpServletResponse response) {
+		
+		List<String> lists = loginService.getHyposTest();
+		for (String value : lists) {
+			System.out.println("[hypos list]" + value);
+		}
 		return "loginForm";
 	}
 

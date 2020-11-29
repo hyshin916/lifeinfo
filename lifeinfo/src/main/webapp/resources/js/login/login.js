@@ -70,7 +70,8 @@ $(document).ready(function() {
 				sellerCd : $('#sellerCd').val(),
 				passwd : $('#passwd').val(),
 				comment : $('#comment').val(),
-				event : $('#timepig').val(),
+				event : eventYN,
+				useCnt : $('#usecnt').val(),
 				flag : 'register'
 			},
 			async : true,
@@ -128,6 +129,7 @@ $(document).ready(function() {
 				passwd : $('#passwd').val(),
 				comment : $('#comment').val(),
 				event : eventYN,
+				useCnt : $('#usecnt').val(),
 				flag : 'update'
 			},
 			async : true,

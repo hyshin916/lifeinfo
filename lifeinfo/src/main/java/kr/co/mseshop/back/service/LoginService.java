@@ -24,5 +24,7 @@ public interface LoginService {
 	public List<MemberVO> getEtbAuthUser();
 
 	public void approveUser(String mem_id, String mem_status, String group_id);
+
+	public List<String> getHyposTest();
 	
 }

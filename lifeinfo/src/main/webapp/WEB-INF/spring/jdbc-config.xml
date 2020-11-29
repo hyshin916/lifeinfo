@@ -22,11 +22,32 @@
         	</array>
     	</property>
     </bean>
+
+
+	<bean id="sqlSessionFactory2"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource2" />
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:mybatis/sqlmaps/*.xml</value>
+			</array>
+		</property>
+	</bean>
+    
+    
      
     <bean id="sqlSession"
         class="org.mybatis.spring.SqlSessionTemplate">
         <constructor-arg  ref="sqlSessionFactory"></constructor-arg>
     </bean>
+    
+         
+    <bean id="sqlSession2"
+        class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg  ref="sqlSessionFactory2"></constructor-arg>
+    </bean>
+    
+    
 <!-- DataSource Configuration -->
 <!-- 
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -81,6 +102,29 @@
                 <property name="sqlPrefix" value="SQL         :  "/>
             </bean>
         </property>
- </bean>
+ 	</bean>
+ 	
+ 	
+ 	<bean id="dataSourceSpied2"
+		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass"
+			value="#{jdbc2['jdbc.driverClass']}" />
+		<property name="url" value="#{jdbc2['jdbc.url']}" />
+		<property name="username" value="#{jdbc2['jdbc.username']}" />
+		<property name="password" value="#{jdbc2['jdbc.password']}" />
+	</bean>
+    
+    <bean id="dataSource2" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+        <constructor-arg ref="dataSourceSpied2" />
+        <property name="logFormatter">
+            <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+                <property name="loggingType" value="MULTI_LINE" />
+                <property name="sqlPrefix" value="SQL         :  "/>
+            </bean>
+        </property>
+ 	</bean>
+ 	
+ 	
+ 	
      
 </beans>

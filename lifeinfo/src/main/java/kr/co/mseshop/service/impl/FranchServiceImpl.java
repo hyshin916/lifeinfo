@@ -92,19 +92,43 @@ public class FranchServiceImpl implements FranchService {
 		map.put("id", userID);
 		map.put("sellerCd", view_num);
 		
-		if (view_num.equals("2426")) {
-			Date date = new Date();
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			map.put("date", df.format(date));
-//			map.put("date", "2020-08-10");
-			int cnt = franchDao.getUseFranchInfo(map);
-			if (cnt > 0) {
-				cnt = 3;
-			}
-			return cnt;
+		Date date = new Date();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		map.put("date", df.format(date));
+		
+		int useCnt = __getUcFromSellerCd(view_num); // cms에서 설정한 하루방문 제한횟수
+		int cnt = franchDao.getUseFranchInfo(map); // 하루이용횟수
+	/*	
+		System.out.println("###################################");
+		System.out.println("[ID]" + userID);
+		System.out.println("[하루방문제한횟수]" + useCnt);
+		System.out.println("[하루방문횟수]" + cnt);
+		System.out.println("###################################");*/
+		
+		if (cnt > useCnt && useCnt != 0) {
+			cnt = 3;
 		} else {
-			return franchDao.getUseFranchInfo(map);
+			cnt = 0;
 		}
+		return cnt;
+		//		if (view_num.equals("2426")) {
+//			Date date = new Date();
+//			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//			map.put("date", df.format(date));
+////			map.put("date", "2020-08-10");
+//			int cnt = franchDao.getUseFranchInfo(map);
+//			if (cnt > 0) {
+//				cnt = 3;
+//			}
+//			return cnt;
+//		} else {
+//			return franchDao.getUseFranchInfo(map);
+//		}
+	}
+
+
+	private int __getUcFromSellerCd(String view_num) {
+		return franchDao.__getUcFromSellerCd(view_num);
 	}
 
 
