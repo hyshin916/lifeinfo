@@ -1,73 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- 
-[Layout]
-%d : 날짜
-%n : new line
-%t : thread
-%p : 로깅레벨
-%c : 로깅이 발생한 카테고리
-%C : 로깅이 발생한 클래스명
-%m : 로깅 메세지
--->
+<!-- 30초마다 설정 파일의 변경을 확인하고, 파일이 변경되면 다시 로딩 -->
+<configuration scan="true" scanPeriod="30 seconds">
+	<!-- logback이 정상 종료되도록 -->
+	<shutdownHook />
 
+	<!-- console에 로그 -->
+	<!-- <appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %40logger{0} - %C - %replace(%msg){'[\r\n]+', 
+				''} %n</Pattern>
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level [%logger] - %replace(%msg){'[\r\n]+', ''} %n</Pattern>
+		</layout>
+	</appender> -->
 
+	<!-- 로그 File에 저장 -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <file>D:\\logs\\catalina.log</file> -->
+		<file>./logs/catalina.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 일별로 로그파일이 생성된다. -->
+			<!-- LOCAL -->
+			<!-- <fileNamePattern>D:\\logs\\ming-%d{yyyy-MM-dd}.%i.log</fileNamePattern> -->
+			<fileNamePattern>./logs/ming-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<!-- 5MB가 넘으면 새로운 로그파일이 생성된다. -->
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!-- 10건의 파일만 남기고 지난 로그파일은 삭제 된다. -->
+			<maxHistory>10</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} %level [%logger] - %msg%n
+			</Pattern>
+		</encoder>
+	</appender>
 
-<configuration scan="true" scanPeriod="30 seconds" >
+	<!-- <logger name="com.ming9.myPage" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger> -->
 
-  <property resource="application.properties"/>
-  <property name="SAMPLE" value="" />
+	<logger name="org.springframework">
+		<level value="INFO" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</logger>
 
-  <timestamp key="date" datePattern="yyyyMMdd"/>
-  <timestamp key="year" datePattern="YYYY"/>
-  <timestamp key="month" datePattern="MM"/>
-  <timestamp key="day" datePattern="dd"/>
-
-  <!-- 콘솔로 로그를 남기는 설정 -->
-  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <charset>UTF-8</charset>
-      <Pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%p] [%t] [%c]%m%n</Pattern>
-    </encoder>
-  </appender>
-
-  <!-- 파일로 로그를 남기는 설정 -->
-  <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <!-- 저장경로/파일명 -->
-    <file>D:\\log\\${year}\\${month}\\${date}.log</file>
-   <!--  <file>/usr/local/cmslog/${year}/${month}/${date}.log</file> -->
-    
-    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-      <Pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%p] [%t] [%c] %m%n</Pattern>
-    </encoder>
-
-    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <!-- 파일명을 .zip .tz로 하는경우 자동으로 압축된다 -->
-      <fileNamePattern>D:\\log\\${year}\\${month}\\${date}_%i.log.zip</fileNamePattern>
-     <!--  <fileNamePattern>/usr/local/cmslog/${year}/${month}/${date}_%i.log.zip</fileNamePattern> -->
-      <minIndex>1</minIndex>
-      <maxIndex>10</maxIndex>
-    </rollingPolicy>
-
-    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-      <maxFileSize>30MB</maxFileSize>
-    </triggeringPolicy>
-  </appender>
-
-
-
-  <!-- 출력되는 로그의 양 순서 : ERROR < WARN < INFO < DEBUG < TRACE -->         
-  <!-- com.freedy.sample 하위 패키지에서 로그설정 -->
-  <!-- additivity가 false인 경우 상위로거의 설정값을 상속받지 않는다. -->
-<!--   <logger name="com.hyunyoung.open" level="debug" additivity="false">
-    <appender-ref ref="file" />
-    <appender-ref ref="console" />
-  </logger> -->
-
-  <!-- root는 글로벌 로거를 의미하며, 위의 logger에 해당하지 않으면 root 로거가 실행된다. -->
-  <root level="ERROR">
- 	<appender-ref ref="file" />
-    <appender-ref ref="console" />
-  </root>
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
 
 </configuration>

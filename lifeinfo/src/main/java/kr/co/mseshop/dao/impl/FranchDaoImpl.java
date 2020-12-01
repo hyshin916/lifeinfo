@@ -69,7 +69,10 @@ public class FranchDaoImpl implements FranchDao {
 
 	@Override
 	public int getUseFranchInfo(HashMap<String, String> map) {
-		return sqlSession.selectOne("franch.getUseFranchInfo",map);
+		
+		int value = sqlSession.selectOne("franch.getUseFranchInfo",map);
+		System.out.println("[Value]:" + value);
+		return value;
 	}
 
 	@Override

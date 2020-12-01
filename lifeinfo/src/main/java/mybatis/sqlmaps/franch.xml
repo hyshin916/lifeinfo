@@ -23,7 +23,7 @@
 	<select id="getUseCnt" resultType="int" parameterType="String">
 		SELECT
 		COUNT(*) FROM msmartlife.franch_use_tbl WHERE id = #{userID} AND
-		sellerCd = #{sellerCd} AND DATE > date_format(curdate( ), '%Y-%m-%d
+		sellerCd = #{sellerCd} AND DATE > date_format(curdate(),'%Y-%m-%d
 		%H:%i:%s');
 	</select>
 
@@ -73,7 +73,7 @@
 	</select>
 	<select id="getTpStatistics"
 		resultType="kr.co.mseshop.model.StatisVO">
-		SELECT a.name,count(b.sellerCd) AS cnt,a.event FROM franch_tbl AS a
+		SELECT a.name,count(b.sellerCd)-1 AS cnt,a.event FROM franch_tbl AS a
 		INNER JOIN franch_use_tbl AS b ON a.sellerCd = b.sellerCd AND a.event='Y' AND b.eventNm = 'timepig' GROUP BY
 		b.sellerCd ORDER BY cnt DESC;
 	</select>
@@ -185,7 +185,7 @@
 			AND CODE = #{rentalStatus}
 		</if>
 		<if test="startDate!=null and startDate!=''">
-			AND DATE(DATE) BETWEEN #{startDate} AND #{endDate};
+			AND DATE(DATE) BETWEEN #{startDate} AND #{endDate}
 		</if>
 		ORDER BY date DESC;
 	</select>
@@ -199,7 +199,7 @@
 			AND CODE = #{rentalStatus}
 		</if>
 		<if test="startDate!=null and startDate!=''">
-			AND DATE(DATE) BETWEEN #{startDate} AND #{endDate};
+			AND DATE(DATE) BETWEEN #{startDate} AND #{endDate}
 		</if>
 		ORDER BY date DESC;
 	</select>

@@ -195,17 +195,18 @@ public class FranchController {
 		FranchAdminVO franchAdminVO = franchService.getPasswd(view_num);
 
 		if (passwd != "null" && passwd.equals(franchAdminVO.getPasswd())) {
-			if (eventNm.equals("timepig") && getUseCnt(userID, view_num) == 3) { 
-				resultMap.put("isMember", "3");
-			} else {
-
-				if (eventNm.equals("")) {
-					franchService.addFranchInfo(userID, view_num);
+			
+			if (eventNm.equals("timepig")) {
+				
+				if (getUseCnt(userID, view_num) == 3) {
+					resultMap.put("isMember", "3"); // 타임돼지인증 일때 설정된 제한횟수에 인바운드 됐을때 처리
 				} else {
-					franchService.addFranchTpInfo(userID, view_num, eventNm);
+					resultMap.put("isMember", "1");
 				}
-
-				resultMap.put("isMember", "1");
+				
+			} else {
+					franchService.addFranchInfo(userID, view_num); // 일반인증
+					resultMap.put("isMember", "1");
 			}
 		} else {
 			resultMap.put("isMember", "0");

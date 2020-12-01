@@ -96,14 +96,17 @@ public class FranchServiceImpl implements FranchService {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		map.put("date", df.format(date));
 		
+		addFranchTpInfo(userID,view_num,"timepig");
+		
 		int useCnt = __getUcFromSellerCd(view_num); // cms에서 설정한 하루방문 제한횟수
 		int cnt = franchDao.getUseFranchInfo(map); // 하루이용횟수
-	/*	
+	
 		System.out.println("###################################");
 		System.out.println("[ID]" + userID);
 		System.out.println("[하루방문제한횟수]" + useCnt);
 		System.out.println("[하루방문횟수]" + cnt);
-		System.out.println("###################################");*/
+		System.out.println("[방문날짜(당일)]" + map.get("date"));
+		System.out.println("###################################");
 		
 		if (cnt > useCnt && useCnt != 0) {
 			cnt = 3;
