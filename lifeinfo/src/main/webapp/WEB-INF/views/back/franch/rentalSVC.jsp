@@ -278,7 +278,7 @@ select::-ms-expand {
 			<div>
 				<span>업체명 :</span> <span> <select name="rentalStatus" id="rentalStatus">
 						<option value="3499" <c:if test="${rentalStatus eq '3499'}">selected</c:if>>넥센타이어렌탈</option>
-						<option value="1111" <c:if test="${rentalStatus eq '1111'}">selected</c:if>>SK렌터카</option>
+						<option value="4387" <c:if test="${rentalStatus eq '4387'}">selected</c:if>>SK렌터카</option>
 				</select>
 
 				</span> <span>날짜검색 : </span> <span><input type="text"
@@ -320,7 +320,7 @@ select::-ms-expand {
 			</tbody>
 		</table>
 		</c:if>
-		<c:if test="${rentalStatus eq '1111'}">
+		<c:if test="${rentalStatus eq '4387'}">
 		<table class="table table-striped">
 			<thead>
 				<tr>

@@ -48,7 +48,7 @@ $(document).ready(function() {
 		if ($('#name').val() == '') {
 			alert('상호명을 입력해 주세요!')
 			$('#name').focus();
-			return false;
+			return false; 
 		}
 		if ($('#sellerCd').val() == '') {
 			alert('업체코드를 입력해 주세요!')
@@ -60,6 +60,13 @@ $(document).ready(function() {
 			$('#passwd').focus();
 			return false;
 		} 
+		
+		var usecnt = $('#usecnt').val();
+		
+		if (usecnt == '') {
+			usecnt = '0';
+		}
+		
 		var eventYN = __rtnEventYN();
 		$.ajax({
 			url : './franchWrite',
@@ -71,7 +78,7 @@ $(document).ready(function() {
 				passwd : $('#passwd').val(),
 				comment : $('#comment').val(),
 				event : eventYN,
-				useCnt : $('#usecnt').val(),
+				useCnt : usecnt,
 				flag : 'register'
 			},
 			async : true,
@@ -116,6 +123,12 @@ $(document).ready(function() {
 			$('#passwd').focus();
 			return false;
 		} 
+		var usecnt = $('#usecnt').val();
+		
+		if (usecnt == '') {
+		
+			usecnt = '0';
+		}
 		var eventYN = __rtnEventYN();
 		
 		$.ajax({
@@ -129,7 +142,7 @@ $(document).ready(function() {
 				passwd : $('#passwd').val(),
 				comment : $('#comment').val(),
 				event : eventYN,
-				useCnt : $('#usecnt').val(),
+				useCnt : usecnt,
 				flag : 'update'
 			},
 			async : true,

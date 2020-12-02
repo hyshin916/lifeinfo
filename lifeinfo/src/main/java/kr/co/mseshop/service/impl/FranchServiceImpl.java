@@ -87,7 +87,7 @@ public class FranchServiceImpl implements FranchService {
 
 
 	@Override
-	public int getUseFranchInfo(String userID, String view_num) {
+	public int getUseFranchInfo(String userID, String view_num, String evtFlag) {
 		HashMap<String,String> map = new HashMap<String,String>();
 		map.put("id", userID);
 		map.put("sellerCd", view_num);
@@ -96,37 +96,44 @@ public class FranchServiceImpl implements FranchService {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		map.put("date", df.format(date));
 		
-		addFranchTpInfo(userID,view_num,"timepig");
+		int cnt = 0;
 		
-		int useCnt = __getUcFromSellerCd(view_num); // cms에서 설정한 하루방문 제한횟수
-		int cnt = franchDao.getUseFranchInfo(map); // 하루이용횟수
-	
-		System.out.println("###################################");
-		System.out.println("[ID]" + userID);
-		System.out.println("[하루방문제한횟수]" + useCnt);
-		System.out.println("[하루방문횟수]" + cnt);
-		System.out.println("[방문날짜(당일)]" + map.get("date"));
-		System.out.println("###################################");
-		
-		if (cnt > useCnt && useCnt != 0) {
-			cnt = 3;
-		} else {
-			cnt = 0;
+		if (evtFlag.equals("timepig")) {
+				map.put("eventNm", "timepig");
+				addFranchTpInfo(userID,view_num,"timepig");
+				
+				int useCnt = __getUcFromSellerCd(view_num); // cms에서 설정한 하루방문 제한횟수
+				cnt = franchDao.getUseFranchInfo(map); // 하루이용횟수
+			
+				System.out.println("###################################");
+				System.out.println("[ID]" + userID);
+				System.out.println("[하루방문제한횟수]" + useCnt);
+				System.out.println("[하루방문횟수]" + cnt);
+				System.out.println("[방문날짜(당일)]" + map.get("date"));
+				System.out.println("###################################");
+				
+				if (cnt > useCnt && useCnt != 0) {
+					cnt = 3;
+				} else {
+					cnt = 0;
+				}
+				
+		} else if (evtFlag.equals("approveCoupon")) {
+			
+			if (view_num.equals("2426")) { //메가박스
+					cnt = franchDao.getUseFranchInfo(map);
+					if (cnt > 0) {
+						cnt = 3;
+					} 
+			} 
+		} else if (evtFlag.equals("cntForReview")) {
+			
+			cnt = franchDao.getUseFranchInfo(map); 
 		}
+		
+		
+		
 		return cnt;
-		//		if (view_num.equals("2426")) {
-//			Date date = new Date();
-//			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//			map.put("date", df.format(date));
-////			map.put("date", "2020-08-10");
-//			int cnt = franchDao.getUseFranchInfo(map);
-//			if (cnt > 0) {
-//				cnt = 3;
-//			}
-//			return cnt;
-//		} else {
-//			return franchDao.getUseFranchInfo(map);
-//		}
 	}
 
 

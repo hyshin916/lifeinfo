@@ -38,6 +38,7 @@
 		parameterType="HashMap">
 		SELECT COUNT(*) FROM franch_use_tbl WHERE 1=1 AND id = #{id} AND
 		sellerCd = #{sellerCd}
+		<if test="eventNm!=null and eventNm!=''">AND eventNm = #{eventNm}</if>
 		<if test="date!=null and date!=''">AND date like '${date}%'</if>
 		;
 	</select>

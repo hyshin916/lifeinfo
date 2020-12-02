@@ -198,15 +198,19 @@ public class FranchController {
 			
 			if (eventNm.equals("timepig")) {
 				
-				if (getUseCnt(userID, view_num) == 3) {
+				if (getUseCnt(userID, view_num, "timepig") == 3) {
 					resultMap.put("isMember", "3"); // 타임돼지인증 일때 설정된 제한횟수에 인바운드 됐을때 처리
 				} else {
 					resultMap.put("isMember", "1");
 				}
 				
 			} else {
-					franchService.addFranchInfo(userID, view_num); // 일반인증
-					resultMap.put("isMember", "1");
+				   if (getUseCnt(userID,view_num,"approveCoupon") == 3) { //timepig인증 아닐때 메가박스 인증 위한 로직
+					   resultMap.put("isMember", "3");
+				   } else {
+					   franchService.addFranchInfo(userID, view_num);
+					   resultMap.put("isMember", "1");
+				   }
 			}
 		} else {
 			resultMap.put("isMember", "0");
@@ -214,9 +218,9 @@ public class FranchController {
 		return gson.toJson(resultMap);
 	}
 
-	private int getUseCnt(String userID, String view_num) {
+	private int getUseCnt(String userID, String view_num, String evtFlag) {
 
-		int useCnt = franchService.getUseFranchInfo(userID, view_num);
+		int useCnt = franchService.getUseFranchInfo(userID, view_num, evtFlag);
 
 		return useCnt;
 	}
@@ -230,7 +234,7 @@ public class FranchController {
 		String userID = request.getParameter("userID");
 		String view_num = request.getParameter("view_num");
 
-		int useCnt = getUseCnt(userID, view_num);
+		int useCnt = getUseCnt(userID, view_num, "cntForReview");
 		System.out.println("[UseCnt]" + useCnt);
 		resultMap.put("useCnt", useCnt);
 

@@ -29,7 +29,7 @@ public interface FranchService {
 
 	FranchAdminVO getPasswd(String view_num);
 
-	int getUseFranchInfo(String userID, String view_num);
+	int getUseFranchInfo(String userID, String view_num, String evtFlag);
 
 	List<FranchSellerVO> getFranchList();
 

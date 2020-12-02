@@ -177,11 +177,11 @@ public class FranchBackController {
 		JSONObject jObj = new JSONObject();
 		if (flag != null && flag.equals("register")) {
 			try {
-				
 				franchService.addFranchSellerInfo(franchSellerVO);
 				jObj.put("result", "success");
 				actionLogUtil.actionLogUtil(request, "save");
 			} catch (Exception e) {
+				e.printStackTrace();
 				jObj.put("result", "fail");
 			}
 
@@ -201,6 +201,7 @@ public class FranchBackController {
 				actionLogUtil.actionLogUtil(request, "update");
 
 			} catch (Exception e) {
+				e.printStackTrace();
 				jObj.put("result", "fail");
 			}
 			__responseResult(response, jObj);
@@ -251,12 +252,12 @@ public class FranchBackController {
 			model.addAttribute("rentalList", rentalList);
 			model.addAttribute("status", "rentalSVC");
 			
-			if (rentalSearchCriteria.getRentalStatus().equals("3499")) {
+			if (rentalSearchCriteria.getRentalStatus().equals("3499")) { // 넥센타이어 렌탈
 				System.out.println("[status]3499");
 				model.addAttribute("rentalStatus","3499");
 				
-			} else if (rentalSearchCriteria.getRentalStatus().equals("1111")) {
-				model.addAttribute("rentalStatus","1111");
+			} else if (rentalSearchCriteria.getRentalStatus().equals("4387")) { // SK 장기 렌터카
+				model.addAttribute("rentalStatus","4387");
 			}
 			
 		}
