@@ -17,7 +17,7 @@
 		<logback.version>1.1.7</logback.version>
 		<!-- add dependencies version DB start -->
 		<org.springframework.jdbc-version>3.2.5.RELEASE</org.springframework.jdbc-version>
-		<org.mybatis-version>3.2.2</org.mybatis-version>
+		<org.mybatis-version>3.5.6</org.mybatis-version>
 		<org.mybatis.spring-version>1.2.0</org.mybatis.spring-version>
 		<!-- add dependencies version DB end -->
 		<failOnMissingWebXml>false</failOnMissingWebXml>
